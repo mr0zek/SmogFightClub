@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Admin" Category="Category1" Bounds="-322.835535226363,-551.878446744478,54.84,25.96" UseManualLocation="True">
+      <Category Ref="Category8" />
+    </Node>
+    <Node Id="GIOŚ" Category="Category2" Bounds="-435.94764047142,-224.875805215827,50,25.96" UseManualLocation="True" />
+    <Node Id="Sensor" Category="Category1" Bounds="-630.179024047851,-551.878443603516,86.5433333333331,25.96" Label="SmogSensor" UseManualLocation="True">
+      <Category Ref="Category8" />
+    </Node>
+    <Node Id="SmogFightClub.App" Bounds="-472.818801490606,-423.995905215727,126.123333333333,25.96" Label="SmogFightClub.App" />
+    <Node Id="SmogFightClub.Database" Bounds="-344.90713482394,-358.435805215827,153.5,25.96" Label="SmogFightClub.Database" UseManualLocation="True" />
+    <Node Id="SmogFigtClub" Category="Category5" Bounds="-492.818801490606,-463.996005215727,321.41166648084,151.520309927641" Group="Expanded" Label="Smog Fight Club" UseManualLocation="True">
+      <Category Ref="Category3" />
+    </Node>
+    <Node Id="User" Category="Category1" Bounds="-441.635690714518,-551.075549619898,50,25.96" UseManualLocation="True">
+      <Category Ref="Category8" />
+    </Node>
+  </Nodes>
+  <Links>
+    <Link Source="Admin" Target="SmogFightClub.App" Bounds="-391.779449462891,-525.91845703125,84.8809204101563,95.2877197265625" />
+    <Link Source="Sensor" Target="SmogFightClub.App" Bounds="-573.848205566406,-525.91845703125,137.356567382813,96.8945617675781" />
+    <Link Source="SmogFightClub.App" Target="GIOŚ" Bounds="-412.158752441406,-398.035919189453,1.85440063476563,164.16096496582" />
+    <Link Source="SmogFightClub.App" Target="SmogFightClub.Database" Bounds="-381.722282539272,-398.035905215727,77.3631932332395,35.8187814928008" />
+    <Link Source="SmogFigtClub" Target="SmogFightClub.App" Category="Contains" />
+    <Link Source="SmogFigtClub" Target="SmogFightClub.Database" Category="Contains" />
+    <Link Source="User" Target="SmogFightClub.App" Bounds="-415.487548828125,-525.115539550781,4.9375,92.12548828125" Label="manage alerts" />
+  </Links>
+  <Categories>
+    <Category Id="Category1" Label="Category 1" Background="#FFE51400" IsTag="True" />
+    <Category Id="Category2" Label="Category 2" Background="#FF339933" IsTag="True" />
+    <Category Id="Category3" Label="Category 3" Background="#FF3EBCED" IsTag="True" />
+    <Category Id="Category5" Label="Category 5" Background="#FF9B4F96" IsTag="True" />
+    <Category Id="Category8" Label="Category 8" Background="#FF44CCCC" IsTag="True" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+  </Categories>
+  <Properties>
+    <Property Id="Background" Label="Background" Description="The background color" DataType="System.Windows.Media.Brush" />
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsTag" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Category 8" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category8')" />
+      <Setter Property="Background" Value="#FF44CCCC" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Category 1" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category1')" />
+      <Setter Property="Background" Value="#FFE51400" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Category 2" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category2')" />
+      <Setter Property="Background" Value="#FF339933" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Category 3" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category3')" />
+      <Setter Property="Background" Value="#FF3EBCED" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Category 5" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category5')" />
+      <Setter Property="Background" Value="#FF9B4F96" />
+    </Style>
+  </Styles>
+</DirectedGraph>

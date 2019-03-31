@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="TopToBottom" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Admin" Bounds="293.360457953673,-74.3599899696368,54.84,25.96" UseManualLocation="True" />
+    <Node Id="Alerts" Bounds="86.7998717727559,135.231694585171,50.2566666666667,25.96" Label="Alerts" />
+    <Node Id="Dashbord" Bounds="316.180741558509,67.086114807129,71.7266666666667,25.96" Label="Dashbord" UseManualLocation="True" />
+    <Node Id="ExternalMetricsSource" Bounds="255.834572792053,345.449330312624,50,25.96" Label="GIOŚ" UseManualLocation="True" />
+    <Node Id="Metrics" Bounds="75.9453764394226,207.137310585171,71.97,25.96" Label="Indicators" />
+    <Node Id="SensorCatalog" Bounds="61.7533281775677,65.7260852050781,60.83,25.96" Label="Sensors" UseManualLocation="True" />
+    <Node Id="Sensors" Bounds="-30.0654272079468,341.449330312624,153.5,25.96" Label="SmogFightClub.Database" UseManualLocation="True" />
+    <Node Id="SmogSensor" Bounds="-69.8640159111511,-75.0259214348291,86.5433333333333,25.96" Label="SmogSensor" UseManualLocation="True" />
+    <Node Id="SomgFightClub" Bounds="41.7533273315429,23.3259760498047,366.154088643392,229.771433520508" Group="Expanded" Label="SomgFightClub.App" UseManualLocation="True" />
+    <Node Id="User" Bounds="108.672750755516,-74.2259214348291,50,25.96" UseManualLocation="True" />
+    <Node Id="UserRegistration" Bounds="163.884074891842,63.3260760498047,107.096666666667,25.96" Label="UserRegistration" />
+    <Node Id="Users" Bounds="193.906779439423,135.231694585171,49.9999999999999,25.96" Label="Users" />
+  </Nodes>
+  <Links>
+    <Link Source="Admin" Target="Dashbord" Bounds="323.649420833302,-48.3999896240234,23.5833371492138,106.698206496891" />
+    <Link Source="Alerts" Target="Metrics" Bounds="111.928597063049,161.191694585171,0.00111564648233298,36.9456160041033" Label="Check indicators for alerts" LabelBounds="115.929154886291,171.684442193238,137.13,15.96" />
+    <Link Source="Alerts" Target="Sensors" Bounds="53.5060239313923,161.191692810059,54.3155362054428,171.676861950511" />
+    <Link Source="Dashbord" Target="Sensors" Bounds="67.8256560280736,93.0461163330078,269.772006126953,242.388115643038" />
+    <Link Source="Metrics" Target="ExternalMetricsSource" Bounds="127.78131954001,233.097309570312,130.239062084043,106.649981043856" />
+    <Link Source="Metrics" Target="Sensors" Bounds="56.9225198850047,233.097309570313,48.7024583249874,100.256655652288" />
+    <Link Source="SensorCatalog" Target="Sensors" Bounds="50.2906320569757,91.6860852050781,39.7364941893812,240.883256763417" />
+    <Link Source="SmogSensor" Target="SensorCatalog" Bounds="-15.6403661805274,-49.0659214348291,91.0528393891742,107.913411513664" />
+    <Link Source="SmogSensor" Target="SomgFightClub" Index="2147483647" Bounds="-10.2960055096506,-49.0659214348291,83.8479388730348,66.7846889020649" Label="Provide indicators" LabelBounds="32.8740102785488,-33.1979837369974,94.89,15.96" Weight="1" />
+    <Link Source="SomgFightClub" Target="Alerts" Category="Contains" />
+    <Link Source="SomgFightClub" Target="Dashbord" Category="Contains" />
+    <Link Source="SomgFightClub" Target="ExternalMetricsSource" Index="2147483647" Bounds="254.047299336169,253.097409570313,21.2680820812963,83.6295616206498" Label="Retreive smog indicators" LabelBounds="268.683304281211,286.439255038033,130.333333333333,15.96" Weight="1" />
+    <Link Source="SomgFightClub" Target="Metrics" Category="Contains" />
+    <Link Source="SomgFightClub" Target="SensorCatalog" Category="Contains" />
+    <Link Source="SomgFightClub" Target="UserRegistration" Category="Contains" />
+    <Link Source="SomgFightClub" Target="Users" Category="Contains" />
+    <Link Source="User" Target="SensorCatalog" Bounds="98.5766017902007,-48.2659214348291,31.246776469729,105.363447949536" />
+    <Link Source="User" Target="UserRegistration" Bounds="141.716348050521,-48.2659220886231,64.4117982390012,103.941815133502" />
+    <Link Source="UserRegistration" Target="Alerts" Bounds="138.410233202957,89.2860760498047,59.9771464920464,40.8769858356163" Label="Add allert" LabelBounds="115.675776960147,92.1119023972361,51.5966666666667,15.96" />
+    <Link Source="UserRegistration" Target="Sensors" Bounds="59.4607536842981,89.2860760498047,151.413860707268,244.511568311404" />
+    <Link Source="UserRegistration" Target="Users" Bounds="217.69855346877,89.2860760498047,0.757581202548209,36.9475098493448" Label="Register user" LabelBounds="222.077344158386,99.7388310801416,68.3066666666669,15.96" />
+    <Link Source="Users" Target="Sensors" Bounds="63.2938441158375,161.191692810059,144.772721475815,173.349820453897" />
+  </Links>
+  <Categories>
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="LabelBounds" DataType="System.Windows.Rect" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Weight" Label="Weight" Description="Weight" DataType="System.Double" />
+    <Property Id="ZoomLevel" DataType="System.String" />
+  </Properties>
+</DirectedGraph>
