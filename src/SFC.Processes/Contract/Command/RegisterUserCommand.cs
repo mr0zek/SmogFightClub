@@ -1,11 +1,13 @@
-﻿namespace SFC.Processes.Contract.Command
+﻿using SFC.SharedKernel;
+
+namespace SFC.Processes.Contract.Command
 {
   public class RegisterUserCommand
   {
-    public string LoginName { get; set; }
-    public string Email { get; set; }
+    public LoginName LoginName { get; set; }
+    public Email Email { get; set; }
     public string PasswordHash { get; set; }
-    public string ZipCode { get; set; }
+    public ZipCode ZipCode { get; set; }
     public string BaseUrl { get; set; }
   }
 }

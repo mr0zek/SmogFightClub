@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
+    <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
-﻿namespace SFC.Notifications.Contract
+﻿using SFC.SharedKernel;
+
+namespace SFC.Notifications.Contract
 {
   public class SetNotificationEmailCommand
   {
-    public string Email { get; set; }
-    public string LoginName { get; set; }
+    public Email Email { get; set; }
+    public LoginName LoginName { get; set; }
   }
 }

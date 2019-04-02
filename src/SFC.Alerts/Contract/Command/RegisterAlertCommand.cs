@@ -1,8 +1,10 @@
-﻿namespace SFC.Alerts.Contract.Command
+﻿using SFC.SharedKernel;
+
+namespace SFC.Alerts.Contract.Command
 {
   public class RegisterAlertCommand
   {
-    public string LoginName { get; set; }
-    public string ZipCode { get; set; }
+    public LoginName LoginName { get; set; }
+    public ZipCode ZipCode { get; set; }
   }
 }

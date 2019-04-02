@@ -2,6 +2,7 @@
 using SFC.Alerts.Contract.Command;
 using SFC.Alerts.Contract.Query;
 using SFC.Infrastructure;
+using SFC.SharedKernel;
 
 namespace SFC.Api.Features.Alerts
 {
@@ -36,7 +37,7 @@ namespace SFC.Api.Features.Alerts
       return Json(_alertsPerspective.GetAll(GetLoginName()));
     }
 
-    private string GetLoginName()
+    private LoginName GetLoginName()
     {
       return User.Identity.Name;
     }

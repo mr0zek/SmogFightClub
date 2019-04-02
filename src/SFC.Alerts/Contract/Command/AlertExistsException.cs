@@ -1,12 +1,13 @@
 ﻿using System;
+using SFC.SharedKernel;
 
 namespace SFC.Alerts.Contract.Command
 {
   internal class AlertExistsException : Exception
   {
-    public string ZipCode { get; }
+    public ZipCode ZipCode { get; }
 
-    public AlertExistsException(string zipCode)
+    public AlertExistsException(ZipCode zipCode)
     {
       ZipCode = zipCode;
     }

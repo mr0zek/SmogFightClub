@@ -4,6 +4,7 @@ using SFC.Infrastructure;
 using SFC.Notifications.Contract;
 using SFC.Processes.Contract.Command;
 using SFC.Users.Contract;
+using SFC.Users.Contract.Command;
 
 namespace SFC.Processes.Features.UserRegistration
 {

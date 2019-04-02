@@ -1,7 +1,9 @@
-﻿namespace SFC.Notifications
+﻿using SFC.SharedKernel;
+
+namespace SFC.Notifications
 {
   internal interface IEmailRepository
   {
-    void Set(string loginName, string email);
+    void Set(LoginName loginName, Email email);
   }
 }
