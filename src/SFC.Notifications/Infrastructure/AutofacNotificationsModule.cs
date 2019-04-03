@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
+using SFC.Notifications.Features.SendNotification;
+using SFC.Notifications.Infrastructure;
 
 namespace SFC.Notifications
 {
@@ -14,7 +16,13 @@ namespace SFC.Notifications
 
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<EmailRepository>().AsImplementedInterfaces();
+      builder.RegisterType<EmailRepository>()
+        .AsImplementedInterfaces()
+        .WithParameter("connectionString", _connectionString);
+
+      builder.RegisterType<NotificationRepository>()
+        .AsImplementedInterfaces()
+        .WithParameter("connectionString", _connectionString);
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

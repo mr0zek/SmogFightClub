@@ -1,13 +1,13 @@
 ﻿using SFC.Infrastructure;
 using SFC.Notifications.Contract;
 
-namespace SFC.Notifications
+namespace SFC.Notifications.Features.SetNotificationEmail
 {
   internal class SetNotificationEmailHandler : ICommandHandler<SetNotificationEmailCommand>
   {
-    private readonly IEmailRepository _emailRepository;
+    private readonly IEmailWriteRepository _emailRepository;
 
-    public SetNotificationEmailHandler(IEmailRepository emailRepository)
+    public SetNotificationEmailHandler(IEmailWriteRepository emailRepository)
     {
       _emailRepository = emailRepository;
     }

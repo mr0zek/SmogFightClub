@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using SFC.SharedKernel;
 
-namespace SFC.Alerts.Contract.Command
+namespace SFC.Sensors.Contract.Command
 {
-  public class RegisterAlertCommand
+  public class RegisterSensorCommand
   {
     public LoginName LoginName { get; set; }
     public ZipCode ZipCode { get; set; }

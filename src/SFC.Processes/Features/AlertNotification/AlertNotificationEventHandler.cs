@@ -4,19 +4,21 @@ using SFC.Notifications.Contract;
 
 namespace SFC.Processes.Features.AlertNotification
 {
-  public class AlertCreatedEventHandler : IEventHandler<AlertRegisteredEvent>
+  public class SmogAlertEventHandler : IEventHandler<SmogAlertEvent>
   {
     private readonly ICommandBus _commandBus;
 
-    public AlertCreatedEventHandler(ICommandBus commandBus)
+    public SmogAlertEventHandler(ICommandBus commandBus)
     {
       _commandBus = commandBus;
     }
 
-    public void Handle(AlertRegisteredEvent @event)
+    public void Handle(SmogAlertEvent @event)
     {
       _commandBus.Send(new SendNotificationCommand()
       {
+        Title = "Smog alert",
+        Body = $"Smog appears in your area, zip code: {@event.ZipCode}",
         LoginName = @event.LoginName
       });
     }

@@ -2,7 +2,7 @@
 
 namespace SFC.Notifications
 {
-  internal interface IEmailRepository
+  internal interface IEmailWriteRepository
   {
     void Set(LoginName loginName, Email email);
   }

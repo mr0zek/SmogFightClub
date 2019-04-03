@@ -1,44 +1,44 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using SFC.Alerts.Contract.Command;
-using SFC.Alerts.Contract.Query;
 using SFC.Infrastructure;
+using SFC.Sensors.Contract.Command;
+using SFC.Sensors.Contract.Query;
 using SFC.SharedKernel;
 
-namespace SFC.Api.Features.Alerts
+namespace SFC.Api.Features.Sensors
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class AlertsController : Controller
+  public class SensorsController : Controller
   {
     private readonly ICommandBus _commandBus;
-    private readonly IAlertsPerspective _alertsPerspective;
+    private readonly ISensorsPerspective _sensorsPerspective;
 
-    public AlertsController(ICommandBus commandBus, IAlertsPerspective alertsPerspective)
+    public SensorsController(ICommandBus commandBus, ISensorsPerspective sensorsPerspective)
     {
       _commandBus = commandBus;
-      _alertsPerspective = alertsPerspective;
+      _sensorsPerspective = sensorsPerspective;
     }
 
     [HttpPost]
-    public IActionResult Post(PostAlertModel model)
+    public IActionResult Post(PostSensorModel model)
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new RegisterAlertCommand()
+      _commandBus.Send(new RegisterSensorCommand()
       {
         Id = id,
         LoginName = GetLoginName(),
         ZipCode = model.ZipCode
       });
 
-      return Created($"/api/alerts/{id}",id);
+      return Accepted($"api/sensors/{id}");
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_alertsPerspective.GetAll(GetLoginName()));
+      return Json(_sensorsPerspective.GetAll(GetLoginName()));
     }
 
     private LoginName GetLoginName()
@@ -49,7 +49,7 @@ namespace SFC.Api.Features.Alerts
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-      return Json(_alertsPerspective.Get(id, GetLoginName()));
+      return Json(_sensorsPerspective.Get(id, GetLoginName()));
     }
   }
 }

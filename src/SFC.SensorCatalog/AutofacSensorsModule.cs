@@ -14,6 +14,8 @@ namespace SFC.Sensors
 
     protected override void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<SensorsPerspecitve>().AsImplementedInterfaces();
+
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
