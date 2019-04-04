@@ -25,7 +25,8 @@ namespace SFC.Notifications.DbMigrations
 
     public override void Down()
     {
-      Delete.Table("Notifications");
+      Delete.Table("Notifications").InSchema("Notifications");
+      Delete.Table("Emails").InSchema("Notifications");
     }
   }
 }

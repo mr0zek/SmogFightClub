@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using SFC.Alerts;
 using SFC.Infrastructure;
-using SFC.Processes.Features.UserRegistration;
 
 namespace SFC.Processes
 {
@@ -15,12 +14,7 @@ namespace SFC.Processes
     }
 
     protected override void Load(ContainerBuilder builder)
-    {
-      builder.RegisterType<SagaRepository>()
-        .AsImplementedInterfaces()
-        .WithParameter("connectionString", _connectionString);
-
-
+    {     
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();

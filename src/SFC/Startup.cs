@@ -8,7 +8,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SFC.AdminApi;
 using SFC.Infrastructure;
+using SFC.SensorApi.Features.RecordMeasurement;
+using SFC.UserApi;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace SFC
@@ -31,12 +34,16 @@ namespace SFC
       // Add framework services.
       services
         .AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)))
+        .AddApplicationPart(typeof(AutofacUserApiModule).Assembly)
+        .AddApplicationPart(typeof(AutofacAdminApiModule).Assembly)
+        .AddApplicationPart(typeof(MeasurementsController).Assembly)
+        .AddControllersAsServices()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
         .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
 
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new Info { Title = "Masterpiece API", Version = "v1" });
+        c.SwaggerDoc("v1", new Info { Title = "SmogFightClub API", Version = "v1" });
       });
 
       var builder = new ContainerBuilder();

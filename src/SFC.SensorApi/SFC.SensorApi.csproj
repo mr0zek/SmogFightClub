@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
+    <ProjectReference Include="..\SFC.Sensors\SFC.Sensors.csproj" />
+    <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

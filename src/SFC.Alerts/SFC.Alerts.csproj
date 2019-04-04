@@ -15,10 +15,4 @@
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore.Design">
-      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore.design\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

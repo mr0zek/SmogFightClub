@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Automatonymous" Version="4.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
+    <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
+    <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />
+    <ProjectReference Include="..\SFC.Processes\SFC.Processes.csproj" />
+    <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
+    <ProjectReference Include="..\SFC.Users\SFC.Accounts.csproj" />
+  </ItemGroup>
+
+</Project>

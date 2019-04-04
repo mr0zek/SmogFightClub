@@ -1,10 +1,11 @@
 ﻿using Automatonymous;
-using SFC.Alerts.Contract.Command;
+using SFC.Accounts.Features.CreateCount;
+using SFC.Accounts.Features.CreateCount.Contract;
+using SFC.Alerts.Features.RegisterAlert.Contract;
 using SFC.Infrastructure;
-using SFC.Notifications.Contract;
-using SFC.Processes.Contract.Command;
-using SFC.Users.Contract;
-using SFC.Users.Contract.Command;
+using SFC.Notifications.Features.SendNotification.Contract;
+using SFC.Notifications.Features.SetNotificationEmail.Contract;
+using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.Processes.Features.UserRegistration
 {
@@ -42,7 +43,7 @@ namespace SFC.Processes.Features.UserRegistration
 
     private void CreateUserAccount(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new CreateAccount()
+      _commandBus.Send(new CreateAccountCommand()
       {
         LoginName = context.Instance.LoginName
       });

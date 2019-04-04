@@ -1,6 +1,8 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using SFC.Notifications.Features.SendNotification;
+using SFC.Notifications.Features.SetNotificationEmail;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Infrastructure

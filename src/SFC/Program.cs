@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using SFC.Infrastructure;
 
 namespace SFC
 {
@@ -19,8 +20,8 @@ namespace SFC
     }
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-          .UseKestrel()
-          .UseStartup<Startup>();
+      WebHost.CreateDefaultBuilder(args)
+        .UseKestrel()
+        .UseStartup<Startup>();
   }
 }

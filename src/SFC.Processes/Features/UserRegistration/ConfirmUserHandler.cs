@@ -1,6 +1,6 @@
 ﻿using Automatonymous;
 using SFC.Infrastructure;
-using SFC.Processes.Contract.Command;
+using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.Processes.Features.UserRegistration
 {

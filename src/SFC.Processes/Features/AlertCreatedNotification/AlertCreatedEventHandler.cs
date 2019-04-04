@@ -1,8 +1,8 @@
-﻿using SFC.Alerts.Contract.Event;
+﻿using SFC.Alerts.Features.RegisterAlert.Contract;
 using SFC.Infrastructure;
-using SFC.Notifications.Contract;
+using SFC.Notifications.Features.SendNotification.Contract;
 
-namespace SFC.Processes.Features.AlertNotification
+namespace SFC.Processes.Features.AlertCreatedNotification
 {
   public class AlertNotificationEventHandler : IEventHandler<AlertRegisteredEvent>
   {

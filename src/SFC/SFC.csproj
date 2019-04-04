@@ -8,22 +8,19 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\Features\Dashboard\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\SFC.AdminApi\SFC.AdminApi.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
     <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />
     <ProjectReference Include="..\SFC.Processes\SFC.Processes.csproj" />
-    <ProjectReference Include="..\SFC.SensorCatalog\SFC.Sensors.csproj" />
-    <ProjectReference Include="..\SFC.Users\SFC.Users.csproj" />
+    <ProjectReference Include="..\SFC.SensorApi\SFC.SensorApi.csproj" />
+    <ProjectReference Include="..\SFC.Sensors\SFC.Sensors.csproj" />
+    <ProjectReference Include="..\SFC.UsersApi\SFC.UserApi.csproj" />
+    <ProjectReference Include="..\SFC.Users\SFC.Accounts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

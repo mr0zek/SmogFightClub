@@ -1,5 +1,5 @@
 ﻿using SFC.Infrastructure;
-using SFC.Notifications.Contract;
+using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Features.SendNotification

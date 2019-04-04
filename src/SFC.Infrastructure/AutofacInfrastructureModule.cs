@@ -15,6 +15,7 @@ namespace SFC.Infrastructure
     {
       RegisterSelf(builder);
       builder.RegisterType<Bus>().AsImplementedInterfaces();
+      builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
     }
   }
 }

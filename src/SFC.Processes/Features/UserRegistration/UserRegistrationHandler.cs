@@ -1,7 +1,7 @@
 ﻿using Automatonymous;
+using SFC.Accounts.Features.AccountQuery;
 using SFC.Infrastructure;
-using SFC.Processes.Contract.Command;
-using SFC.Users.Contract.Query;
+using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.Processes.Features.UserRegistration
 {
@@ -9,18 +9,18 @@ namespace SFC.Processes.Features.UserRegistration
   {
     private readonly ICommandBus _commandBus;
     private readonly ISagaRepository _sagaRepository;
-    private readonly IUsersPerspective _usersPerspective;
+    private readonly IAccountsPerspective _accountsPerspective;
 
-    public UserRegistrationHandler(ICommandBus commandBus, ISagaRepository sagaRepository, IUsersPerspective usersPerspective)
+    public UserRegistrationHandler(ICommandBus commandBus, ISagaRepository sagaRepository, IAccountsPerspective accountsPerspective)
     {
       _commandBus = commandBus;
       _sagaRepository = sagaRepository;
-      _usersPerspective = usersPerspective;
+      _accountsPerspective = accountsPerspective;
     }
 
     public void Handle(RegisterUserCommand command)
     {
-      if (_usersPerspective.Get(command.LoginName) != null)
+      if (_accountsPerspective.Get(command.LoginName) != null)
       {
         throw new LoginNameAlreadyUsedException(command.LoginName);
       }

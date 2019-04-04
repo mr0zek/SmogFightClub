@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Notifications
+namespace SFC.Notifications.Features.SendNotification
 {
   internal interface IEmailReadRepository
   {

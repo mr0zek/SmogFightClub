@@ -5,7 +5,7 @@ using System.Reflection;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SFC
+namespace SFC.Infrastructure
 {
   public class DbMigrations
   {

@@ -17,7 +17,7 @@ namespace SFC.Alerts.DbMigrations
 
     public override void Down()
     {
-      Delete.Table("Alerts");
+      Delete.Table("Alerts").InSchema("Alerts");
     }
   }
 }
