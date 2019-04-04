@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Alerts.Features.AlertQuery;
-using SFC.Alerts.Features.RegisterAlert.Contract;
+using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
 using SFC.SharedKernel;
 
@@ -12,12 +12,12 @@ namespace SFC.UserApi.Features.Alerts
   public class AlertsController : Controller
   {
     private readonly ICommandBus _commandBus;
-    private readonly IAlertsPerspective _alertsPerspective;
+    private readonly IAlertConditionsPerspective _alertConditionsPerspective;
 
-    public AlertsController(ICommandBus commandBus, IAlertsPerspective alertsPerspective)
+    public AlertsController(ICommandBus commandBus, IAlertConditionsPerspective alertConditionsPerspective)
     {
       _commandBus = commandBus;
-      _alertsPerspective = alertsPerspective;
+      _alertConditionsPerspective = alertConditionsPerspective;
     }
 
     [HttpPost]
@@ -25,7 +25,7 @@ namespace SFC.UserApi.Features.Alerts
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new RegisterAlertCommand()
+      _commandBus.Send(new RegisterAlertConditionCommand()
       {
         Id = id,
         LoginName = GetLoginName(),
@@ -38,7 +38,7 @@ namespace SFC.UserApi.Features.Alerts
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_alertsPerspective.GetAll(GetLoginName()));
+      return Json(_alertConditionsPerspective.GetAll(GetLoginName()));
     }
 
     private LoginName GetLoginName()
@@ -49,7 +49,7 @@ namespace SFC.UserApi.Features.Alerts
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-      return Json(_alertsPerspective.Get(id, GetLoginName()));
+      return Json(_alertConditionsPerspective.Get(id, GetLoginName()));
     }
   }
 }

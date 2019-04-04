@@ -32,7 +32,7 @@ namespace SFC.Processes.Features.UserRegistration
 
       UserRegistrationSaga saga = new UserRegistrationSaga(_commandBus);
       UserRegistrationSagaData data = new UserRegistrationSagaData();
-      saga.RaiseEvent(data, saga.CreateUser, command);
+      saga.RaiseEvent(data, saga.RegisterUserCommand, command);
       _sagaRepository.Save(data.Id, data);
     }
   }

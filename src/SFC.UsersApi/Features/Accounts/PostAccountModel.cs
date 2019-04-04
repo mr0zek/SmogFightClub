@@ -1,4 +1,4 @@
-﻿namespace SFC.UserApi.Features.Account
+﻿namespace SFC.UserApi.Features.Accounts
 {
   public class PostAccountModel
   {

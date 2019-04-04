@@ -19,7 +19,7 @@ namespace SFC.Processes.Features.UserRegistration
     {
       UserRegistrationSaga saga = new UserRegistrationSaga(_commandBus);
       UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.LoginName);
-      saga.RaiseEvent(data, saga.UserConfirmation, command);
+      saga.RaiseEvent(data, saga.ConfirmUserCommand, command);
       _sagaRepository.Save(command.LoginName, data);
     }
   }

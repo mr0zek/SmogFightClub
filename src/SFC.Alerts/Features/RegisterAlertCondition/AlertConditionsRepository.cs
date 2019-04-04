@@ -5,13 +5,13 @@ using Dapper;
 using SFC.Alerts.Features.AlertQuery;
 using SFC.SharedKernel;
 
-namespace SFC.Alerts.Features.RegisterAlert
+namespace SFC.Alerts.Features.RegisterAlertCondition
 {
-  class AlertsRepository : IAlertsPerspective, IAlertsRepository
+  class AlertConditionConditionConditionsRepository : IAlertConditionsPerspective, IAlertConditionsRepository
   {
     private readonly IDbConnection _connection;
 
-    public AlertsRepository(string connectionString)
+    public AlertConditionConditionConditionsRepository(string connectionString)
     {
       _connection = new SqlConnection(connectionString);
     }

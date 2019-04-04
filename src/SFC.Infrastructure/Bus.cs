@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using Autofac.Core;
 
 namespace SFC.Infrastructure
@@ -20,8 +21,13 @@ namespace SFC.Infrastructure
 
     public void Publish<T>(T @event)
     {
-      IEventHandler<T> eventHandler = (IEventHandler<T>)_container.Resolve(typeof(IEventHandler<T>));
-      eventHandler.Handle(@event);
+      IEnumerable<IEventHandler<T>> eventHandlers =
+        (IEnumerable<IEventHandler<T>>) _container.Resolve(typeof(IEnumerable<IEventHandler<T>>));
+
+      foreach (var eventHandler in eventHandlers)
+      {
+        eventHandler.Handle(@event);
+      }
     }
   }
 }

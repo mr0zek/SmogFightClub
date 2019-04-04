@@ -2,7 +2,7 @@
 using SFC.Infrastructure;
 using SFC.Processes.Features.UserRegistration.Contract;
 
-namespace SFC.UserApi.Features.Account
+namespace SFC.UserApi.Features.Accounts
 {
   [Route("api/[controller]")]
   [ApiController]

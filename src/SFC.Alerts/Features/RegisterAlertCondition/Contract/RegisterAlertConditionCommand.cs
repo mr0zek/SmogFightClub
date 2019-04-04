@@ -1,9 +1,9 @@
 ﻿using System;
 using SFC.SharedKernel;
 
-namespace SFC.Alerts.Features.RegisterAlert.Contract
+namespace SFC.Alerts.Features.RegisterAlertCondition.Contract
 {
-  public class RegisterAlertCommand
+  public class RegisterAlertConditionCommand
   {
     public LoginName LoginName { get; set; }
     public ZipCode ZipCode { get; set; }

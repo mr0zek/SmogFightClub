@@ -1,7 +1,7 @@
 ﻿using System;
 using SFC.SharedKernel;
 
-namespace SFC.Alerts.Features.RegisterAlert.Contract
+namespace SFC.Alerts.Features.RegisterAlertCondition.Contract
 {
   internal class AlertExistsException : Exception
   {

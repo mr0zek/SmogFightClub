@@ -1,7 +1,6 @@
 ﻿using Automatonymous;
-using SFC.Accounts.Features.CreateCount;
-using SFC.Accounts.Features.CreateCount.Contract;
-using SFC.Alerts.Features.RegisterAlert.Contract;
+using SFC.Accounts.Features.CreateAccount.Contract;
+using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
@@ -12,8 +11,8 @@ namespace SFC.Processes.Features.UserRegistration
   public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
-    public Event<ConfirmUserCommand> UserConfirmation { get; set; }
-    public Event<RegisterUserCommand> CreateUser { get; set; }
+    public Event<ConfirmUserCommand> ConfirmUserCommand { get; set; }
+    public Event<RegisterUserCommand> RegisterUserCommand { get; set; }
     public State WaitingForConfirmation { get; set; }
 
     public UserRegistrationSaga(ICommandBus commandBus)
@@ -21,7 +20,7 @@ namespace SFC.Processes.Features.UserRegistration
       _commandBus = commandBus;
 
       Initially(
-        When(CreateUser)
+        When(RegisterUserCommand)
           .Then(context =>
           {
             context.Instance.BaseUrl = context.Data.BaseUrl;
@@ -35,9 +34,9 @@ namespace SFC.Processes.Features.UserRegistration
           .TransitionTo(WaitingForConfirmation));
 
       During(WaitingForConfirmation,
-        When(UserConfirmation)
+        When(ConfirmUserCommand)
           .Then(CreateUserAccount)
-          .Then(RegisterAlert)
+          .Then(RegisterAlertCondition)
           .TransitionTo(Final));
     }
 
@@ -49,9 +48,9 @@ namespace SFC.Processes.Features.UserRegistration
       });
     }
 
-    private void RegisterAlert(BehaviorContext<UserRegistrationSagaData> context)
+    private void RegisterAlertCondition(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new RegisterAlertCommand()
+      _commandBus.Send(new RegisterAlertConditionCommand()
       {
         LoginName = context.Instance.LoginName,
         ZipCode = context.Instance.ZipCode

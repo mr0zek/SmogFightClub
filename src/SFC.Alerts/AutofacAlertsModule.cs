@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
-using SFC.Alerts.Features.RegisterAlert;
+using SFC.Alerts.Features.RegisterAlertCondition;
 using SFC.Infrastructure;
 
 namespace SFC.Alerts
@@ -18,7 +18,7 @@ namespace SFC.Alerts
 
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<AlertsRepository>()
+      builder.RegisterType<AlertConditionConditionConditionsRepository>()
         .AsImplementedInterfaces()
         .WithParameter("connectionString", _connectionString);
 
