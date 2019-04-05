@@ -5,11 +5,11 @@ using SFC.SharedKernel;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  class DashboardPerspective : IWriteDashboardPerspective, ISearchabelDashboardPerspective
+  class SearchableDashboardPerspective : IWriteDashboardPerspective, ISearchabelDashboardPerspective
   {
     private readonly IDbConnection _connection;
 
-    public DashboardPerspective(string connectionString)
+    public SearchableDashboardPerspective(string connectionString)
     {
       _connection = new SqlConnection(connectionString);
     }

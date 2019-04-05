@@ -7,11 +7,11 @@ using SFC.Notifications.Features.SendNotification;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  class DashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<NotificationSentEvent>
+  class SearchableDashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<NotificationSentEvent>
   {
     private readonly IWriteDashboardPerspective _searchableDashboardPerspective;
 
-    public DashboardHandler(IWriteDashboardPerspective searchableDashboardPerspective)
+    public SearchableDashboardHandler(IWriteDashboardPerspective searchableDashboardPerspective)
     {
       _searchableDashboardPerspective = searchableDashboardPerspective;
     }

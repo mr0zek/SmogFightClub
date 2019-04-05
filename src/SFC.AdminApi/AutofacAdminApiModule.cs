@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 
 namespace SFC.AdminApi
@@ -13,8 +14,10 @@ namespace SFC.AdminApi
     }
 
     protected override void Load(ContainerBuilder builder)
-    { 
-      
+    {
+      builder.RegisterType<SearchableDashboardPerspective>()
+        .AsImplementedInterfaces()
+        .WithParameter("connectionString",_connectionString);
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

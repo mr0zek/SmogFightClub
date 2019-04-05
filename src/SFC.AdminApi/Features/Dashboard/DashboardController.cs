@@ -9,39 +9,17 @@ namespace SFC.AdminApi.Features.Dashboard
   [ApiController]
   public class DashboardController : Controller
   {
-    private readonly IAccountsPerspective _accountPerspective;
-    private readonly INotificationPerspective _notificationPerspective;
+    private readonly IDashboardPerspective _dashboardPerspective;
 
-    public DashboardController(
-      IAccountsPerspective accountPerspective, 
-      INotificationPerspective notificationPerspective)
+    public DashboardController(IDashboardPerspective dashboardPerspective)
     {
-      _accountPerspective = accountPerspective;
-      _notificationPerspective = notificationPerspective;
+      _dashboardPerspective = dashboardPerspective;
     }
 
     [HttpGet]
     public IActionResult Get(DashboardQueryModel query)
     {
-      var results = _accountPerspective.Search(new AccountQuery()
-      {
-        Skip = query.Top,
-        Take = query.Take
-      });
-
-      var counts = _notificationPerspective.GetSendNotificationsCount("SmogAlert", results.Accounts.Select(f=>f.LoginName).ToArray());
-
-      var entries = results.Accounts.Select(f =>
-      {
-        int count = counts.FirstOrDefault(c => c.LoginName == f.LoginName)?.Count ?? 0;
-        return new DashboardEntry()
-        {
-          LoginName = f.LoginName,
-          AlertsSentCount = count
-        };
-      });
-      
-      return Json(new DashboardResult(entries));
+      return Json(_dashboardPerspective.Search(query));
     }
   }
 }
