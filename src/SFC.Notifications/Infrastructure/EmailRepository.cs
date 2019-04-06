@@ -17,17 +17,26 @@ namespace SFC.Notifications.Infrastructure
     }
     public void Set(LoginName loginName, Email email)
     {
-      _connection.Execute(
-        @"insert into Notifications.Notifications(title, body, date, loginName,email)
-          values(@title, @body, @date, @loginName, @email)",
-        new { loginName, email });
+      if (GetEmail(loginName) != null)
+      {
+        _connection.Execute(
+          @"update Notifications.Emails set email = @email where loginName = loginName",
+          new { loginName = loginName.ToString(), email = email.ToString() });
+      }
+      else
+      {
+        _connection.Execute(
+          @"insert into Notifications.Emails(loginName, email)
+          values(@loginName, @email)",
+          new {loginName = loginName.ToString(), email = email.ToString()});
+      }
     }
 
     public Email GetEmail(LoginName loginName)
     {
-      return _connection.QueryFirst<string>(
-        "select email from Notifications.Notifications where loginName = @loginName",
-        new {loginName});
+      return _connection.QueryFirstOrDefault<string>(
+        "select email from Notifications.Emails where loginName = @loginName",
+        new {loginName = loginName.ToString()});
     }
   }
 }

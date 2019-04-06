@@ -24,7 +24,7 @@ namespace SFC.Notifications.Infrastructure
       _connection.Execute(
         @"insert into Notifications.Notifications(title, body, date, loginName,email, notificationType)
           values(@title, @body, @date, @loginName, @email, @notificationType)",
-        new { title, body, date, loginName, email, notificationType });
+        new { title, body, date, loginName = loginName.ToString(), email = email.ToString(), notificationType });
     }
 
     public IEnumerable<NotificationsCountResult> GetSendNotificationsCount(string notificationType, params LoginName[] loginNames)

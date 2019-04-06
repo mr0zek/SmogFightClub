@@ -36,7 +36,7 @@ namespace SFC.Alerts.Features.RegisterAlertCondition
     public bool Exists(ZipCode zipCode, LoginName loginName)
     {
       return _connection.Query(
-        "select id from Alerts where zipCode = @zipCode and loginName = @loginName",
+        "select id from Alerts.Alerts where zipCode = @zipCode and loginName = @loginName",
         new { zipCode = zipCode.ToString(), loginName = loginName.ToString() })
         .Any();
     }

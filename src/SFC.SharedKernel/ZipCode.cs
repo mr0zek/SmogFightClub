@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SFC.SharedKernel
 {
@@ -8,7 +9,7 @@ namespace SFC.SharedKernel
 
     private ZipCode(string value)
     {
-      _value = value;
+      _value = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public override string ToString()
@@ -18,6 +19,10 @@ namespace SFC.SharedKernel
 
     public static implicit operator ZipCode(string zipCode)
     {
+      if (zipCode == null)
+      {
+        return null;
+      }
       return new ZipCode(zipCode);
     }
 

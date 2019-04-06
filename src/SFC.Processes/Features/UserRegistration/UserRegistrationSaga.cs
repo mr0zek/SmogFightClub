@@ -1,4 +1,5 @@
-﻿using Automatonymous;
+﻿using System.Linq;
+using Automatonymous;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
@@ -18,6 +19,7 @@ namespace SFC.Processes.Features.UserRegistration
     public UserRegistrationSaga(ICommandBus commandBus)
     {
       _commandBus = commandBus;
+      UserRegistrationSagaData.States = States.ToDictionary(f=>f.Name,f=>f);
 
       Initially(
         When(RegisterUserCommand)
@@ -72,7 +74,8 @@ namespace SFC.Processes.Features.UserRegistration
       {
         LoginName = context.Instance.LoginName,
         Body = $"<a href=\"{context.Instance.BaseUrl}/Confirmation/{context.Instance.Id}\">Click her to confirm</a>",
-        Title = "Registration confirmation"
+        Title = "Registration confirmation",
+        NotificationType = "RegistrationConfirmation"
       });
     }
   }

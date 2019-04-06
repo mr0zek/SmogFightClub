@@ -20,7 +20,7 @@ namespace SFC.UserApi.Features.Accounts
     [HttpPost]
     public IActionResult PostAccount([FromBody]PostAccountModel model)
     {
-      Guid id = Guid.NewGuid();
+      string id = Guid.NewGuid().ToString().Replace("-","");
 
       _commandBus.Send(new RegisterUserCommand()
       {

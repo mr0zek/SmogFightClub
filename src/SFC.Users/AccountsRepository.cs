@@ -1,14 +1,16 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using SFC.Accounts.Features.CreateAccount;
+using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.AccountQuery
 {
-  class AccountsPerspective : IAccountsPerspective
+  class AccountsRepository : IAccountsPerspective, IAccountRepository
   {
     private readonly IDbConnection _connection;
 
-    public AccountsPerspective(string connectionString)
+    public AccountsRepository(string connectionString)
     {
       _connection = new SqlConnection(connectionString);
     }
@@ -27,6 +29,12 @@ namespace SFC.Accounts.Features.AccountQuery
           offset @skip rows 
           fetch next @take rows only", new { accountQuery.Skip, accountQuery.Take}));
 
+    }
+
+    public void Add(LoginName loginName)
+    {
+      _connection.Execute("insert into Accounts.Accounts(loginName)values(@loginName)",
+        new {loginName = loginName.ToString()});
     }
   }
 }

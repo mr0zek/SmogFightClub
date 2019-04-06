@@ -6,7 +6,7 @@ namespace SFC.Tests
 {
   public class TestSmtpClient : ISmtpClient
   {
-    public List<SmtpClientEmail> SentEmails { get; set; }
+    public static List<SmtpClientEmail> SentEmails { get; set; } = new List<SmtpClientEmail>();
     public void Send(Email email, string title, string body)
     {
       SentEmails.Add(new SmtpClientEmail(email, title, body));

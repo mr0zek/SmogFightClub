@@ -1,6 +1,8 @@
 ﻿using System;
 using Autofac;
+using Microsoft.Extensions.Configuration;
 using RestEase;
+using SFC.Infrastructure;
 using Xunit;
 
 namespace SFC.Tests
@@ -12,6 +14,13 @@ namespace SFC.Tests
 
     public IntegrationTests()
     {
+      var confBuilder = new ConfigurationBuilder()
+        .AddJsonFile("appSettings.json");
+      var configuration = confBuilder.Build();
+      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
+
+      DbMigrations.Run(connectionString);
+
       Bootstrap.Run(new string[0], builder =>
       {
         builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
@@ -31,6 +40,8 @@ namespace SFC.Tests
       string confirmationId = await RestClient.For<IAccountsApi>(_url).PostAccount(postAccountModel);
 
       await RestClient.For<IAccountsApi>(_url).PostAccountConfirmation(confirmationId);
+
+      Assert.Equal(1, TestSmtpClient.SentEmails.Count);
     }
   }
 }

@@ -15,6 +15,7 @@ namespace SFC.Notifications.DbMigrations
         .WithColumn("LoginName").AsString().NotNullable()
         .WithColumn("Body").AsString().NotNullable()
         .WithColumn("Date").AsDateTime().NotNullable()
+        .WithColumn("Email").AsString().NotNullable()
         .WithColumn("NotificationType").AsString().NotNullable()
         .WithColumn("Title").AsString().NotNullable();
 

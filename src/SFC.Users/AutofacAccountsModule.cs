@@ -15,7 +15,7 @@ namespace SFC.Accounts
 
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<AccountsPerspective>()
+      builder.RegisterType<AccountsRepository>()
         .AsImplementedInterfaces()
         .WithParameter("connectionString", _connectionString);
 
