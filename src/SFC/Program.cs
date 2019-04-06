@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using SFC.Infrastructure;
@@ -16,12 +17,9 @@ namespace SFC
 
       DbMigrations.Run(connectionString);
 
-      CreateWebHostBuilder(args).Build().Run();
-    }
+      Bootstrap.Run(args);
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-      WebHost.CreateDefaultBuilder(args)
-        .UseKestrel()
-        .UseStartup<Startup>();
+      Console.ReadKey();
+    }
   }
 }

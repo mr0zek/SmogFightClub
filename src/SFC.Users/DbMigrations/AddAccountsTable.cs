@@ -10,7 +10,7 @@ namespace SFC.Accounts.DbMigrations
       Create.Schema("Accounts");
       Create.Table("Accounts")
         .InSchema("Accounts")
-        .WithColumn("Id").AsString().NotNullable().PrimaryKey().Identity()
+        .WithColumn("Id").AsInt64().PrimaryKey().Identity()
         .WithColumn("LoginName").AsString(int.MaxValue).NotNullable();
     }
 

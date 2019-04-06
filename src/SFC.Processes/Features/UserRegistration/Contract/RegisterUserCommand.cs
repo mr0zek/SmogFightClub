@@ -9,5 +9,6 @@ namespace SFC.Processes.Features.UserRegistration.Contract
     public string PasswordHash { get; set; }
     public ZipCode ZipCode { get; set; }
     public string BaseUrl { get; set; }
+    public string Id { get; set; }
   }
 }

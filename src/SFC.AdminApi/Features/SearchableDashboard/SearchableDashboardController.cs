@@ -6,7 +6,8 @@ using SFC.Notifications.Features.NotificationQuery;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class SearchableDashboardController : Controller
   {
@@ -18,7 +19,7 @@ namespace SFC.AdminApi.Features.SearchableDashboard
     }
 
     [HttpGet]
-    public IActionResult Get(SearchableDashboardQueryModel query)
+    public IActionResult Get([FromQuery]SearchableDashboardQueryModel query)
     {
       var result = _searchableDashboardPerspective.Search(query);
       

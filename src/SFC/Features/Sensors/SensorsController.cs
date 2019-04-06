@@ -7,7 +7,8 @@ using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Sensors
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class SensorsController : Controller
   {
@@ -21,7 +22,7 @@ namespace SFC.UserApi.Features.Sensors
     }
 
     [HttpPost]
-    public IActionResult Post(PostSensorModel model)
+    public IActionResult Post([FromBody]PostSensorModel model)
     {
       Guid id = Guid.NewGuid();
 

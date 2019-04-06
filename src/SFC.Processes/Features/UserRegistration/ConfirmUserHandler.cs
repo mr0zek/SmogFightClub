@@ -1,4 +1,5 @@
-﻿using Automatonymous;
+﻿using System;
+using Automatonymous;
 using SFC.Infrastructure;
 using SFC.Processes.Features.UserRegistration.Contract;
 
@@ -18,9 +19,13 @@ namespace SFC.Processes.Features.UserRegistration
     public void Handle(ConfirmUserCommand command)
     {
       UserRegistrationSaga saga = new UserRegistrationSaga(_commandBus);
-      UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.LoginName);
+      UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
+      if (data == null)
+      {
+        throw new InvalidOperationException();
+      }
       saga.RaiseEvent(data, saga.ConfirmUserCommand, command);
-      _sagaRepository.Save(command.LoginName, data);
+      _sagaRepository.Save(command.ConfirmationId, data);
     }
   }
 }

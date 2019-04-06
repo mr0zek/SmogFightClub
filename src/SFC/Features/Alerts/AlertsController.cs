@@ -7,7 +7,8 @@ using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Alerts
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class AlertsController : Controller
   {
@@ -47,7 +48,7 @@ namespace SFC.UserApi.Features.Alerts
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get(string id)
+    public IActionResult Get([FromRoute]string id)
     {
       return Json(_alertConditionsPerspective.Get(id, GetLoginName()));
     }

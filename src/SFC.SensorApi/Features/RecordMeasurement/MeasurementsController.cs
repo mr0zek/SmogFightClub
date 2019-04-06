@@ -6,7 +6,8 @@ using SFC.Sensors.Features.RegisterMeasurement.Command;
 
 namespace SFC.SensorApi.Features.RecordMeasurement
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class MeasurementsController : Controller
   {
@@ -20,7 +21,7 @@ namespace SFC.SensorApi.Features.RecordMeasurement
     }
 
     [HttpPost]
-    public IActionResult Post(PostMeasurementModel model)
+    public IActionResult Post([FromBody]PostMeasurementModel model)
     {
       Guid id = Guid.NewGuid();
 

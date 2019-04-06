@@ -13,7 +13,7 @@ namespace SFC.Infrastructure
 
     protected override void Load(ContainerBuilder builder)
     {
-      RegisterSelf(builder);
+     // RegisterSelf(builder);
       builder.RegisterType<Bus>().AsImplementedInterfaces();
       builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
     }

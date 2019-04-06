@@ -5,7 +5,8 @@ using SFC.Notifications.Features.NotificationQuery;
 
 namespace SFC.AdminApi.Features.Dashboard
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class DashboardController : Controller
   {
@@ -17,7 +18,7 @@ namespace SFC.AdminApi.Features.Dashboard
     }
 
     [HttpGet]
-    public IActionResult Get(DashboardQueryModel query)
+    public IActionResult Get([FromQuery]DashboardQueryModel query)
     {
       return Json(_dashboardPerspective.Search(query));
     }

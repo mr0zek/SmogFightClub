@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AdminApi", "src\SFC.Adm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{7CD3D1FD-3FE4-4240-9A8E-5FC471E94988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFC.Tests", "src\SFC.Tests\SFC.Tests.csproj", "{4A562CF5-A418-41AF-8680-D74A04B82184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFC.Tests", "src\SFC.Tests\SFC.Tests.csproj", "{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +83,10 @@ Global
 		{C3606D1D-E6FB-477D-8009-32CA1C315F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3606D1D-E6FB-477D-8009-32CA1C315F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3606D1D-E6FB-477D-8009-32CA1C315F1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A562CF5-A418-41AF-8680-D74A04B82184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A562CF5-A418-41AF-8680-D74A04B82184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A562CF5-A418-41AF-8680-D74A04B82184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A562CF5-A418-41AF-8680-D74A04B82184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

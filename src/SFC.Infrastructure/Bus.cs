@@ -6,9 +6,9 @@ namespace SFC.Infrastructure
 {
   public class Bus : ICommandBus, IEventBus
   {
-    private readonly IContainer _container;
+    private readonly IComponentContext _container;
 
-    public Bus(IContainer container)
+    public Bus(IComponentContext container)
     {
       _container = container;
     }

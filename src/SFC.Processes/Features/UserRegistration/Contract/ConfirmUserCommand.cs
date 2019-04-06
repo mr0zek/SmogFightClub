@@ -2,6 +2,6 @@
 {
   public class ConfirmUserCommand
   {
-    public string LoginName { get; set; }
+    public string ConfirmationId { get; set; }
   }
 }

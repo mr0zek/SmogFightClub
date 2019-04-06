@@ -27,10 +27,10 @@ namespace SFC.Processes.Features.UserRegistration
       }
     }
 
-    public T Get<T>(string id) where T : class
+    public T Get<T>(string id) where T:class
     {
       string data = _connection.QueryFirstOrDefault<string>(
-        "select id, data from Processes.Sagas where id = @id",
+        "select data from Processes.Sagas where id = @id",
         new { id });
 
       if (data == null)

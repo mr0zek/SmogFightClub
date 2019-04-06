@@ -10,7 +10,7 @@ namespace SFC.AdminApi.Features.SearchableDashboard.DbMigrations
       Create.Schema("SearchableDashboard");
       Create.Table("SearchableDashboard")
         .InSchema("SearchableDashboard")
-        .WithColumn("Id").AsString().NotNullable().PrimaryKey().Identity()
+        .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
         .WithColumn("LoginName").AsString(int.MaxValue).NotNullable()
         .WithColumn("alertCount").AsInt16().NotNullable();
     }

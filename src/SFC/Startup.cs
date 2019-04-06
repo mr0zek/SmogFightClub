@@ -46,6 +46,13 @@ namespace SFC
         c.SwaggerDoc("v1", new Info { Title = "SmogFightClub API", Version = "v1" });
       });
 
+      services.AddApiVersioning(o =>
+      {
+        o.AssumeDefaultVersionWhenUnspecified = true;
+        o.ReportApiVersions = true;
+        o.DefaultApiVersion = new ApiVersion(1, 0);
+      });
+
       var builder = new ContainerBuilder();
       string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
       builder.RegisterModule(new MainModule(connectionString));
@@ -63,6 +70,15 @@ namespace SFC
         app.UseDeveloperExceptionPage();
       }
 
+      // Enable middleware to serve generated Swagger as a JSON endpoint.
+      app.UseSwagger();
+
+      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+      // specifying the Swagger JSON endpoint.
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "NicePress Api v1");
+      });
       app.UseMvc();
     }
   }
