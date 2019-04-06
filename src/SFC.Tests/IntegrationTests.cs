@@ -28,11 +28,12 @@ namespace SFC.Tests
     }
 
     [Fact]
-    public async void AccountRegistration()
+    public async void AccountRegistrationTest()
     {
       var postAccountModel = new PostAccountModel()
       {
-        LoginName = "ala",
+        LoginName = Guid.NewGuid().ToString(),
+        Password = Guid.NewGuid().ToString(),
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
@@ -41,7 +42,7 @@ namespace SFC.Tests
 
       await RestClient.For<IAccountsApi>(_url).PostAccountConfirmation(confirmationId);
 
-      Assert.Equal(1, TestSmtpClient.SentEmails.Count);
+      Assert.Single(TestSmtpClient.SentEmails);
     }
   }
 }

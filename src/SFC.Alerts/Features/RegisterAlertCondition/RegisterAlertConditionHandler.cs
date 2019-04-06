@@ -7,7 +7,6 @@ namespace SFC.Alerts.Features.RegisterAlertCondition
   {
     private readonly IEventBus _eventBus;
     private readonly IAlertConditionsRepository _repository;
-    private ICommandBus _commandBus;
 
     public RegisterAlertConditionHandler(IEventBus eventBus, IAlertConditionsRepository repository)
     {

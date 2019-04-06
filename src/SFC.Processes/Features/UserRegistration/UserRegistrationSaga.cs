@@ -12,25 +12,20 @@ namespace SFC.Processes.Features.UserRegistration
   public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
+    private readonly IPasswordHasher _passwordHasher;
     public Event<ConfirmUserCommand> ConfirmUserCommand { get; set; }
     public Event<RegisterUserCommand> RegisterUserCommand { get; set; }
     public State WaitingForConfirmation { get; set; }
 
-    public UserRegistrationSaga(ICommandBus commandBus)
+    public UserRegistrationSaga(ICommandBus commandBus, IPasswordHasher passwordHasher)
     {
       _commandBus = commandBus;
+      _passwordHasher = passwordHasher;
       UserRegistrationSagaData.States = States.ToDictionary(f=>f.Name,f=>f);
 
       Initially(
         When(RegisterUserCommand)
-          .Then(context =>
-          {
-            context.Instance.BaseUrl = context.Data.BaseUrl;
-            context.Instance.LoginName = context.Data.LoginName;
-            context.Instance.PasswordHash = context.Data.PasswordHash;
-            context.Instance.Email = context.Data.Email;
-            context.Instance.ZipCode = context.Data.ZipCode;
-          })
+          .Then(CopyDataToSaga)
           .Then(SaveNotificationEmail)
           .Then(SendRegistrationNotification)
           .TransitionTo(WaitingForConfirmation));
@@ -40,6 +35,15 @@ namespace SFC.Processes.Features.UserRegistration
           .Then(CreateUserAccount)
           .Then(RegisterAlertCondition)
           .TransitionTo(Final));
+    }
+
+    private void CopyDataToSaga(BehaviorContext<UserRegistrationSagaData, RegisterUserCommand> context)
+    {
+      context.Instance.BaseUrl = context.Data.BaseUrl;
+      context.Instance.LoginName = context.Data.LoginName;
+      context.Instance.PasswordHash = _passwordHasher.Hash(context.Data.Password);
+      context.Instance.Email = context.Data.Email;
+      context.Instance.ZipCode = context.Data.ZipCode;
     }
 
     private void CreateUserAccount(BehaviorContext<UserRegistrationSagaData> context)

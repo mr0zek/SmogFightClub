@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
+using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.UserApi.Features.Accounts
@@ -11,6 +13,7 @@ namespace SFC.UserApi.Features.Accounts
   public class AccountsController : ControllerBase
   {
     private readonly ICommandBus _commandBus;
+    private IPasswordHasher _passwordHasher;
 
     public AccountsController(ICommandBus commandBus)
     {
@@ -22,14 +25,24 @@ namespace SFC.UserApi.Features.Accounts
     {
       string id = Guid.NewGuid().ToString().Replace("-","");
 
-      _commandBus.Send(new RegisterUserCommand()
+      try
       {
-        Id = id.ToString(),
-        BaseUrl = BaseUrl.Current,
-        LoginName = model.LoginName,
-        ZipCode = model.ZipCode,
-        Email = model.Email
-      });
+        _commandBus.Send(new RegisterUserCommand()
+        {
+          Id = id,
+          BaseUrl = BaseUrl.Current,
+          LoginName = model.LoginName,
+          ZipCode = model.ZipCode,
+          Email = model.Email,
+          Password = model.Password
+        });
+      }
+      catch (LoginNameAlreadyUsedException)
+      {
+        var mds = new ModelStateDictionary();
+        mds.AddModelError("loginName", "Already exists");
+        return BadRequest(mds);
+      }
 
       return Created(new Uri($"{BaseUrl.Current}/api/v1.0/accounts/{id}"),id);
     }
@@ -44,7 +57,7 @@ namespace SFC.UserApi.Features.Accounts
           ConfirmationId = id
         });
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         return BadRequest();
       }
