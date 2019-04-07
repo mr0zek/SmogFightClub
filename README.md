@@ -3,7 +3,7 @@ Sample project that shows how to build modular monolith
 
 ## Technologies
 - AspNetCore 
-- FluentMigrator - tworzenie / aktualizacja bazy danych
+- FluentMigrator 
 - Autofac
 
 ## Architecture documantation
