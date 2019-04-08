@@ -1,6 +1,8 @@
 # SmogFightClub
 Sample project that shows how to build modular monolith
 
+any suggestions contact me https://www.szylhabel.pl/contactme/
+
 ## Technologies
 - AspNetCore 
 - FluentMigrator 
