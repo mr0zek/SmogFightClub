@@ -3,13 +3,17 @@ Sample project that shows how to build modular monolith
 
 any suggestions contact me https://www.szylhabel.pl/contactme/
 
+## Architecture documantation
+- C4 + Enterprise Architect /Doc/smog_EA.xml
+
+![Context](https://github.com/mr0zek/SmogFightClub/blob/master/docs/1.%20Context.png?raw=true)
+
 ## Technologies
 - AspNetCore 
 - FluentMigrator 
 - Autofac
 
-## Architecture documantation
-- C4 + Enterprise Architect /Doc/smog_EA.xml
+
   
 ## Design patterns
 - Command - Command Handler
