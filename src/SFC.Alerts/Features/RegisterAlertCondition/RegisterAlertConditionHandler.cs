@@ -23,27 +23,11 @@ namespace SFC.Alerts.Features.RegisterAlertCondition
 
       _repository.Add(command.ZipCode, command.LoginName);
 
-      //_commandBus.Send(new SendNotificationCommand()
-      //{
-      //  Title = "Smog alert created",
-      //  Body = $"Smog alert has been succesfuly created, zip code: {command.ZipCode}",
-      //  LoginName = @event.LoginName
-      //});
-
-
-
-
-
-
-
-
-
-
-      //_eventBus.Publish(new AlertConditionRegisteredEvent()
-      //{
-      //  ZipCode = command.ZipCode,
-      //  LoginName = command.LoginName
-      //});
+      _eventBus.Publish(new AlertConditionRegisteredEvent()
+      {
+        ZipCode = command.ZipCode,
+        LoginName = command.LoginName
+      });
     }
   }
 }
