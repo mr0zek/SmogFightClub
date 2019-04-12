@@ -13,7 +13,7 @@ before_build:
   - git submodule update --init --recursive
 
 build_script:
-  - ps: .\Build.ps1
+  - ps: .\scripts\build.ps1
 
 after_build:
   - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
@@ -21,8 +21,10 @@ after_build:
 before_test:
   - ps: C:\projects\SmogFightClub\scripts\appveyor-before-tests.ps1
 
-test_script:
-  - cd Tests
-  - dotnet test
+test:
+  # only assemblies to test
+  assemblies:
+    only:
+      - src\SFC.Tests\bin\Debug\netcoreapp2.2\Sfc.Tests.dll
 
 
