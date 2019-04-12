@@ -3,10 +3,12 @@ $sqlInstance = "(local)\SQL2014"
 $dbName = "SFC"
 
 # replace the db connection with the local instance 
-$config = join-path $startPath "SFC.Tests.dll.config"
-$doc = (gc $config) -as [xml]
-$doc.SelectSingleNode('//connectionStrings/add[@name="SFC"]').connectionString = "Data Source=$sqlInstance; Initial Catalog=$dbName; Trusted_connection=true"
-$doc.Save($config)
+$filePath = join-path $startPath "appSettings.json"
+
+$connectionString = "Data Source=$sqlInstance; Initial Catalog=$dbName; Trusted_connection=true"
+$JSON = (Get-Content $filePath | ConvertFrom-Json)
+$JSON.ConnectionStrings.DefaultConnection = $connectionString 
+$JSON | ConvertTo-Json -depth 100 | Set-Content $filePath 
 
 # attach mdf to local instance
 $mdfFile = join-path $startPath "SFC.mdf"
