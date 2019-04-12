@@ -1,24 +1,31 @@
-build:
-  project: SmogFightClub.sln 
+version: 
+  - 1.0.{build}
+
+image: 
+  - Visual Studio 2017
 
 services:
   - mssql2014
-
-before_build:
-  - nuget restore
-
-configuration: Debug
 
 artifacts:
   - path: bin\SmogFightClub.zip
     name: SmogFightClub
 
-test:
-  assemblies:
-    - src\SmogFightClub.Tests\bin\debug\netcoreapp2.2\SFC.Tests.dll
+before_build:
+  - git submodule update --init --recursive
+  - .\prepare.bat
+
+build_script:
+  - ps: .\Build.ps1
+
+after_build:
+  - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
 
 before_test:
   - ps: C:\projects\nsonar\scripts\appveyor-before-tests.ps1
 
-after_build:
-  - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
+test_script:
+  - cd Tests
+  - dotnet test
+
+
