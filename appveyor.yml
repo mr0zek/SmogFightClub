@@ -11,7 +11,6 @@ artifacts:
 
 before_build:
   - git submodule update --init --recursive
-  - .\prepare.bat
 
 build_script:
   - ps: .\Build.ps1
