@@ -22,7 +22,7 @@ before_test:
   - ps: C:\projects\SmogFightClub\scripts\appveyor-before-tests.ps1
 
 #test:
-  # only assemblies to test
+  # only assemblies to test#  
 #  assemblies:
 #    only:
 #      - src\SFC.Tests\bin\Debug\netcoreapp2.2\Sfc.Tests.dll
