@@ -19,7 +19,7 @@ after_build:
   - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
 
 before_test:
-  - ps: C:\projects\nsonar\scripts\appveyor-before-tests.ps1
+  - ps: C:\projects\SmogFightClub\scripts\appveyor-before-tests.ps1
 
 test_script:
   - cd Tests
