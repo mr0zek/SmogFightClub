@@ -1,0 +1,24 @@
+build:
+  project: NSonar.sln 
+
+services:
+  - mssql2014
+
+before_build:
+  - nuget restore
+
+configuration: Debug
+
+artifacts:
+  - path: bin\NSonar.Crawler.zip
+    name: NSonar.Crawler
+
+test:
+  assemblies:
+    - src\NSonar.Tests\bin\debug\NSonar.Tests.dll
+
+before_test:
+  - ps: C:\projects\nsonar\scripts\appveyor-before-tests.ps1
+
+after_build:
+  - 7z a %APPVEYOR_BUILD_FOLDER%\bin\NSonar.Crawler.zip %APPVEYOR_BUILD_FOLDER%\src\NSonar.Crawler\bin\debug\*
