@@ -17,4 +17,4 @@ sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 
 cd $startPath
 
-dotnet xunit
+dotnet test
