@@ -13,6 +13,10 @@ artifacts:
   - path: bin\SmogFightClub.zip
     name: SmogFightClub
 
+  - path: .\src\SFC.Tests\bin\Debug\netcoreapp2.2\SFC\TestReports
+    name: Test Reports
+    type: html
+
 before_build:
   - git submodule update --init --recursive
 
@@ -24,5 +28,4 @@ after_build:
 
 test_script:
   - ps: .\scripts\test.ps1
-  - ps: Push-AppveyorArtifact .\src\SFC.Tests\bin\Debug\netcoreapp2.2\SFC\SFC.TestsReport.html -FileName "Test report" 
 
