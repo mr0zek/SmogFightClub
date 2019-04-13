@@ -15,6 +15,4 @@ $mdfFile = join-path $startPath "SFC.mdf"
 $ldfFile = join-path $startPath "SFC_log.ldf"
 sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 
-cd $startPath
-
 dotnet test
