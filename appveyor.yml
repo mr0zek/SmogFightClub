@@ -18,13 +18,10 @@ build_script:
 after_build:
   - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
 
-before_test:
-  - ps: C:\projects\SmogFightClub\scripts\appveyor-before-tests.ps1
+#before_test:
+#  - ps: C:\projects\SmogFightClub\scripts\appveyor-before-tests.ps1
 
-#test:
-  # only assemblies to test#  
-#  assemblies:
-#    only:
-#      - src\SFC.Tests\bin\Debug\netcoreapp2.2\Sfc.Tests.dll
-
+test:
+  assemblies:
+    - '**\*.tests.dll'
 
