@@ -18,6 +18,6 @@ build_script:
 after_build:
   - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
 
-test:
+test_script:
   - ps: .\scripts\test.ps1
 
