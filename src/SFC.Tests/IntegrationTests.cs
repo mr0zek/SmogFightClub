@@ -42,7 +42,7 @@ namespace SFC.Tests
 
       await RestClient.For<IAccountsApi>(_url).PostAccountConfirmation(confirmationId);
 
-      Assert.Single(TestSmtpClient.SentEmails);
+      Assert.Equal(2, TestSmtpClient.SentEmails.Count);
     }
   }
 }
