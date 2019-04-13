@@ -2,7 +2,7 @@
 using SFC.Notifications.Features.SendNotification;
 using SFC.SharedKernel;
 
-namespace SFC.Tests
+namespace SFC.Tests.UseStories.Mocks
 {
   public class TestSmtpClient : ISmtpClient
   {

@@ -3,6 +3,9 @@ using Autofac;
 using Microsoft.Extensions.Configuration;
 using RestEase;
 using SFC.Infrastructure;
+using SFC.Tests.Infrastructure;
+using SFC.Tests.UseStories.Mocks;
+using SFC.Tests.UseStories.UserApi;
 using TestStack.BDDfy;
 using Xunit;
 

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using SFC.Tests.Infrastructure;
+using Xunit;
 
 namespace SFC.Tests.UseStories
 {
