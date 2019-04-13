@@ -13,7 +13,7 @@ artifacts:
   - path: bin\SmogFightClub.zip
     name: SmogFightClub
 
-  - path: .\src\SFC.Tests\bin\Debug\netcoreapp2.2\SFC\TestReports\*
+  - path: .\src\SFC.Tests\bin\Debug\netcoreapp2.2\TestReports\*
     name: Test Reports
     type: html
 
