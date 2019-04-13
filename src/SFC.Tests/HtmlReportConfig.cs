@@ -1,6 +1,6 @@
 ﻿using TestStack.BDDfy.Reporters.Html;
 
-namespace SFC.Tests.BDD
+namespace SFC.Tests
 {
   /// <summary>
   /// This overrides the default html report setting

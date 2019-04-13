@@ -11,5 +11,10 @@ namespace SFC.Tests
     {
       SentEmails.Add(new SmtpClientEmail(email, title, body));
     }
+
+    public static void Clear()
+    {
+      SentEmails.Clear();
+    }
   }
 }

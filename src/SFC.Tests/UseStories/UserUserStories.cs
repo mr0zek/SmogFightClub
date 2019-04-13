@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using RestEase;
@@ -8,13 +6,13 @@ using SFC.Infrastructure;
 using TestStack.BDDfy;
 using Xunit;
 
-namespace SFC.Tests.BDD
+namespace SFC.Tests.UseStories
 {
-  public class UserStories
+  public class UserUserStories : IClassFixture<UserStoriesFixture>
   {
     private const string _url = "http://localhost:5000";
     private PostAccountModel _postAccountModel;
-
+   
     [Given]
     void GivenSystemWithNotRegisteredAccount()
     {
@@ -25,6 +23,7 @@ namespace SFC.Tests.BDD
 
       DbMigrations.Run(connectionString);
 
+      TestSmtpClient.Clear();
       Bootstrap.Run(new string[0], builder =>
       {
         builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
