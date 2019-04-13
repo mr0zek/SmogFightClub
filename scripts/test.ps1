@@ -16,3 +16,5 @@ $ldfFile = join-path $startPath "SFC_log.ldf"
 sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 
 dotnet test
+
+if $LASTEXITCODE -neq 0 then throw "Some of tests failing"
