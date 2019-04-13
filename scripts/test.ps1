@@ -17,4 +17,7 @@ sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 
 dotnet test
 
-if $LASTEXITCODE -neq 0 then throw "Some of tests failing"
+if($LASTEXITCODE -ne 0)
+{
+  throw "Some of tests failing"
+}
