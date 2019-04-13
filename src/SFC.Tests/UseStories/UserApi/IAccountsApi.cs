@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using RestEase;
 
-namespace SFC.Tests
+namespace SFC.Tests.UseStories.UserApi
 {
   public interface IAccountsApi
   {

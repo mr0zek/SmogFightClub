@@ -2,7 +2,7 @@
 using SFC.Notifications.Features.SendNotification;
 using SFC.SharedKernel;
 
-namespace SFC.Tests
+namespace SFC.Tests.UseStories.Mocks
 {
   public class TestSmtpClient : ISmtpClient
   {
@@ -10,6 +10,11 @@ namespace SFC.Tests
     public void Send(Email email, string title, string body)
     {
       SentEmails.Add(new SmtpClientEmail(email, title, body));
+    }
+
+    public static void Clear()
+    {
+      SentEmails.Clear();
     }
   }
 }

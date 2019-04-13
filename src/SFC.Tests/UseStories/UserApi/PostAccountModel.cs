@@ -1,4 +1,4 @@
-﻿namespace SFC.Tests
+﻿namespace SFC.Tests.UseStories.UserApi
 {
   public class PostAccountModel
   {
