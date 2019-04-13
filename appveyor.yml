@@ -13,6 +13,10 @@ artifacts:
   - path: bin\SmogFightClub.zip
     name: SmogFightClub
 
+  - path: .\src\SFC.Tests\bin\Debug\netcoreapp2.2\SFC\SFC.TestsReport.html
+    name: Test report
+    type: html
+
 before_build:
   - git submodule update --init --recursive
 

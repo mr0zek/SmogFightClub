@@ -14,7 +14,7 @@ namespace SFC.Tests.BDD
     {
       get
       {
-        return "SFC.Tests.html";
+        return "SFC.TestsReport.html";
       }
     }
 

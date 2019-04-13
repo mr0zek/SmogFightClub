@@ -10,11 +10,7 @@ using Xunit;
 
 namespace SFC.Tests.BDD
 {
-  [Story(
-    AsA = "As an not registered user",
-    IWant = "I want to register account",
-    SoThat = "So that I can receive smog alerts")]
-  public class NewUserRegistration
+  public class UserStories
   {
     private const string _url = "http://localhost:5000";
     private PostAccountModel _postAccountModel;
@@ -54,7 +50,7 @@ namespace SFC.Tests.BDD
     }
 
     [Fact]
-    public void Execute()
+    public void NewUserRegistration()
     {
       this.Given(s => s.GivenSystemWithNotRegisteredAccount())
         .When(s => s.WhenUserPostRegistrationForm())
