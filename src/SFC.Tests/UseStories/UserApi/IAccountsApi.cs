@@ -8,7 +8,7 @@ namespace SFC.Tests.UseStories.UserApi
     [Post("api/v1.0/accounts")]
     Task<string> PostAccount([Body]PostAccountModel account);
 
-    [Post("api/v1.0/accounts/{id}/confirmations")]
+    [Post("api/v1.0/accounts/{id}/confirmation")]
     Task PostAccountConfirmation([Path]string id);
   }
 }

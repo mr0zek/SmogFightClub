@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
   </ItemGroup>
@@ -22,7 +22,6 @@
     <ProjectReference Include="..\SFC.SensorApi\SFC.SensorApi.csproj" />
     <ProjectReference Include="..\SFC.Sensors\SFC.Sensors.csproj" />
     <ProjectReference Include="..\SFC.UsersApi\SFC.UserApi.csproj" />
-    <ProjectReference Include="..\SFC.Users\SFC.Accounts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

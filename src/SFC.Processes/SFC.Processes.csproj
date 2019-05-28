@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SFC.Accounts\SFC.Accounts.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
     <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />
-    <ProjectReference Include="..\SFC.Users\SFC.Accounts.csproj" />
   </ItemGroup>
 
 </Project>

@@ -14,7 +14,9 @@ any suggestions contact me https://www.szylhabel.pl/contactme/
 - FluentMigrator 
 - Autofac
 
-
+## ToDo:
+- Integrate with identity server
+- Implement delayed commands based on hangfire
   
 ## Design patterns
 - Command - Command Handler

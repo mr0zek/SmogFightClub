@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SFC.AdminApi;
 using SFC.Infrastructure;
 using SFC.SensorApi.Features.RecordMeasurement;
@@ -40,6 +41,14 @@ namespace SFC
         .AddControllersAsServices()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
         .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+      services.AddLogging(loggingBuilder =>
+      {
+        loggingBuilder
+          .AddConsole()
+          .AddConfiguration(Configuration.GetSection("logging"))
+          .AddDebug();
+      });
 
       services.AddSwaggerGen(c =>
       {

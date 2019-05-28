@@ -19,7 +19,6 @@
     <ProjectReference Include="..\SFC.Processes\SFC.Processes.csproj" />
     <ProjectReference Include="..\SFC.Sensors\SFC.Sensors.csproj" />
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
-    <ProjectReference Include="..\SFC.Users\SFC.Accounts.csproj" />
   </ItemGroup>
 
 </Project>

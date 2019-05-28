@@ -13,7 +13,6 @@ namespace SFC.UserApi.Features.Accounts
   public class AccountsController : ControllerBase
   {
     private readonly ICommandBus _commandBus;
-    private IPasswordHasher _passwordHasher;
 
     public AccountsController(ICommandBus commandBus)
     {
@@ -47,7 +46,7 @@ namespace SFC.UserApi.Features.Accounts
       return Created(new Uri($"{BaseUrl.Current}/api/v1.0/accounts/{id}"),id);
     }
 
-    [HttpPost("{id}/confirmations")]
+    [HttpPost("{id}/confirmation")]
     public IActionResult PostConfirmation([FromRoute]string id)
     {
       try
