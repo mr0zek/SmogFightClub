@@ -14,11 +14,13 @@ namespace SFC.UserApi.Features.Sensors
   {
     private readonly ICommandBus _commandBus;
     private readonly ISensorsPerspective _sensorsPerspective;
+    private readonly IIdentityProvider _identityProvider;
 
-    public SensorsController(ICommandBus commandBus, ISensorsPerspective sensorsPerspective)
+    public SensorsController(ICommandBus commandBus, ISensorsPerspective sensorsPerspective, IIdentityProvider identityProvider)
     {
       _commandBus = commandBus;
       _sensorsPerspective = sensorsPerspective;
+      _identityProvider = identityProvider;
     }
 
     [HttpPost]
@@ -29,7 +31,7 @@ namespace SFC.UserApi.Features.Sensors
       _commandBus.Send(new RegisterSensorCommand()
       {
         Id = id,
-        LoginName = GetLoginName(),
+        LoginName = _identityProvider.GetLoginName(),
         ZipCode = model.ZipCode
       });
 
@@ -39,18 +41,13 @@ namespace SFC.UserApi.Features.Sensors
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_sensorsPerspective.GetAll(GetLoginName()));
-    }
-
-    private LoginName GetLoginName()
-    {
-      return User.Identity.Name;
-    }
+      return Json(_sensorsPerspective.GetAll(_identityProvider.GetLoginName()));
+    }    
 
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-      return Json(_sensorsPerspective.Get(id, GetLoginName()));
+      return Json(_sensorsPerspective.Get(id, _identityProvider.GetLoginName()));
     }
   }
 }

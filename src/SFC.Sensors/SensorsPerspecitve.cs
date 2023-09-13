@@ -19,12 +19,12 @@ namespace SFC.Sensors
     public SensorsReadModel GetAll(LoginName loginName)
     {
       return new SensorsReadModel(_connection.Query<SensorReadModel>(
-        "select id, ZipCode from Sensors.Sensors where loginName = @loginName", new { loginName = loginName.ToString() }));
+        "select id, zipCode from Sensors.Sensors where loginName = @loginName", new { loginName = loginName.ToString() }));
     }
 
     public SensorReadModel Get(string id, LoginName loginName)
     {
-      return _connection.QueryFirst<SensorReadModel>("select id,ZipCode from Sensors.Sensors where loginName = @loginName nad id = @id", new { id, loginName = loginName.ToString() });
+      return _connection.QueryFirst<SensorReadModel>("select id,zipCode from Sensors.Sensors where loginName = @loginName nad id = @id", new { id, loginName = loginName.ToString() });
     }
 
     public void Add(ZipCode zipCode, LoginName loginName)

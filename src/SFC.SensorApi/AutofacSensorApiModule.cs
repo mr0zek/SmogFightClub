@@ -1,24 +1,19 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
-using SFC.Sensors.Features.RegisterMeasurement;
 
-namespace SFC.Sensors
+namespace SFC.UserApi
 {
-  public class AutofacSensorsModule : Module
+  public class AutofacSensorApiModule : Module
   {
     private readonly string _connectionString;
 
-    public AutofacSensorsModule(string connectionString)
+    public AutofacSensorApiModule(string connectionString)
     {
       _connectionString = connectionString;
     }
 
     protected override void Load(ContainerBuilder builder)
-    {
-      builder.RegisterType<SensorsRepository>().WithParameter("connectionString", _connectionString).AsImplementedInterfaces();
-
-      builder.RegisterType<MeasurementRepository>().WithParameter("connectionString", _connectionString).AsImplementedInterfaces();
-
+    {       
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();

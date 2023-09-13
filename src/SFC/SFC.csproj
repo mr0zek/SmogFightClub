@@ -6,14 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Startup.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Startup.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac" Version="7.1.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Serilog" Version="3.0.1" />
@@ -26,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SFC.Infrastructure.Fake\SFC.Infrastructure.Fake.csproj" />
     <ProjectReference Include="..\SFC.AdminApi\SFC.AdminApi.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />

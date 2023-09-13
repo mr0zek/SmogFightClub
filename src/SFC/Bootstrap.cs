@@ -44,8 +44,10 @@ namespace SFC
       builder.Services.AddControllers();
       builder.Services
         .AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)))
+          .AddApplicationPart(typeof(MainModule).Assembly)
           .AddApplicationPart(typeof(AutofacUserApiModule).Assembly)
           .AddApplicationPart(typeof(AutofacAdminApiModule).Assembly)
+          .AddApplicationPart(typeof(AutofacSensorApiModule).Assembly)
           .AddApplicationPart(typeof(MeasurementsController).Assembly)
           .AddControllersAsServices();
 
@@ -67,6 +69,8 @@ namespace SFC
 
       builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+      BaseUrl.Current = "http://localhost:5000/";
+
       string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
 
       // Register services directly with Autofac here.
@@ -80,7 +84,7 @@ namespace SFC
       });
 
       var app = builder.Build();
-
+      
       // Configure the HTTP request pipeline.
       if (app.Environment.IsDevelopment())
       {

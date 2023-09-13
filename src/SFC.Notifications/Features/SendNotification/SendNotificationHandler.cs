@@ -15,7 +15,9 @@ namespace SFC.Notifications.Features.SendNotification
     public SendNotificationHandler(
       IEmailReadRepository emailRepository, 
       INotificationRepository notificationRepository, 
-      ISmtpClient smtpClient, IDateTimeProvider dateTimeProvider, IEventBus eventBus)
+      ISmtpClient smtpClient, 
+      IDateTimeProvider dateTimeProvider, 
+      IEventBus eventBus)
     {
       _emailRepository = emailRepository;
       _notificationRepository = notificationRepository;

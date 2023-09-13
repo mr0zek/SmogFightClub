@@ -11,6 +11,7 @@ namespace SFC.Sensors.DbMigrations
       Create.Table("Sensors")
         .InSchema("Sensors")
         .WithColumn("Id").AsInt64().PrimaryKey().Identity()
+        .WithColumn("ZipCode").AsString().NotNullable()
         .WithColumn("LoginName").AsString().NotNullable();
 
       Create.Table("Measurements")
