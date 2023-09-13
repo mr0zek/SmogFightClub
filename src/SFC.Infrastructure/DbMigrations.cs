@@ -13,7 +13,7 @@ namespace SFC.Infrastructure
     {
       var assemblies = Directory.GetFiles(
         AppDomain.CurrentDomain.BaseDirectory, "*.*")
-        .Where(f=>Path.GetExtension(f).ToLower() == ".dll" || Path.GetExtension(f).ToLower() == ".exe")
+        .Where(f=>Path.GetExtension(f).ToLower() == ".dll")
         .Where(f => Path.GetFileName(f).Contains("SFC"))
         .Select(f=>Assembly.LoadFile(f)).ToArray();
 
