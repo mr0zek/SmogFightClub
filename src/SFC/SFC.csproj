@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SFC.Infrastructure.Fake\SFC.Infrastructure.Fake.csproj" />
     <ProjectReference Include="..\SFC.AdminApi\SFC.AdminApi.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
+    <ProjectReference Include="..\SFC.Infrastructure.Fake\SFC.Infrastructure.Fake.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
     <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />
     <ProjectReference Include="..\SFC.Processes\SFC.Processes.csproj" />
