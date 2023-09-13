@@ -30,7 +30,7 @@ namespace SFC.Notifications.Infrastructure
     public IEnumerable<NotificationsCountResult> GetSendNotificationsCount(string notificationType, params LoginName[] loginNames)
     {
       return _connection.Query<dynamic>(
-        @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType",
+        @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType group by loginName",
         new { loginNames = loginNames.Select(f=>f.ToString()).ToArray(), notificationType }).Select(f=> new NotificationsCountResult()
       {
         LoginName = f.loginName,

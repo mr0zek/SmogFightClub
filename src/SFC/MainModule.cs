@@ -22,7 +22,7 @@ namespace SFC
     }
 
     protected override void Load(ContainerBuilder builder)
-    {
+    {                                 
       builder.RegisterModule(new AutofacAdminApiModule(_connectionString));
       builder.RegisterModule(new AutofacSensorApiModule(_connectionString));
       builder.RegisterModule(new AutofacUserApiModule(_connectionString));
