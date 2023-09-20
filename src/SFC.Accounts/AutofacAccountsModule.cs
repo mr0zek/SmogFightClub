@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Accounts

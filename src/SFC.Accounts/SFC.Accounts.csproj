@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj" />
+    <ProjectReference Include="..\SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj" />
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
   </ItemGroup>
 

@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="SFC.Infrastructure" />
-    <ProjectReference Include="..\..\SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj" />
+    <ProjectReference Include="..\SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj" />
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
   </ItemGroup>
 
