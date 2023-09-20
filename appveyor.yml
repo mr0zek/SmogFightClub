@@ -18,11 +18,11 @@ artifacts:
     type: html
 
 before_build:
-  - git submodule update --init --recursive
+  #- git submodule update --init --recursive
+  - cmd: nuget restore "SmogFightClub.sln"
 
 build:
-  project: SmogFightClub.sln
-  verbosity: minimal
+  project: SmogFightClub.sln  
   
 #build_script:
 #  - ps: .\scripts\build.ps1
