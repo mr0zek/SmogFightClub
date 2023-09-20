@@ -20,11 +20,12 @@ artifacts:
 before_build:
   - git submodule update --init --recursive
 
-build_script:
-  - ps: .\scripts\build.ps1
-
-after_build:
-  - 7z a %APPVEYOR_BUILD_FOLDER%\bin\SmogFightClub.zip %APPVEYOR_BUILD_FOLDER%\src\SFC\bin\Debug\netcoreapp2.2\*
+build:
+  project: SmogFightClub.sln
+  verbosity: minimal
+  
+#build_script:
+#  - ps: .\scripts\build.ps1
 
 test_script:
   - ps: .\scripts\test.ps1
