@@ -9,6 +9,7 @@ using SFC.Notifications.Infrastructure;
 using SFC.Processes;
 using SFC.Sensors;
 using SFC.UserApi;
+using SFC.SensorApi;
 
 namespace SFC
 {
@@ -30,8 +31,7 @@ namespace SFC
       builder.RegisterModule(new AutofacProcessesModule(_connectionString));
       builder.RegisterModule(new AutofacNotificationsModule(_connectionString));
       builder.RegisterModule(new AutofacSensorsModule(_connectionString));
-      builder.RegisterModule(new AutofacAccountsModule(_connectionString));
-      builder.RegisterModule(new AutofacFakeInfrastructureModule());
+      builder.RegisterModule(new AutofacAccountsModule(_connectionString));      
       builder.RegisterModule(new AutofacInfrastructureModule());
     }
   }

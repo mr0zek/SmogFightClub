@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification;
 using SFC.Notifications.Infrastructure;
 

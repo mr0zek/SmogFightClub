@@ -1,7 +1,8 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
-namespace SFC.UserApi
+namespace SFC.SensorApi
 {
   public class AutofacSensorApiModule : Module
   {
@@ -13,7 +14,7 @@ namespace SFC.UserApi
     }
 
     protected override void Load(ContainerBuilder builder)
-    {       
+    {
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();

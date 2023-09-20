@@ -1,9 +1,10 @@
 ﻿using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts.Features.RegisterAlertCondition
 {
-  class RegisterAlertConditionHandler : ICommandHandler<RegisterAlertConditionCommand>
+  internal class RegisterAlertConditionHandler : ICommandHandler<RegisterAlertConditionCommand>
   {
     private readonly IEventBus _eventBus;
     private readonly IAlertConditionsRepository _repository;

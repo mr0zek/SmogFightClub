@@ -4,7 +4,7 @@ using SFC.Sensors.Features.RegisterMeasurement.Command;
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
 
-  public interface IMeasurementRepository
+  internal interface IMeasurementRepository
   {
     void Add(Guid sensorId, DateTime date, ElementName elementName, decimal elementValue);
   }  

@@ -7,7 +7,7 @@ using SFC.SharedKernel;
 
 namespace SFC.Alerts.Features.RegisterAlertCondition
 {
-  class AlertConditionConditionConditionsRepository : IAlertConditionsPerspective, IAlertConditionsRepository
+  internal class AlertConditionConditionConditionsRepository : IAlertConditionsPerspective, IAlertConditionsRepository
   {
     private readonly IDbConnection _connection;
 

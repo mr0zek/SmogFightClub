@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Sensors.Features.RegisterMeasurement.Query
+namespace SFC.Sensors.Features.SensorQuery
 {
   public interface ISensorsPerspective
   {

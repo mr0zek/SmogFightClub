@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Infrastructure
 {

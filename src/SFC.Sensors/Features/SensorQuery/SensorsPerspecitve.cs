@@ -2,12 +2,11 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using SFC.Sensors.Features.RegisterMeasurement.Query;
 using SFC.SharedKernel;
 
-namespace SFC.Sensors
+namespace SFC.Sensors.Features.SensorQuery
 {
-  class SensorsRepository : ISensorsPerspective
+  internal class SensorsRepository : ISensorsPerspective
   {
     private readonly IDbConnection _connection;
 

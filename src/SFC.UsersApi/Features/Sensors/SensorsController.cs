@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Command;
-using SFC.Sensors.Features.RegisterMeasurement.Query;
+using SFC.Sensors.Features.SensorQuery;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Sensors

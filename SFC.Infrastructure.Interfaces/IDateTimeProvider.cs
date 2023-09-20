@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFC.Infrastructure
+namespace SFC.Infrastructure.Interfaces
 {
   public interface IDateTimeProvider
   {

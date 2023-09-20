@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFC.Sensors.Features.RegisterMeasurement.Query
+namespace SFC.Sensors.Features.SensorQuery
 {
   public class SensorsReadModel
   {

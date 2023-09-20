@@ -1,6 +1,7 @@
 ﻿using System;
 using Automatonymous;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.Processes.Features.UserRegistration

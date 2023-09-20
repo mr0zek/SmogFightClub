@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Command;
 
 namespace SFC.SensorApi.Features.RecordMeasurement

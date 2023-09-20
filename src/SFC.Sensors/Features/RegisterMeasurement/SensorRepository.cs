@@ -5,7 +5,7 @@ using Dapper;
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
-  class SensorRepository : ISensorRepository
+  internal class SensorRepository : ISensorRepository
   {
     private readonly IDbConnection _connection;
 

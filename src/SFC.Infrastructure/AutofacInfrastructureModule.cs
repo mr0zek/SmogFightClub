@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SFC.Infrastructure.Fake;
 
 namespace SFC.Infrastructure
 {
@@ -8,6 +9,8 @@ namespace SFC.Infrastructure
     {   
       builder.RegisterType<Bus>().AsImplementedInterfaces();
       builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
+      builder.RegisterType<FakeIdentityProvider>().AsImplementedInterfaces();
+      builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
     }
   }
 }

@@ -2,7 +2,7 @@
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
-  public interface ISensorRepository
+  internal interface ISensorRepository
   {
     bool Exits(Guid commandSensorId);
   }

@@ -1,9 +1,10 @@
 ﻿using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Command;
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
-  public class RegisterMeasurementHandler : ICommandHandler<RegisterMeasurementCommand>
+  internal class RegisterMeasurementHandler : ICommandHandler<RegisterMeasurementCommand>
   {
     private readonly IMeasurementRepository _measurementRepository;
     private readonly ISensorRepository _sensorRepository;

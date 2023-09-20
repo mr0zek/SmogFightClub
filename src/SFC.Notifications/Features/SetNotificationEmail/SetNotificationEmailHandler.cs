@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 
 namespace SFC.Notifications.Features.SetNotificationEmail

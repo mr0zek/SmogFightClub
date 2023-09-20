@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using SFC.Accounts.Features.AccountQuery;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Accounts
 {

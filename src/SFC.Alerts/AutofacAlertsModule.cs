@@ -4,6 +4,7 @@ using System.Text;
 using Autofac;
 using SFC.Alerts.Features.RegisterAlertCondition;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts
 {

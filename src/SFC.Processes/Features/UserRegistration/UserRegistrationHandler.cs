@@ -1,6 +1,7 @@
 ﻿using Automatonymous;
 using SFC.Accounts.Features.AccountQuery;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Processes.Features.UserRegistration.Contract;
 
 namespace SFC.Processes.Features.UserRegistration

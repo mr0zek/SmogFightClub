@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFC.Infrastructure.Interfaces;
+using System;
 
 namespace SFC.Infrastructure
 {

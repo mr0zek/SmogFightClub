@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SFC.Accounts.Features.CreateAccount.Contract;
-using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Accounts.Features.CreateAccount
 {

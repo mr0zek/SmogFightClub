@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement;
+using SFC.Sensors.Features.SensorQuery;
 
 namespace SFC.Sensors
 {

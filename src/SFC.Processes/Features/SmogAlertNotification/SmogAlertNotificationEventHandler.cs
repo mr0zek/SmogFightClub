@@ -1,5 +1,6 @@
 ﻿using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.Processes.Features.SmogAlertNotification

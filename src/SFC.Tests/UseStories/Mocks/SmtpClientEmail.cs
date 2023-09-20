@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Tests
+namespace SFC.Tests.UseStories.Mocks
 {
   public class SmtpClientEmail
   {

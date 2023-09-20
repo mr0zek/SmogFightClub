@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using SFC.AdminApi;
 using SFC.Infrastructure;
+using SFC.SensorApi;
 using SFC.SensorApi.Features.RecordMeasurement;
 using SFC.UserApi;
 
@@ -75,7 +76,7 @@ namespace SFC
 
       // Register services directly with Autofac here.
       // Don't call builder.Populate(), that happens in AutofacServiceProviderFactory.
-      builder.Host.ConfigureContainer<ContainerBuilder>(builder => {
+      builder.Host.ConfigureContainer<ContainerBuilder>(builder => {        
         builder.RegisterModule(new MainModule(connectionString));
         if (overrideDependencies != null)
         {

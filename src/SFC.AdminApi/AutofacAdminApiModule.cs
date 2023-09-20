@@ -2,6 +2,7 @@
 using SFC.AdminApi.Features.Dashboard;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.AdminApi
 {

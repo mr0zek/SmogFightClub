@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SFC.Alerts.Features.AlertQuery;
 using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Alerts

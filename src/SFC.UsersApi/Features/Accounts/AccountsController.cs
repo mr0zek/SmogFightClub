@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistration.Contract;
 

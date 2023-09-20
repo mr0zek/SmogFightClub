@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SFC.Alerts;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.Processes.Features.UserRegistration;
 
 namespace SFC.Processes

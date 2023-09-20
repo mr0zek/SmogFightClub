@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Infrastructure;
-using SFC.Notifications.Features.SendNotification;
+using SFC.Infrastructure.Interfaces;
+using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
