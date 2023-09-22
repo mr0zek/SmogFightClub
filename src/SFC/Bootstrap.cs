@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using SFC.AdminApi;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
 using SFC.SensorApi;
 using SFC.SensorApi.Features.RecordMeasurement;
 using SFC.UserApi;
@@ -27,7 +28,7 @@ namespace SFC
 {
   public class Bootstrap
   {
-    public static void Run(string[] args, Action<ContainerBuilder> overrideDependencies = null)
+    public static void Run(string[] args, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null) 
     {
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
@@ -43,14 +44,12 @@ namespace SFC
 
       
       builder.Services.AddControllers();
-      builder.Services
-        .AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)))
-          .AddApplicationPart(typeof(MainModule).Assembly)
-          .AddApplicationPart(typeof(AutofacUserApiModule).Assembly)
-          .AddApplicationPart(typeof(AutofacAdminApiModule).Assembly)
-          .AddApplicationPart(typeof(AutofacSensorApiModule).Assembly)
-          .AddApplicationPart(typeof(MeasurementsController).Assembly)
-          .AddControllersAsServices();
+      var mvc = builder.Services.AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)));           
+      foreach (var m in modules)
+      {
+        mvc.AddApplicationPart(m.GetType().Assembly);
+      }
+      mvc.AddControllersAsServices();
 
       builder.Services.AddValidatorsFromAssembly(typeof(Bootstrap).Assembly);      
 
@@ -76,8 +75,12 @@ namespace SFC
 
       // Register services directly with Autofac here.
       // Don't call builder.Populate(), that happens in AutofacServiceProviderFactory.
-      builder.Host.ConfigureContainer<ContainerBuilder>(builder => {        
-        builder.RegisterModule(new MainModule(connectionString));
+      builder.Host.ConfigureContainer<ContainerBuilder>(builder => {
+        builder.RegisterInstance(new ConnectionString(connectionString));
+        foreach (Module m in modules)
+        {
+          builder.RegisterModule(m);
+        }
         if (overrideDependencies != null)
         {
           overrideDependencies(builder);
@@ -94,8 +97,6 @@ namespace SFC
       }      
 
       app.UseSerilogRequestLogging();
-
-      app.UseHttpsRedirection();
 
       app.UseAuthorization();
 

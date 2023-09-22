@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SFC.Sensors.Features.RegisterMeasurement.Command
+namespace SFC.Sensors.Features.RegisterMeasurement.Contract
 {
   public class RegisterMeasurementCommand
   {

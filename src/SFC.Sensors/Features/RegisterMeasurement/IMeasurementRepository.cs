@@ -1,5 +1,5 @@
 ﻿using System;
-using SFC.Sensors.Features.RegisterMeasurement.Command;
+using SFC.Sensors.Features.RegisterMeasurement.Contract;
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {

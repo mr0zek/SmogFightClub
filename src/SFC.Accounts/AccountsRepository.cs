@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using Dapper;
 using SFC.Accounts.Features.AccountQuery;
 using SFC.Accounts.Features.CreateAccount;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.Accounts
@@ -11,9 +12,9 @@ namespace SFC.Accounts
   {
     private readonly IDbConnection _connection;
 
-    public AccountsRepository(string connectionString)
+    public AccountsRepository(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public AccountReadModel Get(string loginName)

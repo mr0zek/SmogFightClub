@@ -2,24 +2,17 @@
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement;
-using SFC.Sensors.Features.SensorQuery;
+using SFC.Sensors.Infratructure;
 
 namespace SFC.Sensors
 {
-  public class AutofacSensorsModule : Module
-  {
-    private readonly string _connectionString;
-
-    public AutofacSensorsModule(string connectionString)
-    {
-      _connectionString = connectionString;
-    }
-
+    public class AutofacSensorsModule : Module
+  {    
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<SensorsRepository>().WithParameter("connectionString", _connectionString).AsImplementedInterfaces();
+      builder.RegisterType<SensorRepository>().AsImplementedInterfaces();
 
-      builder.RegisterType<MeasurementRepository>().WithParameter("connectionString", _connectionString).AsImplementedInterfaces();
+      builder.RegisterType<MeasurementRepository>().AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.IO;
 using Dapper;
 using Newtonsoft.Json;
+using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Processes.Features.UserRegistration
 {
@@ -10,9 +11,9 @@ namespace SFC.Processes.Features.UserRegistration
   {
     private readonly IDbConnection _connection;
 
-    public SagaRepository(string connectionString)
+    public SagaRepository(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public void Save(string id, object data)

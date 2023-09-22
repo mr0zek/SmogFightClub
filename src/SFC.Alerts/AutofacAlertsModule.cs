@@ -9,19 +9,11 @@ using SFC.Infrastructure.Interfaces;
 namespace SFC.Alerts
 {
   public class AutofacAlertsModule : Module
-  {
-    private readonly string _connectionString;
-
-    public AutofacAlertsModule(string connectionString)
-    {
-      _connectionString = connectionString;
-    }
-
+  {    
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<AlertConditionConditionConditionsRepository>()
-        .AsImplementedInterfaces()
-        .WithParameter("connectionString", _connectionString);
+        .AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

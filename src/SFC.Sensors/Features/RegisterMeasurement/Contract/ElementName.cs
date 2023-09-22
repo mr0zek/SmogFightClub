@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFC.SharedKernel;
 
-namespace SFC.Sensors.Features.RegisterMeasurement.Command
+namespace SFC.Sensors.Features.RegisterMeasurement.Contract
 {
   public class ElementName : ValueObject
   {
@@ -11,8 +11,8 @@ namespace SFC.Sensors.Features.RegisterMeasurement.Command
 
     public ElementName(string elementName)
     {
-      if(string.IsNullOrEmpty(elementName) || elementName.Length > MaxLength)
-      _value = elementName;
+      if (string.IsNullOrEmpty(elementName) || elementName.Length > MaxLength)
+        _value = elementName;
     }
 
     public override string ToString()

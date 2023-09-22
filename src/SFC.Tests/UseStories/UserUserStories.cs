@@ -2,10 +2,18 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using RestEase;
+using SFC.Accounts;
+using SFC.AdminApi;
+using SFC.Alerts;
 using SFC.Infrastructure;
+using SFC.Notifications;
+using SFC.Processes;
+using SFC.SensorApi;
+using SFC.Sensors;
 using SFC.Tests.Infrastructure;
 using SFC.Tests.UseStories.Mocks;
 using SFC.Tests.UseStories.UserApi;
+using SFC.UserApi;
 using TestStack.BDDfy;
 using Xunit;
 
@@ -27,7 +35,19 @@ namespace SFC.Tests.UseStories
       DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
-      Bootstrap.Run(new string[0], builder =>
+      Bootstrap.Run(new string[0], new Module[]
+        {
+          new AutofacAdminApiModule(),
+          new AutofacSensorApiModule(),
+          new AutofacUserApiModule(),
+          new AutofacAlertsModule(),
+          new AutofacProcessesModule(),
+          new AutofacNotificationsModule(),
+          new AutofacSensorsModule(),
+          new AutofacAccountsModule(),
+          new AutofacInfrastructureModule()
+        },
+        builder =>
       {
         builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
       });
@@ -56,7 +76,7 @@ namespace SFC.Tests.UseStories
     {
       this.Given(s => s.GivenSystemWithNotRegisteredAccount())
         .When(s => s.WhenUserPostRegistrationForm())
-        .Then(s=>ThenSystemSendsConfirmationEmail())
+        .Then(s=> ThenSystemSendsConfirmationEmail())
         .BDDfy();      
     }
   }

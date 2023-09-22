@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.Sensors.Features.RegisterMeasurement.Command;
+using SFC.Sensors.Features.RegisterSensor.Contract;
 using SFC.Sensors.Features.SensorQuery;
 using SFC.SharedKernel;
 
@@ -36,7 +36,7 @@ namespace SFC.UserApi.Features.Sensors
         ZipCode = model.ZipCode
       });
 
-      return Accepted($"api/sensors/{id}");
+      return Accepted($"api/v1.0/sensors/{id}");
     }
 
     [HttpGet]
@@ -48,7 +48,7 @@ namespace SFC.UserApi.Features.Sensors
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-      return Json(_sensorsPerspective.Get(id, _identityProvider.GetLoginName()));
+      return Json(_sensorsPerspective.Get(new Guid(id), _identityProvider.GetLoginName()));
     }
   }
 }

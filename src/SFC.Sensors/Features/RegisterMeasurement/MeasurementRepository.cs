@@ -2,7 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
-using SFC.Sensors.Features.RegisterMeasurement.Command;
+using SFC.Infrastructure.Interfaces;
+using SFC.Sensors.Features.RegisterMeasurement.Contract;
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
@@ -11,9 +12,9 @@ namespace SFC.Sensors.Features.RegisterMeasurement
   {
     private readonly IDbConnection _connection;
 
-    public MeasurementRepository(string connectionString)
+    public MeasurementRepository(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public void Add(Guid sensorId, DateTime date, ElementName elementName, decimal elementValue)

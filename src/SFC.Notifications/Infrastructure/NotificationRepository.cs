@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
+using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.NotificationQuery;
 using SFC.Notifications.Features.SendNotification;
 using SFC.SharedKernel;
@@ -14,9 +15,9 @@ namespace SFC.Notifications.Infrastructure
   {
     private readonly IDbConnection _connection;
 
-    public NotificationRepository(string connectionString)
+    public NotificationRepository(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public void Add(Email email, string title, string body, DateTime date, LoginName loginName, string notificationType)

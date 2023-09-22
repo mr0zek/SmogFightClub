@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using SFC.Alerts.Features.AlertQuery;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.Alerts.Features.RegisterAlertCondition
@@ -11,9 +12,9 @@ namespace SFC.Alerts.Features.RegisterAlertCondition
   {
     private readonly IDbConnection _connection;
 
-    public AlertConditionConditionConditionsRepository(string connectionString)
+    public AlertConditionConditionConditionsRepository(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public AlertsReadModel GetAll(LoginName loginName)

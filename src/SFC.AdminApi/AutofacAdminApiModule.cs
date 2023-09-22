@@ -8,19 +8,11 @@ namespace SFC.AdminApi
 {
   public class AutofacAdminApiModule : Module
   {
-    private readonly string _connectionString;
-
-    public AutofacAdminApiModule(string connectionString)
-    {
-      _connectionString = connectionString;
-    }
-
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<DashboardPerspective>().AsImplementedInterfaces();
       builder.RegisterType<SearchableDashboardPerspective>()
-        .AsImplementedInterfaces()
-        .WithParameter("connectionString", _connectionString);
+        .AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

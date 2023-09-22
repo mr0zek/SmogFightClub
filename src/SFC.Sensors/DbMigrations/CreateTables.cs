@@ -10,14 +10,14 @@ namespace SFC.Sensors.DbMigrations
       Create.Schema("Sensors");
       Create.Table("Sensors")
         .InSchema("Sensors")
-        .WithColumn("Id").AsInt64().PrimaryKey().Identity()
+        .WithColumn("Id").AsGuid().PrimaryKey()
         .WithColumn("ZipCode").AsString().NotNullable()
         .WithColumn("LoginName").AsString().NotNullable();
 
       Create.Table("Measurements")
         .InSchema("Sensors")
         .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-        .WithColumn("SensorId").AsInt64().ForeignKey("FK_Measurements_Sensors", "Sensors", "Sensors", "Id")
+        .WithColumn("SensorId").AsGuid().ForeignKey("FK_Measurements_Sensors", "Sensors", "Sensors", "Id")
         .WithColumn("ElementName").AsString().NotNullable()
         .WithColumn("ElementValue").AsDecimal().NotNullable();
     }

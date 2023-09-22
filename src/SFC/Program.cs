@@ -1,8 +1,18 @@
 ﻿using System;
+using Autofac;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using SFC.Accounts;
+using SFC.AdminApi;
+using SFC.Alerts;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Interfaces;
+using SFC.Notifications;
+using SFC.Processes;
+using SFC.SensorApi;
+using SFC.Sensors;
+using SFC.UserApi;
 
 namespace SFC
 {
@@ -17,7 +27,18 @@ namespace SFC
 
       DbMigrations.Run(connectionString);
 
-      Bootstrap.Run(args);
+      Bootstrap.Run(args, new Module[]
+      {
+        new AutofacAdminApiModule(),
+        new AutofacSensorApiModule(),
+        new AutofacUserApiModule(),
+        new AutofacAlertsModule(),
+        new AutofacProcessesModule(),
+        new AutofacNotificationsModule(),
+        new AutofacSensorsModule(),
+        new AutofacAccountsModule(),
+        new AutofacInfrastructureModule()
+    });
 
       Console.ReadKey();
     }

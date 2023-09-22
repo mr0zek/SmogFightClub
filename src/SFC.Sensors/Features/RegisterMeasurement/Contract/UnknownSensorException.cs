@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFC.Sensors.Features.RegisterMeasurement.Command
+namespace SFC.Sensors.Features.RegisterMeasurement.Contract
 {
   public class UnknownSensorException : Exception
   {

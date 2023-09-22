@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
@@ -9,9 +10,9 @@ namespace SFC.AdminApi.Features.SearchableDashboard
   {
     private readonly IDbConnection _connection;
 
-    public SearchableDashboardPerspective(string connectionString)
+    public SearchableDashboardPerspective(ConnectionString connectionString)
     {
-      _connection = new SqlConnection(connectionString);
+      _connection = new SqlConnection(connectionString.ToString());
     }
 
     public void Add(SearchableDashboardEntry searchableDashboardEntry)
