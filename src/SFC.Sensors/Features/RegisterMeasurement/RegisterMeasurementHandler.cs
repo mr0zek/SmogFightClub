@@ -18,7 +18,7 @@ namespace SFC.Sensors.Features.RegisterMeasurement
 
     public void Handle(RegisterMeasurementCommand command)
     {
-      if (_sensorRepository.Exits(command.SensorId))
+      if (!_sensorRepository.Exits(command.SensorId))
       {
         throw new UnknownSensorException(command.SensorId);
       }

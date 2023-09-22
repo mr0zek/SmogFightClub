@@ -18,6 +18,7 @@ namespace SFC.Sensors.DbMigrations
         .InSchema("Sensors")
         .WithColumn("Id").AsInt64().PrimaryKey().Identity()
         .WithColumn("SensorId").AsGuid().ForeignKey("FK_Measurements_Sensors", "Sensors", "Sensors", "Id")
+        .WithColumn("Date").AsDateTime2().NotNullable()
         .WithColumn("ElementName").AsString().NotNullable()
         .WithColumn("ElementValue").AsDecimal().NotNullable();
     }

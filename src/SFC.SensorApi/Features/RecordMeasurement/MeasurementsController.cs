@@ -8,7 +8,7 @@ using SFC.Sensors.Features.RegisterMeasurement.Contract;
 namespace SFC.SensorApi.Features.RecordMeasurement
 {
   [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}")]
   [ApiController]
   public class MeasurementsController : Controller
   {
@@ -21,19 +21,20 @@ namespace SFC.SensorApi.Features.RecordMeasurement
       _dateTimeProvider = dateTimeProvider;
     }
 
-    [HttpPost]
-    public IActionResult Post([FromBody]PostMeasurementModel model)
+    [HttpPost("sensors/{sensorId}/measurements")]
+    public IActionResult Post([FromRoute] Guid sensorId, [FromBody] PostMeasurementModel model)
     {
       Guid id = Guid.NewGuid();
 
       _commandBus.Send(new RegisterMeasurementCommand()
       {
         Id = id,
+        SensorId = sensorId,
         Date = _dateTimeProvider.Now(),
-        Elements = model.Values.ToDictionary(f=>(ElementName)f.Key, f=>f.Value)
+        Elements = model.Values.ToDictionary(f => (ElementName)f.Key, f => f.Value)
       });
 
-      return Accepted($"api/measurements/{id}");
+      return Ok();
     }
   }
 }

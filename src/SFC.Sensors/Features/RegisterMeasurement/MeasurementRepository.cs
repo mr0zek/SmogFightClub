@@ -20,7 +20,7 @@ namespace SFC.Sensors.Features.RegisterMeasurement
     public void Add(Guid sensorId, DateTime date, ElementName elementName, decimal elementValue)
     {
       _connection.Execute("insert into Sensors.Measurements(sensorId, date, elementName, elementValue)values(@sensorId, @date, @elementName, @elementValue)",
-        new { sensorId, date, elementName, elementValue});
+        new { sensorId, date, elementName = elementName.ToString(), elementValue});
     }
   }
 }

@@ -45,7 +45,7 @@ namespace SFC.Sensors.Infratructure
 
     public bool Exits(Guid sensorId)
     {
-      return _connection.QueryFirst<int>("select count(*) from Sensors.Sensors where id = @id", new { Id = sensorId }) != 0;
+      return _connection.QueryFirst<int>("select count(*) from Sensors.Sensors where id = @sensorId", new { sensorId }) != 0;
     }
 
   }

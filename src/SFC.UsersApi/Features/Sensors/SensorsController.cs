@@ -36,7 +36,7 @@ namespace SFC.UserApi.Features.Sensors
         ZipCode = model.ZipCode
       });
 
-      return Accepted($"api/v1.0/sensors/{id}");
+      return Accepted($"api/v1/sensors/{id}");
     }
 
     [HttpGet]
