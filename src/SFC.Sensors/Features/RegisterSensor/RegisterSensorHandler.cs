@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using SFC.Sensors.Features.RegisterSensor.Contract;
-using SFC.Sensors.Infratructure;
 
 namespace SFC.Sensors.Features.RegisterSensor
 {

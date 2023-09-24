@@ -2,7 +2,7 @@
 {
   public class ConnectionString 
   {
-    private string connectionString;
+    private readonly string connectionString;
 
     public ConnectionString(string connectionString)
     {

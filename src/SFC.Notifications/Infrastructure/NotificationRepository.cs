@@ -28,6 +28,17 @@ namespace SFC.Notifications.Infrastructure
         new { title, body, date, loginName = loginName.ToString(), email = email.ToString(), notificationType });
     }
 
+    public IEnumerable<NotificationsCountResult> GetAllSendNotificationsByUser(int top, int take)
+    {
+      return _connection.Query<dynamic>(
+        @"select loginName, count(*) as count from Notifications.Notifications group by loginName order by loginName offset @top rows fetch next @take rows only",
+        new { top, take }).Select(f => new NotificationsCountResult()
+        {
+          LoginName = f.loginName,
+          Count = f.count
+        });
+    }
+
     public IEnumerable<NotificationsCountResult> GetSendNotificationsCount(string notificationType, params LoginName[] loginNames)
     {
       return _connection.Query<dynamic>(

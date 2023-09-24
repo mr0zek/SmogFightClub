@@ -4,7 +4,7 @@ using SFC.Notifications.Features.NotificationQuery;
 
 namespace SFC.AdminApi.Features.Dashboard
 {
-  class DashboardPerspective : IDashboardPerspective
+    class DashboardPerspective : IDashboardPerspective
   {
     private readonly IAccountsPerspective _accountPerspective;
     private readonly INotificationPerspective _notificationPerspective;

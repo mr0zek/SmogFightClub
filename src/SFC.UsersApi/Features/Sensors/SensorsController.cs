@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterSensor.Contract;
-using SFC.Sensors.Features.SensorQuery;
+using SFC.Sensors.Features.SensorQuery.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Sensors
 {
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
   public class SensorsController : Controller

@@ -8,6 +8,7 @@ namespace SFC.Notifications.Features.NotificationQuery
 {
   public interface INotificationPerspective
   {
+    IEnumerable<NotificationsCountResult> GetAllSendNotificationsByUser(int top, int take);
     IEnumerable<NotificationsCountResult> GetSendNotificationsCount(
       string notificationType,
       params LoginName[] loginNames);

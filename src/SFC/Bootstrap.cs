@@ -81,10 +81,7 @@ namespace SFC
         {
           builder.RegisterModule(m);
         }
-        if (overrideDependencies != null)
-        {
-          overrideDependencies(builder);
-        }
+        overrideDependencies?.Invoke(builder);
       });
 
       var app = builder.Build();

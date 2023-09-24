@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace SFC.Sensors.Features.RegisterSensor.Contract
 {
-  public class SensorAlreadyExistsException : Exception
-  {
-    public Guid SensorId { get; set; }
-
-    public SensorAlreadyExistsException(Guid sensorId)
+    public class SensorAlreadyExistsException : Exception
     {
-      SensorId = sensorId;
+        public Guid SensorId { get; set; }
+
+        public SensorAlreadyExistsException(Guid sensorId)
+        {
+            SensorId = sensorId;
+        }
     }
-  }
 }
