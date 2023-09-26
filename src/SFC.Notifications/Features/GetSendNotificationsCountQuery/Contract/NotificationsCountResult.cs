@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Notifications.Infrastructure
+namespace SFC.Notifications.Features.GetSendNotificationsCountQuery.Contract
 {
   public class NotificationsCountResult
   {

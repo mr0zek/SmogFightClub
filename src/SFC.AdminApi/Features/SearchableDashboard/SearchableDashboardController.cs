@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SFC.Accounts.Features.AccountQuery;
 using SFC.AdminApi.Features.Dashboard;
-using SFC.Notifications.Features.NotificationQuery;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {

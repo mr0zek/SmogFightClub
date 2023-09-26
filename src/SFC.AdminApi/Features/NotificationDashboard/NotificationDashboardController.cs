@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SFC.Notifications.Features.NotificationQuery;
+using SFC.Infrastructure.Interfaces;
+using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery.Contract;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,17 +16,17 @@ namespace SFC.AdminApi.Features.NotificationDashboard
   [ApiController]
   public class NotificationDashboardController : Controller
   {
-    private readonly INotificationPerspective _notificationPerspective;
+    private readonly IQueryBus _query;
 
-    public NotificationDashboardController(INotificationPerspective notificationPerspective)
+    public NotificationDashboardController(IQueryBus query)
     {
-      _notificationPerspective = notificationPerspective;
+      _query = query;
     }
 
     [HttpGet]
     public IActionResult Get([FromQuery] NotificationDashboardQueryModel query)
     {
-      return Json(_notificationPerspective.GetAllSendNotificationsByUser(query.Top, query.Take));
+      return Json(_query.Query(new GetAllSendNotificationsByUserQuery(query.Top, query.Take)));
     }
   }
 }

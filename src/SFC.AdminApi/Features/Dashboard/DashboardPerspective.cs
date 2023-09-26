@@ -1,31 +1,31 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.Contracts;
+using System.Linq;
 using SFC.Accounts.Features.AccountQuery;
-using SFC.Notifications.Features.NotificationQuery;
+using SFC.Infrastructure.Interfaces;
+using SFC.Notifications.Features.GetAllSendNotificationsCountQuery.Contract;
+using SFC.Notifications.Features.GetSendNotificationsCountQuery.Contract;
 
 namespace SFC.AdminApi.Features.Dashboard
 {
-    class DashboardPerspective : IDashboardPerspective
-  {
-    private readonly IAccountsPerspective _accountPerspective;
-    private readonly INotificationPerspective _notificationPerspective;
+  class DashboardPerspective : IDashboardPerspective
+  {    
+    private readonly IQueryBus _query;
 
-    public DashboardPerspective(
-      IAccountsPerspective accountPerspective, 
-      INotificationPerspective notificationPerspective)
+    public DashboardPerspective(      
+      IQueryBus notificationPerspective)
     {
-      _accountPerspective = accountPerspective;
-      _notificationPerspective = notificationPerspective;
+      _query = notificationPerspective;
     }
 
     public DashboardResult Search(DashboardQueryModel query)
     {
-      var results = _accountPerspective.Search(new AccountQuery()
+      var results = _query.Query(new AccountQuery()
       {
         Skip = query.Top,
         Take = query.Take
       });
 
-      var counts = _notificationPerspective.GetSendNotificationsCount("SmogAlert", results.Accounts.Select(f => f.LoginName).ToArray());
+      var counts = _query.Query(new GetSendNotificationsCountRequest("SmogAlert", results.Accounts.Select(f => f.LoginName).ToArray()));
 
       var entries = results.Accounts.Select(f =>
       {

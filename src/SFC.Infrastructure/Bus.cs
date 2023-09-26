@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Infrastructure
 {
-  public class Bus : ICommandBus, IEventBus
+  public class Bus : ICommandBus, IEventBus, IQueryBus
   {
     private readonly IComponentContext _container;
 
@@ -29,6 +30,15 @@ namespace SFC.Infrastructure
       {
         eventHandler.Handle(@event);
       }
+    }
+
+    public TResult Query<TResult>(IRequest<TResult> request)
+    {
+      Type generic = typeof(IQueryHandler<,>);
+      generic = generic.MakeGenericType(request.GetType(), typeof(TResult));
+
+      var queryHandler = _container.Resolve(generic);
+      return (TResult)queryHandler.GetType().InvokeMember("HandleQuery",System.Reflection.BindingFlags.InvokeMethod,null,queryHandler, new[] { request });
     }
   }
 }

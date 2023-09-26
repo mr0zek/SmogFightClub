@@ -5,13 +5,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
-using SFC.Notifications.Features.NotificationQuery;
+using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery;
+using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery.Contract;
 using SFC.Notifications.Features.SendNotification;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Infrastructure
 {
-  class NotificationRepository : INotificationRepository, INotificationPerspective
+    class NotificationRepository : INotificationRepository
   {
     private readonly IDbConnection _connection;
 
@@ -26,28 +27,6 @@ namespace SFC.Notifications.Infrastructure
         @"insert into Notifications.Notifications(title, body, date, loginName,email, notificationType)
           values(@title, @body, @date, @loginName, @email, @notificationType)",
         new { title, body, date, loginName = loginName.ToString(), email = email.ToString(), notificationType });
-    }
-
-    public IEnumerable<NotificationsCountResult> GetAllSendNotificationsByUser(int top, int take)
-    {
-      return _connection.Query<dynamic>(
-        @"select loginName, count(*) as count from Notifications.Notifications group by loginName order by loginName offset @top rows fetch next @take rows only",
-        new { top, take }).Select(f => new NotificationsCountResult()
-        {
-          LoginName = f.loginName,
-          Count = f.count
-        });
-    }
-
-    public IEnumerable<NotificationsCountResult> GetSendNotificationsCount(string notificationType, params LoginName[] loginNames)
-    {
-      return _connection.Query<dynamic>(
-        @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType group by loginName",
-        new { loginNames = loginNames.Select(f=>f.ToString()).ToArray(), notificationType }).Select(f=> new NotificationsCountResult()
-      {
-        LoginName = f.loginName,
-        Count = f.count
-      });
-    }
+    }    
   }
 }
