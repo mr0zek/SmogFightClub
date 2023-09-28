@@ -3,7 +3,7 @@
 namespace SFC.Sensors.Infrastructure.DbMigrations
 {
   [Migration(201904040952)]
-  public class CreateTables : Migration
+  public class M01_CreateTables : Migration
   {
     public override void Up()
     {

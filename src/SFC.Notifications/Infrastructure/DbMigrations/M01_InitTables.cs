@@ -3,7 +3,7 @@
 namespace SFC.Notifications.DbMigrations
 {
   [Migration(201903311041)]
-  public class InitTables : Migration
+  public class M01_InitTables : Migration
   {
     public override void Up()
     {

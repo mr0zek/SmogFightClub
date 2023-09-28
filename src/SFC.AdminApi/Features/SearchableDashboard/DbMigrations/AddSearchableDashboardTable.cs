@@ -3,7 +3,7 @@
 namespace SFC.AdminApi.Features.SearchableDashboard.DbMigrations
 {
   [Migration(201904042139)]
-  public class AddSearchableDashboardTable : Migration
+  public class M01_AddSearchableDashboardTable : Migration
   {
     public override void Up()
     {

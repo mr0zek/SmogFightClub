@@ -1,6 +1,6 @@
 ﻿namespace SFC.Infrastructure.Interfaces
 {
-  public interface IQueryBus
+  public interface IQuery
   {
     TResult Query<TResult>(IRequest<TResult> request);
   }

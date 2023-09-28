@@ -9,7 +9,7 @@ using SFC.SharedKernel;
 namespace SFC.UserApi.Features.Sensors
 {
     [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}/user/[controller]")]
   [ApiController]
   public class SensorsController : Controller
   {
@@ -36,7 +36,7 @@ namespace SFC.UserApi.Features.Sensors
         ZipCode = model.ZipCode
       });
 
-      return Accepted($"api/v1/sensors/{id}");
+      return Accepted($"api/v1/sensors/{id}",id);
     }
 
     [HttpGet]

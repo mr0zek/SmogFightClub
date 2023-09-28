@@ -5,9 +5,9 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 
-namespace SFC.SensorApi.Features.RecordMeasurement
+namespace SFC.SensorApi.Features.RegisterMeasurement
 {
-    [ApiVersion("1.0")]
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}")]
   [ApiController]
   public class MeasurementsController : Controller

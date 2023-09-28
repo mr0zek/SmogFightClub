@@ -16,9 +16,9 @@ namespace SFC.AdminApi.Features.NotificationDashboard
   [ApiController]
   public class NotificationDashboardController : Controller
   {
-    private readonly IQueryBus _query;
+    private readonly IQuery _query;
 
-    public NotificationDashboardController(IQueryBus query)
+    public NotificationDashboardController(IQuery query)
     {
       _query = query;
     }

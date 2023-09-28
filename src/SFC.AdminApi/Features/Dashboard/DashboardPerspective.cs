@@ -9,10 +9,10 @@ namespace SFC.AdminApi.Features.Dashboard
 {
   class DashboardPerspective : IDashboardPerspective
   {    
-    private readonly IQueryBus _query;
+    private readonly IQuery _query;
 
     public DashboardPerspective(      
-      IQueryBus notificationPerspective)
+      IQuery notificationPerspective)
     {
       _query = notificationPerspective;
     }
@@ -25,8 +25,12 @@ namespace SFC.AdminApi.Features.Dashboard
         Take = query.Take
       });
 
-      var counts = _query.Query(new GetSendNotificationsCountRequest("SmogAlert", results.Accounts.Select(f => f.LoginName).ToArray()));
-
+      var counts = _query.Query(new GetSendNotificationsCountRequest()
+      {
+        NotificationType = "SmogAlert",
+        LoginNames = results.Accounts.Select(f => f.LoginName).ToArray()
+      });
+    
       var entries = results.Accounts.Select(f =>
       {
         int count = counts.FirstOrDefault(c => c.LoginName == f.LoginName)?.Count ?? 0;

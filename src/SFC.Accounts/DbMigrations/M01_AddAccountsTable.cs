@@ -3,7 +3,7 @@
 namespace SFC.Accounts.DbMigrations
 {
   [Migration(201903312139)]
-  public class AddAccountsTable : Migration
+  public class M01_AddAccountsTable : Migration
   {
     public override void Up()
     {

@@ -9,7 +9,7 @@ using SFC.SharedKernel;
 namespace SFC.UserApi.Features.Alerts
 {
   [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}/user/[controller]")]
   [ApiController]
   public class AlertsController : Controller
   {

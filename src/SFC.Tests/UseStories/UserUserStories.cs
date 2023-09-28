@@ -11,15 +11,15 @@ using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
 using SFC.Tests.Infrastructure;
-using SFC.Tests.UseStories.Mocks;
-using SFC.Tests.UseStories.UserApi;
+using SFC.Tests.Mocks;
+using SFC.Tests.UserApi;
 using SFC.UserApi;
 using TestStack.BDDfy;
 using Xunit;
 
 namespace SFC.Tests.UseStories
 {
-  public class UserUserStories : IClassFixture<UserStoriesFixture>
+    public class UserUserStories : IClassFixture<UserStoriesFixture>
   {
     private const string _url = "http://localhost:5000";
     private PostAccountModel _postAccountModel;
@@ -63,7 +63,7 @@ namespace SFC.Tests.UseStories
 
     async void WhenUserPostRegistrationForm()
     {
-      string confirmationId = await RestClient.For<IAccountsApi>(_url).PostAccount(_postAccountModel);
+      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(_postAccountModel);
     }
 
     void ThenSystemSendsConfirmationEmail()

@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SFC.AdminApi;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.SensorApi;
-using SFC.SensorApi.Features.RecordMeasurement;
-using SFC.UserApi;
 
 namespace SFC
 {

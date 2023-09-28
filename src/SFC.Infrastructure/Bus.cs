@@ -6,7 +6,7 @@ using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Infrastructure
 {
-  public class Bus : ICommandBus, IEventBus, IQueryBus
+  public class Bus : ICommandBus, IEventBus, IQuery
   {
     private readonly IComponentContext _container;
 

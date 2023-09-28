@@ -3,7 +3,7 @@
 namespace SFC.Alerts.DbMigrations
 {
   [Migration(20190331041)]
-  public class AddAlertsTable : Migration
+  public class M01_AddAlertsTable : Migration
   {
     public override void Up()
     {
