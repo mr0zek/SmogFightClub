@@ -13,7 +13,7 @@ using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Infrastructure;
-using SFC.Notifications.Features.GetSendNotificationsCountQuery.Contract;
+using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
 
 namespace SFC.Tests.Notification
 {

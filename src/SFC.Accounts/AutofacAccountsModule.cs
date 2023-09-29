@@ -1,9 +1,10 @@
 ﻿using Autofac;
+using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Accounts
 {
-  public class AutofacAccountsModule : Module
+    public class AutofacAccountsModule : Module
   {
     
 

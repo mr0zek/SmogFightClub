@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using SFC.Alerts.Features.AlertQuery;
+using SFC.Alerts.Features.GetAllAlertCondition;
+using SFC.Alerts.Features.GetAllAlertConditions;
 using SFC.Alerts.Features.RegisterAlertCondition.Contract;
-using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
@@ -14,14 +14,14 @@ namespace SFC.UserApi.Features.Alerts
   public class AlertsController : Controller
   {
     private readonly ICommandBus _commandBus;
-    private readonly IAlertConditionsPerspective _alertConditionsPerspective;
     private readonly IIdentityProvider _identityProvider;
+    private readonly IQuery _query;
 
-    public AlertsController(ICommandBus commandBus, IAlertConditionsPerspective alertConditionsPerspective, IIdentityProvider identityProvider)
+    public AlertsController(ICommandBus commandBus, IIdentityProvider identityProvider, IQuery query)
     {
       _commandBus = commandBus;
-      _alertConditionsPerspective = alertConditionsPerspective;
       _identityProvider = identityProvider;
+      _query = query;
     }
 
     [HttpPost]
@@ -42,13 +42,13 @@ namespace SFC.UserApi.Features.Alerts
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_alertConditionsPerspective.GetAll(_identityProvider.GetLoginName()));
+      return Json(_query.Query(new GetAllAlertConditionsRequest(_identityProvider.GetLoginName())));
     }    
 
     [HttpGet("{id}")]
     public IActionResult Get([FromRoute]string id)
     {
-      return Json(_alertConditionsPerspective.Get(id, _identityProvider.GetLoginName()));
+      return Json(_query.Query(new GetAlertConditionRequest(id, _identityProvider.GetLoginName())));
     }
   }
 }

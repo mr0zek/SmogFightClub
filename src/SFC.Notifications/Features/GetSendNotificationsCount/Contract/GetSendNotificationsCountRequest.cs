@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Notifications.Features.GetSendNotificationsCountQuery.Contract
+namespace SFC.Notifications.Features.GetSendNotificationsCount.Contract
 {
 
-  public class GetSendNotificationsCountRequest : IRequest<IEnumerable<NotificationsCountResult>>
-  {    
+  public class GetSendNotificationsCountRequest : IRequest<IEnumerable<GetSendNotificationsCountResponse>>
+  {
     public string NotificationType { get; set; }
     public LoginName[] LoginNames { get; set; }
   }

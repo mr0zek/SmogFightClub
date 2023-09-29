@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
-using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery.Contract;
+using SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace SFC.AdminApi.Features.NotificationDashboard
     [HttpGet]
     public IActionResult Get([FromQuery] NotificationDashboardQueryModel query)
     {
-      return Json(_query.Query(new GetAllSendNotificationsByUserQuery(query.Top, query.Take)));
+      return Json(_query.Query(new GetAllSendNotificationsByUserRequest(query.Top, query.Take)));
     }
   }
 }

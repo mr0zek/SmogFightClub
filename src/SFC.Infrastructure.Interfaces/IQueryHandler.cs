@@ -1,8 +1,8 @@
 ﻿namespace SFC.Infrastructure.Interfaces
 {
-  public interface IQueryHandler<TRequest, TResult> where TRequest : IRequest<TResult>
+  public interface IQueryHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>
   {
-    TResult HandleQuery(TRequest query);
+    TResponse HandleQuery(TRequest query);
   }
 
 }

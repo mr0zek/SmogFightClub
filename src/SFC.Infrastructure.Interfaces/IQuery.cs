@@ -2,6 +2,6 @@
 {
   public interface IQuery
   {
-    TResult Query<TResult>(IRequest<TResult> request);
+    TResponse Query<TResponse>(IRequest<TResponse> request);
   }
 }

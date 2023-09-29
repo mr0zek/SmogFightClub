@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using SFC.Accounts.Features.AccountQuery;
-using SFC.AdminApi.Features.Dashboard;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {

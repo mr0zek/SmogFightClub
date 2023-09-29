@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Notifications.Features.GetAllSendNotificationsCountQuery.Contract
+namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
 {
-  public class GetAllSendNotificationsCountRequest : IRequest<IEnumerable<NotificationsCountResult>>
+  public class GetAllSendNotificationsByUserRequest : IRequest<IEnumerable<GetAllSendNotificationsByUserResponse>>
   {
 
-    public GetAllSendNotificationsCountRequest(int skip, int take)
+    public GetAllSendNotificationsByUserRequest(int skip, int take)
     {
       Skip = skip;
       Take = take;

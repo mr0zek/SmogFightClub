@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace SFC.Notifications.DbMigrations
+namespace SFC.Notifications.Infrastructure.DbMigrations
 {
   [Migration(201903311041)]
   public class M01_InitTables : Migration

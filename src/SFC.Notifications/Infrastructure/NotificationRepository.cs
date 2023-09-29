@@ -5,8 +5,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
-using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery;
-using SFC.Notifications.Features.GetAllSendNotificationsByUserQuery.Contract;
 using SFC.Notifications.Features.SendNotification;
 using SFC.SharedKernel;
 

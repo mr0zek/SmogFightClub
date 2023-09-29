@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Linq;
-using SFC.Accounts.Features.AccountQuery;
+using SFC.Accounts.Features.SearchAccount;
 using SFC.Infrastructure.Interfaces;
-using SFC.Notifications.Features.GetAllSendNotificationsCountQuery.Contract;
-using SFC.Notifications.Features.GetSendNotificationsCountQuery.Contract;
+using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
 
 namespace SFC.AdminApi.Features.Dashboard
 {
@@ -19,7 +18,7 @@ namespace SFC.AdminApi.Features.Dashboard
 
     public DashboardResult Search(DashboardQueryModel query)
     {
-      var results = _query.Query(new AccountQuery()
+      var results = _query.Query(new SearchAccountRequest()
       {
         Skip = query.Top,
         Take = query.Take

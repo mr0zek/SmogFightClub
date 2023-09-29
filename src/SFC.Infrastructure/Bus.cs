@@ -32,13 +32,13 @@ namespace SFC.Infrastructure
       }
     }
 
-    public TResult Query<TResult>(IRequest<TResult> request)
+    public TResponse Query<TResponse>(IRequest<TResponse> request)
     {
       Type generic = typeof(IQueryHandler<,>);
-      generic = generic.MakeGenericType(request.GetType(), typeof(TResult));
+      generic = generic.MakeGenericType(request.GetType(), typeof(TResponse));
 
       var queryHandler = _container.Resolve(generic);
-      return (TResult)queryHandler.GetType().InvokeMember("HandleQuery",System.Reflection.BindingFlags.InvokeMethod,null,queryHandler, new[] { request });
+      return (TResponse)queryHandler.GetType().InvokeMember("HandleQuery",System.Reflection.BindingFlags.InvokeMethod,null,queryHandler, new[] { request });
     }
   }
 }
