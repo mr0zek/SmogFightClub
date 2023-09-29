@@ -1,8 +1,9 @@
-﻿using SFC.SharedKernel;
+﻿using SFC.Infrastructure.Interfaces;
+using SFC.SharedKernel;
 
 namespace SFC.Processes.Features.UserRegistration.Contract
 {
-  public class RegisterUserCommand
+  public class RegisterUserCommand : ICommand
   {
     public LoginName LoginName { get; set; }
     public Email Email { get; set; }

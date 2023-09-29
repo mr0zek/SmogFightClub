@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
+using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasurementCommand;
 
 namespace SFC.SensorApi.Features.RegisterMeasurement
 {

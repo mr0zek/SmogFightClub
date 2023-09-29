@@ -32,7 +32,7 @@ namespace SFC.AdminApi.Features.Dashboard
     
       var entries = results.Accounts.Select(f =>
       {
-        int count = counts.FirstOrDefault(c => c.LoginName == f.LoginName)?.Count ?? 0;
+        int count = counts.Result.FirstOrDefault(c => c.LoginName == f.LoginName)?.Count ?? 0;
         return new DashboardEntry()
         {
           LoginName = f.LoginName,

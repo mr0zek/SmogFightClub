@@ -5,23 +5,24 @@ using Dapper;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
+using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasurementCommand;
 
 namespace SFC.Sensors.Infrastructure
 {
 
-    internal class MeasurementRepository : IMeasurementRepository
+  internal class MeasurementRepository : IMeasurementRepository
+  {
+    private readonly IDbConnection _connection;
+
+    public MeasurementRepository(ConnectionString connectionString)
     {
-        private readonly IDbConnection _connection;
-
-        public MeasurementRepository(ConnectionString connectionString)
-        {
-            _connection = new SqlConnection(connectionString.ToString());
-        }
-
-        public void Add(Guid sensorId, DateTime date, ElementName elementName, decimal elementValue)
-        {
-            _connection.Execute("insert into Sensors.Measurements(sensorId, date, elementName, elementValue)values(@sensorId, @date, @elementName, @elementValue)",
-              new { sensorId, date, elementName = elementName.ToString(), elementValue });
-        }
+      _connection = new SqlConnection(connectionString.ToString());
     }
+
+    public void Add(Guid sensorId, DateTime date, ElementName elementName, decimal elementValue)
+    {
+      _connection.Execute("insert into Sensors.Measurements(sensorId, date, elementName, elementValue)values(@sensorId, @date, @elementName, @elementValue)",
+        new { sensorId, date, elementName = elementName.ToString(), elementValue });
+    }
+  }
 }

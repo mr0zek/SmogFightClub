@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
 {
-  public class GetAllSendNotificationsByUserRequest : IRequest<IEnumerable<GetAllSendNotificationsByUserResponse>>
+  public class GetAllSendNotificationsByUserRequest : IRequest<GetAllSendNotificationsByUserResponse>
   {
 
     public GetAllSendNotificationsByUserRequest(int skip, int take)

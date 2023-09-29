@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace SFC.Infrastructure.Interfaces
 {
 
-  public interface IRequest<TResponse>
+  public interface IRequest<TResponse> where TResponse : IResponse
   {
-
   }
 }

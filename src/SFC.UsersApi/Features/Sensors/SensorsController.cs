@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Sensors.Features.GetAllSensors;
+using SFC.Sensors.Features.GetSensor;
 using SFC.Sensors.Features.RegisterSensor.Contract;
-using SFC.Sensors.Features.SensorQuery.Contract;
-using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Sensors
 {
@@ -14,14 +13,14 @@ namespace SFC.UserApi.Features.Sensors
   public class SensorsController : Controller
   {
     private readonly ICommandBus _commandBus;
-    private readonly ISensorsPerspective _sensorsPerspective;
+    private readonly IQuery _query;
     private readonly IIdentityProvider _identityProvider;
 
-    public SensorsController(ICommandBus commandBus, ISensorsPerspective sensorsPerspective, IIdentityProvider identityProvider)
+    public SensorsController(ICommandBus commandBus, IIdentityProvider identityProvider, IQuery query)
     {
       _commandBus = commandBus;
-      _sensorsPerspective = sensorsPerspective;
       _identityProvider = identityProvider;
+      _query = query;
     }
 
     [HttpPost]
@@ -42,13 +41,13 @@ namespace SFC.UserApi.Features.Sensors
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_sensorsPerspective.GetAll(_identityProvider.GetLoginName()));
+      return Json(_query.Query(new GetAllSensorsRequest(_identityProvider.GetLoginName())));
     }    
 
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-      return Json(_sensorsPerspective.Get(new Guid(id), _identityProvider.GetLoginName()));
+      return Json(_query.Query(new GetSensorRequest(new Guid(id), _identityProvider.GetLoginName())));
     }
   }
 }

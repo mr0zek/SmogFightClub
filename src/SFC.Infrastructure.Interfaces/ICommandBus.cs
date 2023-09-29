@@ -4,6 +4,6 @@ namespace SFC.Infrastructure.Interfaces
 {
   public interface ICommandBus
   {
-    void Send<T>(T command);
+    void Send<T>(T command) where T : ICommand;
   }
 }

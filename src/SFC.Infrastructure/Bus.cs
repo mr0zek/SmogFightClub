@@ -15,13 +15,13 @@ namespace SFC.Infrastructure
       _container = container;
     }
 
-    public void Send<T>(T command)
+    public void Send<T>(T command) where T : ICommand  
     {
       ICommandHandler<T> commandHandler = (ICommandHandler<T>)_container.Resolve(typeof(ICommandHandler<T>));
       commandHandler.Handle(command);
     }
 
-    public void Publish<T>(T @event)
+    public void Publish<T>(T @event) where T : IEvent
     {
       IEnumerable<IEventHandler<T>> eventHandlers =
         (IEnumerable<IEventHandler<T>>) _container.Resolve(typeof(IEnumerable<IEventHandler<T>>));
@@ -32,7 +32,7 @@ namespace SFC.Infrastructure
       }
     }
 
-    public TResponse Query<TResponse>(IRequest<TResponse> request)
+    public TResponse Query<TResponse>(IRequest<TResponse> request)where TResponse : IResponse  
     {
       Type generic = typeof(IQueryHandler<,>);
       generic = generic.MakeGenericType(request.GetType(), typeof(TResponse));

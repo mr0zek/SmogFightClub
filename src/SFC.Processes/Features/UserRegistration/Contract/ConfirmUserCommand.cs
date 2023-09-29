@@ -1,6 +1,8 @@
-﻿namespace SFC.Processes.Features.UserRegistration.Contract
+﻿using SFC.Infrastructure.Interfaces;
+
+namespace SFC.Processes.Features.UserRegistration.Contract
 {
-  public class ConfirmUserCommand
+  public class ConfirmUserCommand : ICommand
   {
     public string ConfirmationId { get; set; }
   }

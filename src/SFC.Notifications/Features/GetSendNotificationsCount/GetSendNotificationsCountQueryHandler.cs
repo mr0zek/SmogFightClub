@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.GetSendNotificationsCount
 {
-  internal class GetSendNotificationsCountQueryHandler : IQueryHandler<GetSendNotificationsCountRequest, IEnumerable<GetSendNotificationsCountResponse>>
+  internal class GetSendNotificationsCountQueryHandler : IQueryHandler<GetSendNotificationsCountRequest, GetSendNotificationsCountResponse>
   {
     private readonly IDbConnection _connection;
 
@@ -23,15 +23,15 @@ namespace SFC.Notifications.Features.GetSendNotificationsCount
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public IEnumerable<GetSendNotificationsCountResponse> HandleQuery(GetSendNotificationsCountRequest request)
+    public GetSendNotificationsCountResponse HandleQuery(GetSendNotificationsCountRequest request)
     {
-      return _connection.Query<dynamic>(
+      return new GetSendNotificationsCountResponse(_connection.Query<dynamic>(
         @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType group by loginName",
-        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType }).Select(f => new GetSendNotificationsCountResponse()
+        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType }).Select(f => new GetSendNotificationsCountResponse.SendNotificaton()
         {
           LoginName = f.loginName,
           Count = f.count
-        });
+        }));
     }
   }
 }

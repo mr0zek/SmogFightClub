@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.CreateAccount.Contract
 {
-  public class AccountCreatedEvent
+  public class AccountCreatedEvent : IEvent
   {
-    public LoginName LoginName { get; set; }
+    public AccountCreatedEvent(LoginName loginName)
+    {
+      LoginName = loginName;
+    }
+
+    public LoginName LoginName { get; set; }    
   }
 }

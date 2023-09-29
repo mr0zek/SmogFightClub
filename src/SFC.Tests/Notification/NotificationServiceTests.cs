@@ -74,9 +74,9 @@ namespace SFC.Tests.Notification
           LoginNames = new[] { loginName }
         });
 
-      Assert.True(result.Count() == 1);
-      Assert.True(result.First().LoginName == loginName);
-      Assert.True(result.First().Count == 1);
+      Assert.True(result.Result.Count() == 1);
+      Assert.True(result.Result.First().LoginName == loginName);
+      Assert.True(result.Result.First().Count == 1);
       Assert.True(TestSmtpClient.SentEmails.Count == 1);
       Assert.True(TestEventHandler<NotificationSentEvent>.Events.Count == 1);
     }
