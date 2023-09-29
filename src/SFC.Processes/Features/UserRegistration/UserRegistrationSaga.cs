@@ -57,7 +57,7 @@ namespace SFC.Processes.Features.UserRegistration
 
     private void RegisterAlertCondition(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new RegisterAlertConditionCommand()
+      _commandBus.Send(new CreateAlertCommand()
       {
         LoginName = context.Instance.LoginName,
         ZipCode = context.Instance.ZipCode
@@ -66,11 +66,10 @@ namespace SFC.Processes.Features.UserRegistration
 
     private void SaveNotificationEmail(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new SetNotificationEmailCommand()
-      {
-        Email = context.Instance.Email,
-        LoginName = context.Instance.LoginName
-      });
+      _commandBus.Send(new SetNotificationEmailCommand(
+        context.Instance.Email,
+        context.Instance.LoginName
+      ));
     }
 
     private void SendRegistrationNotification(BehaviorContext<UserRegistrationSagaData> context)

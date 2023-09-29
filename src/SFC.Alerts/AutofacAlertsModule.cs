@@ -12,7 +12,7 @@ namespace SFC.Alerts
   {    
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<AlertConditionConditionConditionsRepository>()
+      builder.RegisterType<AlertRepository>()
         .AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)

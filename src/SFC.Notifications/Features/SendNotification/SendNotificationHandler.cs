@@ -30,7 +30,11 @@ namespace SFC.Notifications.Features.SendNotification
     public void Handle(SendNotificationCommand command)
     {
       Email email = _emailRepository.GetEmail(command.LoginName);
-
+	  if(email == null)
+      {
+		throw new UserNotFoundException(command.LoginName);
+	  }
+	  
       _smtpClient.Send(email, command.Title, command.Body);
 
       _notificationRepository.Add(email, command.Title, command.Body, _dateTimeProvider.Now(), command.LoginName, command.NotificationType);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Autofac.Core;
 using SFC.Infrastructure.Interfaces;
@@ -24,7 +25,7 @@ namespace SFC.Infrastructure
     public void Publish<T>(T @event) where T : IEvent
     {
       IEnumerable<IEventHandler<T>> eventHandlers =
-        (IEnumerable<IEventHandler<T>>) _container.Resolve(typeof(IEnumerable<IEventHandler<T>>));
+        _container.Resolve<IEnumerable<IEventHandler<T>>>().DistinctBy(f=>f.GetType());
 
       foreach (var eventHandler in eventHandlers)
       {

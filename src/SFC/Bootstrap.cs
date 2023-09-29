@@ -22,7 +22,7 @@ namespace SFC
 {
   public class Bootstrap
   {
-    public static void Run(string[] args, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null) 
+    public static WebApplication Run(string[] args, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null) 
     {
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
@@ -94,6 +94,8 @@ namespace SFC
       app.MapControllers();      
 
       ThreadPool.QueueUserWorkItem(state => { app.Run(); });
+
+      return app;
     }
   }
 }

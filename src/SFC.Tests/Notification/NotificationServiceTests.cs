@@ -53,11 +53,10 @@ namespace SFC.Tests.Notification
       LoginName loginName = "ala" + Guid.NewGuid();
       string notificationType = "type1";
 
-      setNotificationEmail.Handle(new SetNotificationEmailCommand
-      {
-        Email = "example@exmaple.com",
-        LoginName = loginName
-      });
+      setNotificationEmail.Handle(new SetNotificationEmailCommand(
+        "example@exmaple.com",
+        loginName));
+      
 
       sendNotification.Handle(new SendNotificationCommand()
       {

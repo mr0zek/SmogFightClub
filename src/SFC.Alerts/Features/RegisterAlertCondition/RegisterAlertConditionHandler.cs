@@ -4,18 +4,18 @@ using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts.Features.RegisterAlertCondition
 {
-  internal class RegisterAlertConditionHandler : ICommandHandler<RegisterAlertConditionCommand>
+  internal class RegisterAlertConditionHandler : ICommandHandler<CreateAlertCommand>
   {
     private readonly IEventBus _eventBus;
-    private readonly IAlertConditionsRepository _repository;
+    private readonly IAlertRepository _repository;
 
-    public RegisterAlertConditionHandler(IEventBus eventBus, IAlertConditionsRepository repository)
+    public RegisterAlertConditionHandler(IEventBus eventBus, IAlertRepository repository)
     {
       _eventBus = eventBus;
       _repository = repository;
     }
 
-    public void Handle(RegisterAlertConditionCommand command)
+    public void Handle(CreateAlertCommand command)
     {
       if (_repository.Exists(command.ZipCode, command.LoginName))
       {
@@ -24,7 +24,7 @@ namespace SFC.Alerts.Features.RegisterAlertCondition
 
       _repository.Add(command.ZipCode, command.LoginName);
 
-      _eventBus.Publish(new AlertConditionRegisteredEvent()
+      _eventBus.Publish(new AlertCreatedEvent()
       {
         ZipCode = command.ZipCode,
         LoginName = command.LoginName

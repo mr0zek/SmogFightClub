@@ -29,7 +29,7 @@ namespace SFC.UserApi.Features.Alerts
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new RegisterAlertConditionCommand()
+      _commandBus.Send(new CreateAlertCommand()
       {
         Id = id,
         LoginName = _identityProvider.GetLoginName(),

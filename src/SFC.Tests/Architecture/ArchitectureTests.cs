@@ -39,9 +39,7 @@ namespace SFC.Tests.Arch
           .DoNotImplementInterface(typeof(IEvent)).And()
           .AreAssignableTo(typeof(Module))
           .Should().NotBePublic();
-
-      
-
+           
       allowedPublicTypesInModules.Check(Architecture);
     }
   }

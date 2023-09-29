@@ -18,7 +18,7 @@ namespace SFC.Accounts.Features.SearchAccount
 
     public SearchAccountResponse HandleQuery(SearchAccountRequest query)
     {
-      return new SearchAccountResponse(_connection.Query<GetAccountByLoginNameResponse>(
+      return new SearchAccountResponse(_connection.Query<SearchAccountResponse.Account>(
         @"select id, loginName 
           from Accounts.Accounts 
           order by id 
