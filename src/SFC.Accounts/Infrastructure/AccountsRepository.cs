@@ -16,10 +16,10 @@ namespace SFC.Accounts.Infrastructure
             _connection = new SqlConnection(connectionString.ToString());
         }
 
-        public void Add(LoginName loginName)
+        public void Add(LoginName loginName, string passwordHash)
         {
-            _connection.Execute("insert into Accounts.Accounts(loginName)values(@loginName)",
-              new { loginName = loginName.ToString() });
+            _connection.Execute("insert into Accounts.Accounts(loginName, passwordHash)values(@loginName, @passwordHash)",
+              new { loginName = loginName.ToString(), passwordHash });
         }
     }
 }

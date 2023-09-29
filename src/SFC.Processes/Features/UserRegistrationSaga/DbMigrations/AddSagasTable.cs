@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace SFC.Processes.Features.UserRegistration.DbMigrations
+namespace SFC.Processes.Features.UserRegistrationSaga.DbMigrations
 {
   [Migration(201903310852)]
   public class AddSagasTable : Migration

@@ -9,7 +9,7 @@ namespace SFC.Infrastructure
     {   
       builder.RegisterType<Bus>().AsImplementedInterfaces();
       builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
-      builder.RegisterType<FakeIdentityProvider>().AsImplementedInterfaces();
+      builder.RegisterInstance(new FakeIdentityProvider()).AsSelf().AsImplementedInterfaces();
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
     }
   }

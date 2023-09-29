@@ -1,23 +1,28 @@
 ﻿using Automatonymous;
+using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Accounts.Features.GetAccountByLoginName;
+using SFC.Alerts.Features.RegisterAlertCondition.Contract;
 using SFC.Infrastructure.Interfaces;
+using SFC.Notifications.Features.SendNotification.Contract;
+using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes.Features.UserRegistration.Contract;
+using System;
 
 namespace SFC.Processes.Features.UserRegistration
 {
-  class UserRegistrationHandler : ICommandHandler<RegisterUserCommand>
+  class UserRegistrationHandler : ICommandHandler<RegisterUserCommand>, ICommandHandler<ConfirmUserCommand>
   {
     private readonly ICommandBus _commandBus;
-    private readonly ISagaRepository _sagaRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IQuery _query;
+    private readonly IAccountRepository _accountRepository;
 
-    public UserRegistrationHandler(ICommandBus commandBus, ISagaRepository sagaRepository, IPasswordHasher passwordHasher, IQuery query)
+    public UserRegistrationHandler(ICommandBus commandBus, IPasswordHasher passwordHasher, IQuery query, IAccountRepository accountRepository)
     {
       _commandBus = commandBus;
-      _sagaRepository = sagaRepository;
       _passwordHasher = passwordHasher;
       _query = query;
+      _accountRepository = accountRepository;
     }
 
     public void Handle(RegisterUserCommand command)
@@ -26,16 +31,44 @@ namespace SFC.Processes.Features.UserRegistration
       {
         throw new LoginNameAlreadyUsedException(command.LoginName);
       }
+      
+      var passwordHash = _passwordHasher.Hash(command.Password);
 
-      if (_sagaRepository.Get<UserRegistrationSagaData>(command.LoginName) != null)
+      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, passwordHash));
+
+      _commandBus.Send(new SetNotificationEmailCommand(
+        command.Email,
+        command.LoginName
+      ));
+
+      _commandBus.Send(new SendNotificationCommand()
       {
-        throw new LoginNameAlreadyUsedException(command.LoginName);
+        LoginName = command.LoginName,
+        Body = $"<a href=\"{command.BaseUrl}/Confirmation/{command.Id}\">Click her to confirm</a>",
+        Title = "Registration confirmation",
+        NotificationType = "RegistrationConfirmation"
+      });
+    }
+
+    public void Handle(ConfirmUserCommand command)
+    {
+      Account account = _accountRepository.Get(command.ConfirmationId);
+      if(account == null)
+      {
+        throw new InvalidOperationException();
       }
 
-      UserRegistrationSaga saga = new(_commandBus, _passwordHasher);
-      UserRegistrationSagaData data = new() { Id = command.Id };
-      saga.RaiseEvent(data, saga.RegisterUserCommand, command);
-      _sagaRepository.Save(data.Id, data);
+      _commandBus.Send(new CreateAccountCommand()
+      {
+        LoginName = account.LoginName,
+        PasswordHash = account.PasswordHash
+      });      
+
+      _commandBus.Send(new CreateAlertCommand()
+      {
+        LoginName = account.LoginName,
+        ZipCode = account.ZipCode
+      });
     }
   }
 }

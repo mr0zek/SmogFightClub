@@ -19,7 +19,7 @@ namespace SFC.Accounts.Features.CreateAccount
 
     public void Handle(CreateAccountCommand command)
     {
-      _accountRepository.Add(command.LoginName);
+      _accountRepository.Add(command.LoginName, command.PasswordHash);
 
       _eventBus.Publish(new AccountCreatedEvent(command.LoginName));
     }

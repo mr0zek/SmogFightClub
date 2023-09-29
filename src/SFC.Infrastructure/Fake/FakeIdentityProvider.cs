@@ -6,9 +6,15 @@ namespace SFC.Infrastructure.Fake
 {
   public class FakeIdentityProvider : IIdentityProvider
   {
+    private static LoginName _loginName = "Bugs Bunny";
+
+    public void SetLoginName(string loginName)
+    {
+      _loginName = loginName;
+    }
     public LoginName GetLoginName()
     {
-      return "Bugs Bunny";
+      return _loginName;
     }
   }
 }

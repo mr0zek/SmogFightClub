@@ -5,7 +5,7 @@ using Dapper;
 using Newtonsoft.Json;
 using SFC.Infrastructure.Interfaces;
 
-namespace SFC.Processes.Features.UserRegistration
+namespace SFC.Processes.Features.UserRegistrationSaga
 {
   class SagaRepository : ISagaRepository
   {
@@ -28,7 +28,7 @@ namespace SFC.Processes.Features.UserRegistration
       }
     }
 
-    public T Get<T>(string id) where T:class
+    public T Get<T>(string id) where T : class
     {
       string data = _connection.QueryFirstOrDefault<string>(
         "select data from Processes.Sagas where id = @id",
@@ -39,7 +39,7 @@ namespace SFC.Processes.Features.UserRegistration
         return null;
       }
 
-      using(var sr = new StringReader(data))
+      using (var sr = new StringReader(data))
       using (var jr = new JsonTextReader(sr))
       {
         return JsonSerializer.CreateDefault().Deserialize<T>(jr);

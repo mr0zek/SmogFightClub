@@ -1,4 +1,4 @@
-﻿namespace SFC.Processes.Features.UserRegistration
+﻿namespace SFC.Processes.Features.UserRegistrationSaga
 {
   public interface ISagaRepository
   {

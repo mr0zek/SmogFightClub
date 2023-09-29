@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.Processes.Features.UserRegistration;
-using SFC.Processes.Features.UserRegistration.Contract;
+using SFC.Processes.Features.UserRegistrationSaga.Contract;
 
 namespace SFC.UserApi.Features.Accounts
 {
@@ -27,7 +26,7 @@ namespace SFC.UserApi.Features.Accounts
 
       try
       {
-        _commandBus.Send(new RegisterUserCommand()
+        _commandBus.Send(new RegisterUserCommandSaga()
         {
           Id = id,
           BaseUrl = BaseUrl.Current,
@@ -37,7 +36,7 @@ namespace SFC.UserApi.Features.Accounts
           Password = model.Password
         });
       }
-      catch (LoginNameAlreadyUsedException)
+      catch (LoginNameAlreadyUsedSagaException)
       {
         var mds = new ModelStateDictionary();
         mds.AddModelError("loginName", "Already exists");
@@ -52,7 +51,7 @@ namespace SFC.UserApi.Features.Accounts
     {
       try
       {
-        _commandBus.Send(new ConfirmUserCommand()
+        _commandBus.Send(new ConfirmUserCommandSaga()
         {
           ConfirmationId = id
         });

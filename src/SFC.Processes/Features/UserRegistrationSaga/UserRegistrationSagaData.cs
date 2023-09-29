@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SFC.SharedKernel;
 
-namespace SFC.Processes.Features.UserRegistration
+namespace SFC.Processes.Features.UserRegistrationSaga
 {
   public class UserRegistrationSagaData
   {

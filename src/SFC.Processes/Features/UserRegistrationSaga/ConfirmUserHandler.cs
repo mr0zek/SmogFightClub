@@ -2,11 +2,11 @@
 using Automatonymous;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.Processes.Features.UserRegistration.Contract;
+using SFC.Processes.Features.UserRegistrationSaga.Contract;
 
-namespace SFC.Processes.Features.UserRegistration
+namespace SFC.Processes.Features.UserRegistrationSaga
 {
-  public class ConfirmUserHandler : ICommandHandler<ConfirmUserCommand>
+  public class ConfirmUserHandler : ICommandHandler<ConfirmUserCommandSaga>
   {
     private readonly ICommandBus _commandBus;
     private readonly ISagaRepository _sagaRepository;
@@ -19,7 +19,7 @@ namespace SFC.Processes.Features.UserRegistration
       _passwordHasher = passwordHasher;
     }
 
-    public void Handle(ConfirmUserCommand command)
+    public void Handle(ConfirmUserCommandSaga command)
     {
       UserRegistrationSaga saga = new UserRegistrationSaga(_commandBus, _passwordHasher);
       UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
