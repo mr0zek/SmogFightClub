@@ -28,7 +28,7 @@ namespace SFC.Tests.UserApi
 {
   public class UserApiTests
   {
-    private const string _url = "http://localhost:5000";
+    private string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
     public UserApiTests()
@@ -42,7 +42,7 @@ namespace SFC.Tests.UserApi
       InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(new string[0], new Module[]
+      _app = Bootstrap.Run(new string[0],_url, new Module[]
         {
           new AutofacUserApiModule(),
           new AutofacAccountsModule(),

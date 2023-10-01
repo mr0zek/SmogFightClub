@@ -26,9 +26,9 @@ using Xunit;
 
 namespace SFC.Tests.AdminApi
 {
-  public class AdminApiTest
+    public class AdminApiTest
   {
-    private const string _url = "http://localhost:5000";
+    private string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
     public AdminApiTest() 
@@ -42,7 +42,7 @@ namespace SFC.Tests.AdminApi
       InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(new string[0], new Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
           new AutofacAdminApiModule(),
           new AutofacUserApiModule(),

@@ -20,7 +20,7 @@ namespace SFC.Tests.SensorApi
 {
     public class MeasurementsTests
   {
-    private const string _url = "http://localhost:5000";
+    private string _url = TestHelper.GenerateUrl();
     
     public MeasurementsTests()
     {
@@ -32,7 +32,7 @@ namespace SFC.Tests.SensorApi
       SFC.Infrastructure.DbMigrations.Run(connectionString);      
 
       TestSmtpClient.Clear();
-      Bootstrap.Run(new string[0], new Module[]
+      Bootstrap.Run(new string[0],_url, new Module[]
         {
           new AutofacUserApiModule(),
           new AutofacSensorApiModule(),          

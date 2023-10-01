@@ -22,7 +22,7 @@ namespace SFC
 {
   public class Bootstrap
   {
-    public static WebApplication Run(string[] args, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null) 
+    public static WebApplication Run(string[] args, string url, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null) 
     {
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
@@ -63,7 +63,7 @@ namespace SFC
 
       builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-      BaseUrl.Current = "http://localhost:5000/";
+      BaseUrl.Current = url;
 
       string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
 
@@ -93,7 +93,7 @@ namespace SFC
 
       app.MapControllers();      
 
-      ThreadPool.QueueUserWorkItem(state => { app.Run(); });
+      ThreadPool.QueueUserWorkItem(state => { app.Run(url); });
 
       return app;
     }

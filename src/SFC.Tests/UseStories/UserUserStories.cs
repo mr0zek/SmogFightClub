@@ -21,7 +21,7 @@ namespace SFC.Tests.UseStories
 {
     public class UserUserStories : IClassFixture<UserStoriesFixture>
   {
-    private const string _url = "http://localhost:5000";
+    private string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
    
     [Given]
@@ -35,7 +35,7 @@ namespace SFC.Tests.UseStories
       SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
-      Bootstrap.Run(new string[0], new Module[]
+      Bootstrap.Run(new string[0], _url, new Module[]
         {
           new AutofacAdminApiModule(),
           new AutofacSensorApiModule(),

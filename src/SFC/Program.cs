@@ -27,7 +27,7 @@ namespace SFC
 
       DbMigrations.Run(connectionString);
 
-      Bootstrap.Run(args, new Module[]
+      Bootstrap.Run(args,"http://localhost:5000", new Module[]
       {
         new AutofacAdminApiModule(),
         new AutofacSensorApiModule(),
