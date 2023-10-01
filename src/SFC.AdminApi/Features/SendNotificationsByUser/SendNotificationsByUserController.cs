@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace SFC.AdminApi.Features.SendNotificationsByUser
 {
   [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}/admin/[controller]")]
   [ApiController]
   public class SendNotificationsByUserController : Controller
   {

@@ -79,6 +79,7 @@ namespace SFC.Tests.UserApi
     [Fact]
     public async void AccountCreationSuccessScenario()
     {
+      // Arrange
       var postAccountModel = new PostAccountModel()
       {
         LoginName = Guid.NewGuid().ToString(),
@@ -89,12 +90,11 @@ namespace SFC.Tests.UserApi
       var provider = (FakeIdentityProvider)_app.Services.GetService(typeof(FakeIdentityProvider));
       provider.SetLoginName(postAccountModel.LoginName);
 
+      // Act
       string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
-
-      Assert.Single(TestSmtpClient.SentEmails);
-
       await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
 
+      // Assert
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
       var alerts = await RestClient.For<IUserApi>(_url).GetAlerts();

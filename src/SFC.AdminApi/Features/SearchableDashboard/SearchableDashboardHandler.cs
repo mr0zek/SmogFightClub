@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using SFC.Accounts.Features.CreateAccount.Contract;
+using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  class SearchableDashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<NotificationSentEvent>
+  class SearchableDashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<AlertCreatedEvent>
   {
     private readonly IWriteDashboardPerspective _searchableDashboardPerspective;
 
@@ -25,14 +26,11 @@ namespace SFC.AdminApi.Features.SearchableDashboard
       });
     }
 
-    public void Handle(NotificationSentEvent @event)
+    public void Handle(AlertCreatedEvent @event)
     {
-      if (@event.NotificationType == "SmogAlert")
-      {
-        var result = _searchableDashboardPerspective.Get(@event.LoginName);
-        result.AlertsSentCount++;
-        _searchableDashboardPerspective.Update(result);
-      }
+      var result = _searchableDashboardPerspective.Get(@event.LoginName);
+      result.AlertsCount++;
+      _searchableDashboardPerspective.Update(result);
     }
   }
 }

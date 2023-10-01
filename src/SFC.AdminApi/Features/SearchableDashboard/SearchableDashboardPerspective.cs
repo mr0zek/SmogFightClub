@@ -18,42 +18,47 @@ namespace SFC.AdminApi.Features.SearchableDashboard
     public void Add(SearchableDashboardEntry searchableDashboardEntry)
     {
       _connection.Execute(
-        @"insert into SearchableDashboard.SearchableDashboard(loginName, alertCount)
-          values(@loginName, @alertCount)",
+        @"insert into SearchableDashboard.SearchableDashboard(loginName, alertsCount)
+          values(@loginName, @alertsCount)",
         new
         {
           loginName = searchableDashboardEntry.LoginName.ToString(),
-          alertCount = searchableDashboardEntry.AlertsSentCount
+          alertsCount = searchableDashboardEntry.AlertsCount
         });
     }
 
     public SearchableDashboardEntry Get(LoginName loginName)
     {
       return _connection.QueryFirst<SearchableDashboardEntry>(
-        @"select id, loginName, alertCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
+        @"select id, loginName, alertsCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
     }
 
     public void Update(SearchableDashboardEntry searchableDashboardEntry)
     {
       _connection.Execute(
         @"update SearchableDashboard.SearchableDashboard 
-          set alertCount = @alertCount
+          set alertsCount = @alertsCount
           where loginName = @loginName",
           new 
           {             
             loginName = searchableDashboardEntry.LoginName.ToString(), 
-            alertCount = searchableDashboardEntry.AlertsSentCount });
+            alertsCount = searchableDashboardEntry.AlertsCount });
     }
 
     public SearchableDashboardResult Search(SearchableDashboardQueryModel query)
     {
       return new SearchableDashboardResult(_connection.Query<SearchableDashboardEntry>(
-        @"select id, loginName 
+        @"select id, loginName, alertsCount  
           from SearchableDashboard.SearchableDashboard
-          where alertCount > @alertsCountGreaterThan
+          where alertsCount between @alertsMin and @alertsMax
           order by id 
           offset @skip rows 
-          fetch next @take rows only", new { query.Skip, query.Take, query.AlertsCountGreaterThan }));
+          fetch next @take rows only", new
+        { 
+          skip = query.Skip, 
+          take = query.Take, 
+          alertsMin = query.AlertsMin, 
+          alertsMax = query.AlertsMax }));
     }
   }
 }

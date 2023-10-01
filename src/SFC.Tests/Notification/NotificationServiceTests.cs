@@ -46,6 +46,7 @@ namespace SFC.Tests.Notification
     [Fact]
     public void Send_notification_suuccess_scenaio()
     {
+      // Arrange
       var setNotificationEmail = _container.Resolve<ICommandHandler<SetNotificationEmailCommand>>();
       var sendNotification = _container.Resolve<ICommandHandler<SendNotificationCommand>>();
       var query = _container.Resolve<IQuery>();
@@ -57,7 +58,7 @@ namespace SFC.Tests.Notification
         "example@exmaple.com",
         loginName));
       
-
+      // Act
       sendNotification.Handle(new SendNotificationCommand()
       {
         LoginName = loginName,
@@ -66,6 +67,7 @@ namespace SFC.Tests.Notification
         NotificationType = notificationType
       });
 
+      // Assert
       var result = query.Query(
         new GetSendNotificationsCountRequest()
         {

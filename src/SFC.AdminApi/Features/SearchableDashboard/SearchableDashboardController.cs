@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
   [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v{version:apiVersion}/admin/[controller]")]
   [ApiController]
   public class SearchableDashboardController : Controller
   {

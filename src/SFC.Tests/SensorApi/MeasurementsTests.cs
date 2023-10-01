@@ -48,14 +48,14 @@ namespace SFC.Tests.SensorApi
     [Fact]
     public async void PostMeasurements_should_return_ok()
     {
+      // Arrange
       Guid sensorId = await RestClient.For<IUserApi>(_url).PostSensor(new PostSensorModel() { ZipCode = "01-102"});
 
-
+      // Act, Assert
       await RestClient.For<ISensorApi>(_url).PostMeasurements(sensorId, new PostMeasurementModel()
       {
         Values = new Dictionary<PolutionType, decimal>() { { PolutionType.PM2_5, 12 }, { PolutionType.NO2, 34 } }
       });
-
     }
   }
 }

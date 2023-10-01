@@ -12,7 +12,7 @@ namespace SFC.AdminApi.Features.SearchableDashboard.DbMigrations
         .InSchema("SearchableDashboard")
         .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
         .WithColumn("LoginName").AsString(int.MaxValue).NotNullable()
-        .WithColumn("alertCount").AsInt16().NotNullable();
+        .WithColumn("alertsCount").AsInt16().NotNullable();
     }
 
     public override void Down()
