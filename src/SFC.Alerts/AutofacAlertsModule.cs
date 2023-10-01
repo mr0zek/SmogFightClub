@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using FluentValidation;
 using SFC.Alerts.Features.CreateAlert;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
@@ -25,6 +26,10 @@ namespace SFC.Alerts
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IQueryHandler<,>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }

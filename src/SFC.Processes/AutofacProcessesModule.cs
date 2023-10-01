@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
@@ -24,6 +25,10 @@ namespace SFC.Processes
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IQueryHandler<,>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }

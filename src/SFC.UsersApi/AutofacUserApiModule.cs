@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
@@ -14,6 +15,10 @@ namespace SFC.UserApi
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IEventHandler<>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }

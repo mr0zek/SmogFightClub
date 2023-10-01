@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification;
@@ -26,6 +27,10 @@ namespace SFC.Notifications
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IQueryHandler<,>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }

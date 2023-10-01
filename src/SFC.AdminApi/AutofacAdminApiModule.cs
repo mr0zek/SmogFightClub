@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
@@ -20,6 +21,10 @@ namespace SFC.AdminApi
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IEventHandler<>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }

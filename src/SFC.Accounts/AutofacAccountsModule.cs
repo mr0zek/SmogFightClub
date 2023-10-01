@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
@@ -23,6 +24,10 @@ namespace SFC.Accounts
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IQueryHandler<,>)).AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(GetType().Assembly)
+        .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
     }
   }
