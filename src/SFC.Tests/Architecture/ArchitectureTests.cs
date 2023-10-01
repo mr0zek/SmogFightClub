@@ -30,7 +30,7 @@ namespace SFC.Tests.Architecture
     public void CheckPublicTypesInModules()
     {
       IArchRule allowedPublicTypesInModules =
-        Classes().That()
+        Types().That()
           .AreAssignableTo(typeof(Migration)).And()
           .AreAssignableTo(typeof(Exception)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
@@ -38,7 +38,7 @@ namespace SFC.Tests.Architecture
           .DoNotImplementInterface(typeof(ICommand)).And()
           .DoNotImplementInterface(typeof(IEvent)).And()
           .AreAssignableTo(typeof(Module))
-          .Should().NotBePublic();
+          .Should().NotBePublic();                  
 
       allowedPublicTypesInModules.Check(Architecture);
     }
