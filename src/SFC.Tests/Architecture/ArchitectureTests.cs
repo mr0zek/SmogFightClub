@@ -14,11 +14,11 @@ using ArchUnitNET.xUnit;
 using Autofac;
 using FluentMigrator;
 
-namespace SFC.Tests.Arch
+namespace SFC.Tests.Architecture
 {
   public class ArchitectureTests
   {
-    private static readonly Architecture Architecture =
+    private static readonly ArchUnitNET.Domain.Architecture Architecture =
     new ArchLoader().LoadAssemblies(
       typeof(AutofacAccountsModule).Assembly,
       typeof(AutofacAlertsModule).Assembly,
@@ -29,7 +29,7 @@ namespace SFC.Tests.Arch
     [Fact]
     public void CheckPublicTypesInModules()
     {
-      IArchRule allowedPublicTypesInModules = 
+      IArchRule allowedPublicTypesInModules =
         Classes().That()
           .AreAssignableTo(typeof(Migration)).And()
           .AreAssignableTo(typeof(Exception)).And()
@@ -39,7 +39,7 @@ namespace SFC.Tests.Arch
           .DoNotImplementInterface(typeof(IEvent)).And()
           .AreAssignableTo(typeof(Module))
           .Should().NotBePublic();
-           
+
       allowedPublicTypesInModules.Check(Architecture);
     }
   }

@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Tests.InitializeDb
+namespace SFC.Tests.DbMigrations
 {
   public class InitializeDb
-  { 
+  {
     public static void Init(string connectionString)
     {
       new SqlConnection(connectionString).Execute("delete from Alerts.Alerts");

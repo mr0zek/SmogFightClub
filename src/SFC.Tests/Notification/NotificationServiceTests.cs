@@ -21,7 +21,7 @@ namespace SFC.Tests.Notification
 
   public class NotificationServiceTests
   {
-    IContainer _container;
+    private readonly IContainer _container;
 
     public NotificationServiceTests()
     {
@@ -30,7 +30,7 @@ namespace SFC.Tests.Notification
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      DbMigrations.Run(connectionString);
+      SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       var builder = new ContainerBuilder();
       builder.RegisterModule(new AutofacNotificationsModule());

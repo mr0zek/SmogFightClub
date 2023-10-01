@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Automatonymous;
 using SFC.Accounts.Features.CreateAccount.Contract;
-using SFC.Alerts.Features.RegisterAlertCondition.Contract;
+using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
@@ -34,7 +34,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       During(WaitingForConfirmation,
         When(ConfirmUserCommand)
           .Then(CreateUserAccount)
-          .Then(RegisterAlertCondition)
+          .Then(RegisterAlert)
           .TransitionTo(Final));
     }
 
@@ -56,7 +56,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       });
     }
 
-    private void RegisterAlertCondition(BehaviorContext<UserRegistrationSagaData> context)
+    private void RegisterAlert(BehaviorContext<UserRegistrationSagaData> context)
     {
       _commandBus.Send(new CreateAlertCommand()
       {

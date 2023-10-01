@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
+using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.SharedKernel;
 
 namespace SFC.Sensors.Infrastructure
@@ -27,5 +28,9 @@ namespace SFC.Sensors.Infrastructure
       return _connection.QueryFirst<int>("select count(*) from Sensors.Sensors where id = @sensorId", new { sensorId }) != 0;
     }
 
+    public Sensor Get(Guid sensorId)
+    {
+      return _connection.QueryFirst<Sensor>("select id, zipCode from Sensors.Sensors where id = @sensorId", new { sensorId });
+    }
   }
 }

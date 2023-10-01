@@ -18,11 +18,11 @@ namespace SFC.Sensors.Features.RegisterSensor
 
     public void Handle(RegisterSensorCommand command)
     {
-      if(_sensorRepository.Exits(command.Id))
+      if(_sensorRepository.Exits(command.SensorId))
       {
-        throw new SensorAlreadyExistsException(command.Id);
+        throw new SensorAlreadyExistsException(command.SensorId);
       }
-      _sensorRepository.Add(command.Id, command.ZipCode, command.LoginName);
+      _sensorRepository.Add(command.SensorId, command.ZipCode, command.LoginName);
     }
   }
 }

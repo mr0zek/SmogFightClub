@@ -30,7 +30,7 @@ namespace SFC.UserApi.Features.Sensors
 
       _commandBus.Send(new RegisterSensorCommand()
       {
-        Id = id,
+        SensorId = id,
         LoginName = _identityProvider.GetLoginName(),
         ZipCode = model.ZipCode
       });

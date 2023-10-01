@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Infrastructure;
 
 namespace SFC.Sensors
@@ -13,6 +14,8 @@ namespace SFC.Sensors
 
       builder.RegisterType<MeasurementRepository>().AsImplementedInterfaces();
 
+      builder.RegisterType<PM25Verificator>().AsImplementedInterfaces();
+
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
@@ -24,6 +27,8 @@ namespace SFC.Sensors
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IQueryHandler<,>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
+
+      
     }
   }
 }

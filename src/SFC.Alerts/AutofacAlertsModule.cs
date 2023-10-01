@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
-using SFC.Alerts.Features.RegisterAlertCondition;
+using SFC.Alerts.Features.CreateAlert;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 

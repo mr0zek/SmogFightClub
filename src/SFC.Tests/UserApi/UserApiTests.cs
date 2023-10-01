@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using RestEase;
 using SFC.Accounts;
-using SFC.AdminApi.Features.Dashboard;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Fake;
@@ -13,6 +12,7 @@ using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
 using SFC.Sensors;
 using SFC.SharedKernel;
+using SFC.Tests.DbMigrations;
 using SFC.Tests.Mocks;
 using SFC.UserApi;
 using SFC.UserApi.Features.Accounts;
@@ -38,8 +38,8 @@ namespace SFC.Tests.UserApi
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      DbMigrations.Run(connectionString);
-      InitializeDb.InitializeDb.Init(connectionString);
+      SFC.Infrastructure.DbMigrations.Run(connectionString);
+      InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(new string[0], new Module[]

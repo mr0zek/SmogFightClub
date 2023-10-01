@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using SFC.AdminApi.Features.Dashboard;
+using SFC.AdminApi.Features.AlertNotificationsWithUserData;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;

@@ -32,7 +32,7 @@ namespace SFC.Tests.UseStories
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      DbMigrations.Run(connectionString);
+      SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
       Bootstrap.Run(new string[0], new Module[]
@@ -63,7 +63,7 @@ namespace SFC.Tests.UseStories
 
     async void WhenUserPostRegistrationForm()
     {
-      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(_postAccountModel);
+      await RestClient.For<IUserApi>(_url).PostAccount(_postAccountModel);
     }
 
     void ThenSystemSendsConfirmationEmail()

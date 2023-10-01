@@ -29,10 +29,9 @@ namespace SFC.SensorApi.Features.RegisterMeasurement
 
       _commandBus.Send(new RegisterMeasurementCommand()
       {
-        Id = id,
         SensorId = sensorId,
         Date = _dateTimeProvider.Now(),
-        Elements = model.Values.ToDictionary(f => (ElementName)f.Key, f => f.Value)
+        Elements = model.Values.ToDictionary(f => f.Key, f => f.Value)
       });
 
       return Ok();

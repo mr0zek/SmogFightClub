@@ -18,28 +18,31 @@ namespace SFC.AdminApi.Features.SearchableDashboard
     public void Add(SearchableDashboardEntry searchableDashboardEntry)
     {
       _connection.Execute(
-        @"insert into SearchableDashboard.SearchableDashboard(id, loginName, alertsCount)
-          values(@loginName, @alertsCount)",
+        @"insert into SearchableDashboard.SearchableDashboard(loginName, alertCount)
+          values(@loginName, @alertCount)",
         new
         {
-          loginName = searchableDashboardEntry.LoginName,
-          alertsCount = searchableDashboardEntry.AlertsSentCount
+          loginName = searchableDashboardEntry.LoginName.ToString(),
+          alertCount = searchableDashboardEntry.AlertsSentCount
         });
     }
 
     public SearchableDashboardEntry Get(LoginName loginName)
     {
       return _connection.QueryFirst<SearchableDashboardEntry>(
-        @"select id, loginName, alertsCount where loginName = @loginName", new {loginName});
+        @"select id, loginName, alertCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
     }
 
     public void Update(SearchableDashboardEntry searchableDashboardEntry)
     {
       _connection.Execute(
         @"update SearchableDashboard.SearchableDashboard 
-          set loginName = @loginName, alertsCount = @alertsCount)
-          where id = @id",
-        searchableDashboardEntry);
+          set alertCount = @alertCount
+          where loginName = @loginName",
+          new 
+          {             
+            loginName = searchableDashboardEntry.LoginName.ToString(), 
+            alertCount = searchableDashboardEntry.AlertsSentCount });
     }
 
     public SearchableDashboardResult Search(SearchableDashboardQueryModel query)

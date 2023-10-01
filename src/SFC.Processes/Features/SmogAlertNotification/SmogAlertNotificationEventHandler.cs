@@ -1,4 +1,4 @@
-﻿using SFC.Alerts.Features.RegisterAlertCondition.Contract;
+﻿using SFC.Alerts.Features.VerifySmogExceedence.Contract;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;

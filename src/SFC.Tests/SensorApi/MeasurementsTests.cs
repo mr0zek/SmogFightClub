@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Xunit;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
+using SFC.SharedKernel;
 
 namespace SFC.Tests.SensorApi
 {
@@ -28,7 +29,7 @@ namespace SFC.Tests.SensorApi
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      DbMigrations.Run(connectionString);      
+      SFC.Infrastructure.DbMigrations.Run(connectionString);      
 
       TestSmtpClient.Clear();
       Bootstrap.Run(new string[0], new Module[]
@@ -52,7 +53,7 @@ namespace SFC.Tests.SensorApi
 
       await RestClient.For<ISensorApi>(_url).PostMeasurements(sensorId, new PostMeasurementModel()
       {
-        Values = new Dictionary<string, decimal>() { { "a", 12 }, { "b", 34 } }
+        Values = new Dictionary<PolutionType, decimal>() { { PolutionType.PM2_5, 12 }, { PolutionType.NO2, 34 } }
       });
 
     }

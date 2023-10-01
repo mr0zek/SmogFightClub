@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using SFC.Alerts.Features.GetAllAlertCondition;
-using SFC.Alerts.Features.GetAllAlertConditions;
-using SFC.Alerts.Features.RegisterAlertCondition.Contract;
+using SFC.Alerts.Features.CreateAlert.Contract;
+using SFC.Alerts.Features.GetAllAlert;
+using SFC.Alerts.Features.GetAllAlerts;
 using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
@@ -42,13 +42,13 @@ namespace SFC.UserApi.Features.Alerts
     [HttpGet]
     public IActionResult Get()
     {
-      return Json(_query.Query(new GetAllAlertConditionsRequest(_identityProvider.GetLoginName())));
+      return Json(_query.Query(new GetAllAlertsRequest(_identityProvider.GetLoginName())));
     }    
 
     [HttpGet("{id}")]
     public IActionResult Get([FromRoute]string id)
     {
-      return Json(_query.Query(new GetAlertConditionRequest(id, _identityProvider.GetLoginName())));
+      return Json(_query.Query(new GetAlertRequest(id, _identityProvider.GetLoginName())));
     }
   }
 }

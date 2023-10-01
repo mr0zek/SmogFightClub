@@ -1,7 +1,7 @@
 ﻿using Automatonymous;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Accounts.Features.GetAccountByLoginName;
-using SFC.Alerts.Features.RegisterAlertCondition.Contract;
+using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
