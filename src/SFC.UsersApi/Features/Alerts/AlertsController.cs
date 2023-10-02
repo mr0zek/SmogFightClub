@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Alerts.Features.CreateAlert.Contract;
-using SFC.Alerts.Features.GetAllAlert;
+using SFC.Alerts.Features.GetAlert;
 using SFC.Alerts.Features.GetAllAlerts;
 using SFC.Infrastructure.Interfaces;
-using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Alerts
 {

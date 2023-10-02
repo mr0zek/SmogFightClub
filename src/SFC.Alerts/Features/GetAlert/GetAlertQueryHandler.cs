@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Alerts.Features.GetAllAlert
+namespace SFC.Alerts.Features.GetAlert
 {
   internal class GetAlertQueryHandler : IQueryHandler<GetAlertRequest, GetAlertResponse>
   {

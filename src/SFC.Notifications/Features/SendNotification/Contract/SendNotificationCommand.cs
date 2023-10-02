@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure.Interfaces;
+using SFC.Notifications.Features.GetAllSendNotificationsCount.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Features.SendNotification.Contract

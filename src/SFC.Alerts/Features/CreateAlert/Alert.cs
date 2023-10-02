@@ -2,7 +2,7 @@
 
 namespace SFC.Alerts.Features.CreateAlert
 {
-  public class Alert
+  class Alert
   {
     public LoginName LoginName { get; set; }    
   }

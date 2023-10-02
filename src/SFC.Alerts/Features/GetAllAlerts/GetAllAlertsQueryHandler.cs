@@ -1,7 +1,6 @@
 ﻿using Dapper;
-using SFC.Alerts.Features.GetAllAlert;
+using SFC.Alerts.Features.GetAlert;
 using SFC.Infrastructure.Interfaces;
-using SFC.SharedKernel;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -9,7 +8,7 @@ namespace SFC.Alerts.Features.GetAllAlerts
 {
   internal class GetAllAlertsQueryHandler : IQueryHandler<GetAllAlertsRequest, GetAllAlertsResponse>
     {
-        private IDbConnection _connection;
+        private readonly IDbConnection _connection;
 
         public GetAllAlertsQueryHandler(ConnectionString connectionString)
         {

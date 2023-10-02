@@ -1,7 +1,7 @@
 ﻿using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
-namespace SFC.Alerts.Features.GetAllAlert
+namespace SFC.Alerts.Features.GetAlert
 {
   public class GetAlertRequest : IRequest<GetAlertResponse>
   {
@@ -15,5 +15,4 @@ namespace SFC.Alerts.Features.GetAllAlert
 
     public LoginName LoginName { get; set; }
   }
-
 }

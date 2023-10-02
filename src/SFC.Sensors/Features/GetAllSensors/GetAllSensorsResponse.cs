@@ -9,7 +9,7 @@ namespace SFC.Sensors.Features.GetAllSensors
     {
       Sensors = sensors;
     }
-    public class SensorReadModel
+    public class SensorReadModel : IResponse
     {
 
     }

@@ -3,7 +3,7 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 
-namespace SFC.Processes.Features.AlertCreatedNotification
+namespace SFC.Processes.Features.AlertConditionCreatedNotification
 {
   public class AlertNotificationEventHandler : IEventHandler<AlertCreatedEvent>
   {

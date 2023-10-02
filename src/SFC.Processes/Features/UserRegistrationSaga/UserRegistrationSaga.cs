@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Automatonymous;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Alerts.Features.CreateAlert.Contract;
@@ -60,9 +61,10 @@ namespace SFC.Processes.Features.UserRegistrationSaga
     {
       _commandBus.Send(new CreateAlertCommand()
       {
+        Id = Guid.NewGuid(),
         LoginName = context.Instance.LoginName,
         ZipCode = context.Instance.ZipCode
-      });
+      }); 
     }
 
     private void SaveNotificationEmail(BehaviorContext<UserRegistrationSagaData> context)

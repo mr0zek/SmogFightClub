@@ -28,7 +28,7 @@ namespace SFC.Infrastructure
 
         if (!validationResult.IsValid)
         {
-          throw new ArgumentException();
+          throw new ArgumentException(validationResult.ToString(), nameof(command));
         }
       }
 
@@ -59,7 +59,7 @@ namespace SFC.Infrastructure
 
         if (!validationResult.IsValid)
         {
-          throw new ArgumentException(validationResult.ToString());
+          throw new ArgumentException(validationResult.ToString(), nameof(request));
         }
       }
       Type generic = typeof(IQueryHandler<,>);

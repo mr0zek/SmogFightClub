@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using SFC.Notifications.Features.SendNotification;
+using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.Infrastructure.Fake

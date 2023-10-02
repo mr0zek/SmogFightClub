@@ -1,6 +1,6 @@
 ﻿using SFC.Infrastructure.Interfaces;
 
-namespace SFC.Alerts.Features.GetAllAlert
+namespace SFC.Alerts.Features.GetAlert
 {
   public class GetAlertResponse : IResponse
   {

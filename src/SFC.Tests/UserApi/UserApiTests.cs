@@ -28,7 +28,7 @@ namespace SFC.Tests.UserApi
 {
   public class UserApiTests
   {
-    private string _url = TestHelper.GenerateUrl();
+    private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
     public UserApiTests()
@@ -42,7 +42,7 @@ namespace SFC.Tests.UserApi
       InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(new string[0],_url, new Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
           new AutofacUserApiModule(),
           new AutofacAccountsModule(),
@@ -72,7 +72,7 @@ namespace SFC.Tests.UserApi
         });
 
       // Assert
-      Assert.Equal(1, TestSmtpClient.SentEmails.Count);
+      Assert.Single(TestSmtpClient.SentEmails);
 
     }
 

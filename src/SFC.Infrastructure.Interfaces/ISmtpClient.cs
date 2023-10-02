@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Notifications.Features.SendNotification
+namespace SFC.Infrastructure.Interfaces
 {
   public interface ISmtpClient
   {

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using SFC.Accounts.Features.CreateAccount.Contract;
 
-namespace SFC.Accounts.Features.CreateAccount.Contract
+namespace SFC.Accounts.Features.CreateAccount
 {
   class CreaateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
   {

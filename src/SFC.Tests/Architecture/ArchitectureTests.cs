@@ -31,13 +31,13 @@ namespace SFC.Tests.Architecture
     {
       IArchRule allowedPublicTypesInModules =
         Types().That()
-          .AreAssignableTo(typeof(Migration)).And()
-          .AreAssignableTo(typeof(Exception)).And()
+          .AreNotAssignableTo(typeof(Migration)).And()
+          .AreNotAssignableTo(typeof(Exception)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()
           .DoNotImplementInterface(typeof(ICommand)).And()
           .DoNotImplementInterface(typeof(IEvent)).And()
-          .AreAssignableTo(typeof(Module))
+          .AreNotAssignableTo(typeof(Module))
           .Should().NotBePublic();                  
 
       allowedPublicTypesInModules.Check(Architecture);

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SFC.Alerts.Features.GetAllAlert;
+using SFC.Alerts.Features.GetAlert;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts.Features.GetAllAlerts
