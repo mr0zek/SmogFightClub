@@ -53,9 +53,10 @@ namespace SFC.Tests.Notification
 
       LoginName loginName = "ala" + Guid.NewGuid();
       string notificationType = "type1";
+      string email = "example@exmaple.com";
 
       setNotificationEmail.Handle(new SetNotificationEmailCommand(
-        "example@exmaple.com",
+        email,
         loginName));
       
       // Act
@@ -76,11 +77,11 @@ namespace SFC.Tests.Notification
         });
 
       var entry = result.Result.FirstOrDefault(f=>f.LoginName == loginName);
-      
-      Assert.True(entry.LoginName == loginName);
-      Assert.True(entry.Count == 1);
-      Assert.True(TestSmtpClient.SentEmails.Count == 1);
-      Assert.True(TestEventHandler<NotificationSentEvent>.Events.Count == 1);
+
+      Assert.Equal(loginName,entry.LoginName);
+      Assert.Equal(1,entry.Count);
+      Assert.Equal(1,TestSmtpClient.SentEmails.Where(f=>f.Email == email).Count());
+      Assert.Equal(1,TestEventHandler<NotificationSentEvent>.Events.Count);
     }
   }
 }
