@@ -3,12 +3,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
+using SFC.Alerts.Features.CreateAlert;
+using SFC.Alerts.Features.VerifySmogExceedence;
 using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
 
 namespace SFC.Alerts.Infrastructure
 {
-    internal class AlertRepository : IAlertRepository
+  internal class AlertRepository : IAlertWriteRepository, IAlertReadRepository
     {
         private readonly IDbConnection _connection;
 

@@ -1,6 +1,6 @@
 ﻿using SFC.SharedKernel;
 
-namespace SFC.Alerts.Infrastructure
+namespace SFC.Alerts.Features.VerifySmogExceedence
 {
     class Alert
     {
