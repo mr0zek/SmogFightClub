@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Autofac;
 using FluentValidation;
-using SFC.Alerts.Features.CreateAlert;
+using SFC.Alerts.Infrastructure;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts
 {
-  public class AutofacAlertsModule : Module
+    public class AutofacAlertsModule : Module
   {    
     protected override void Load(ContainerBuilder builder)
     {

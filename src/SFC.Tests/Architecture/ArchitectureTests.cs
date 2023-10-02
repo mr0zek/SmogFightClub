@@ -8,11 +8,12 @@ using SFC.Accounts;
 using SFC.Alerts;
 using SFC.Notifications;
 using SFC.Sensors;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using SFC.Infrastructure.Interfaces;
 using ArchUnitNET.xUnit;
 using Autofac;
 using FluentMigrator;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SFC.Tests.Architecture
 {
@@ -38,9 +39,48 @@ namespace SFC.Tests.Architecture
           .DoNotImplementInterface(typeof(ICommand)).And()
           .DoNotImplementInterface(typeof(IEvent)).And()
           .AreNotAssignableTo(typeof(Module))
-          .Should().NotBePublic();                  
+          .Should().NotBePublic();
 
       allowedPublicTypesInModules.Check(Architecture);
+    }
+
+    [Fact]
+    public void CheckFeatureAutonomy()
+    {
+      var obj = Types().That().ResideInNamespace(".*Feature.*", true).GetObjects(Architecture);
+      var namespaces = obj.Select(f =>
+      {
+        var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[\\.].+[^\\.])[.].*");
+        return m.Groups["ns"].Value;
+      }).Where(f=>f!="").Distinct();
+
+
+      foreach (var ns in namespaces)
+      {
+        foreach (var ns2 in namespaces)
+        {
+          if (ns != ns2)
+          {
+            Types().That().ResideInNamespace($"{ns}.*", true)
+              .Should()
+              .NotDependOnAny(
+                Types()
+                .That()
+                .ResideInNamespace($"{ns2}.*", true)
+                .And()
+                .DoNotImplementInterface(typeof(ICommand))
+                .And()
+                .DoNotImplementInterface(typeof(IEvent))
+                .And()
+                .DoNotImplementInterface(typeof(IResponse))
+                .And()
+                .DoNotImplementInterface(typeof(IRequest<>))
+                )
+
+              .Check(Architecture);
+          }
+        }
+      }
     }
   }
 }

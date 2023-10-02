@@ -1,6 +1,5 @@
-﻿using SFC.Alerts.Features.CreateAlert;
-using SFC.Alerts.Features.CreateAlert.Contract;
-using SFC.Alerts.Features.VerifySmogExceedence.Contract;
+﻿using SFC.Alerts.Features.VerifySmogExceedence.Contract;
+using SFC.Alerts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using System;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Alerts.Features.VerifySmogExceedence
 {
-  internal class VerifySmogExceedenceHandler : IEventHandler<AcceptableLevelExceededEvent>
+    internal class VerifySmogExceedenceHandler : IEventHandler<AcceptableLevelExceededEvent>
   {
     private readonly IAlertRepository _alertRepository;
     private readonly IEventBus _eventBus;

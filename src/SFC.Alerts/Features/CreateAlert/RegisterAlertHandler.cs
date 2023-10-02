@@ -1,10 +1,13 @@
 ﻿using SFC.Alerts.Features.CreateAlert.Contract;
+using SFC.Alerts.Features.VerifySmogExceedence;
+using SFC.Alerts.Features.VerifySmogExceedence.Contract;
+using SFC.Alerts.Infrastructure;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts.Features.CreateAlert
 {
-  internal class RegisterAlertHandler : ICommandHandler<CreateAlertCommand>
+    internal class RegisterAlertHandler : ICommandHandler<CreateAlertCommand>
   {
     private readonly IEventBus _eventBus;
     private readonly IAlertRepository _repository;
