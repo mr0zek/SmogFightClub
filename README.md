@@ -15,6 +15,7 @@ any suggestions contact me https://www.szylhabel.pl/contactme/
 - Autofac
 
 ## ToDo:
+- CRUD module Template
 - Integrate with identity server
 - Implement delayed commands based on hangfire
   
