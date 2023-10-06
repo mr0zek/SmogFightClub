@@ -12,7 +12,7 @@ namespace SFC.Infrastructure
   internal class ValidationCommandHandler<T> : ICommandHandler<T>
   {
     private readonly ICommandHandler<T> _commandHandler;
-    IComponentContext _container;
+    private readonly IComponentContext _container;
 
     public ValidationCommandHandler(ICommandHandler<T> commandHandler, IComponentContext container)
     {

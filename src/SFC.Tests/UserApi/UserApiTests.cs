@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using RestEase;
 using SFC.Accounts;
 using SFC.Alerts;
+using SFC.AuthenticationApi;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Fake;
 using SFC.Infrastructure.Interfaces;
@@ -44,6 +45,7 @@ namespace SFC.Tests.UserApi
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
+          new AutofacAuthenticationApiModule(),
           new AutofacUserApiModule(),
           new AutofacAccountsModule(),
           new AutofacSensorsModule(),
@@ -97,7 +99,11 @@ namespace SFC.Tests.UserApi
       // Assert
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
-      var alerts = await RestClient.For<IUserApi>(_url).GetAlerts();
+      string token = await RestClient.For<IAuthenticationApi>(_url).Login(new (postAccountModel.LoginName, postAccountModel.Password));
+
+      var api = RestClient.For<IUserApi>(_url);
+      api.Token = $"Bearer {token}";
+      var alerts = await api.GetAlerts();
 
       Assert.Single(alerts.Alerts);
       Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);

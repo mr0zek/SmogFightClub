@@ -10,7 +10,7 @@ namespace SFC.Infrastructure
     where TResponse : IResponse
   {
     private readonly IQueryHandler<TRequest, TResponse> _queryHandler;
-    IComponentContext _container;
+    private readonly IComponentContext _container;
 
     public ValidationQueryHandler(IQueryHandler<TRequest, TResponse> queryHandler, IComponentContext container)
     {

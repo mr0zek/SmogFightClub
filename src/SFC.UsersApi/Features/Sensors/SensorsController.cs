@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.GetAllSensors;
@@ -7,7 +8,8 @@ using SFC.Sensors.Features.RegisterSensor.Contract;
 
 namespace SFC.UserApi.Features.Sensors
 {
-    [ApiVersion("1.0")]
+  [Authorize]
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/user/[controller]")]
   [ApiController]
   public class SensorsController : Controller

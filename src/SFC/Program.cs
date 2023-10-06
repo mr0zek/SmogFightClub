@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using SFC.Accounts;
 using SFC.AdminApi;
 using SFC.Alerts;
+using SFC.AuthenticationApi;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
@@ -29,6 +30,7 @@ namespace SFC
 
       Bootstrap.Run(args,"http://localhost:5000", new Module[]
       {
+        new AutofacAuthenticationApiModule(),
         new AutofacAdminApiModule(),
         new AutofacSensorApiModule(),
         new AutofacUserApiModule(),

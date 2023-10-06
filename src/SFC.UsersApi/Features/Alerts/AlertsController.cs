@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Alerts.Features.GetAlert;
@@ -7,6 +8,7 @@ using SFC.Infrastructure.Interfaces;
 
 namespace SFC.UserApi.Features.Alerts
 {
+  [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/user/[controller]")]
   [ApiController]

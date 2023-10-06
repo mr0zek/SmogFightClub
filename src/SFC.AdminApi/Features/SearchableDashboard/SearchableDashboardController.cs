@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
+  [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/admin/[controller]")]
   [ApiController]
@@ -16,11 +18,9 @@ namespace SFC.AdminApi.Features.SearchableDashboard
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery]SearchableDashboardQueryModel query)
+    public ActionResult<SearchableDashboardResult> Get([FromQuery]SearchableDashboardQueryModel query)
     {
-      var result = _searchableDashboardPerspective.Search(query);
-      
-      return Json(result);
+      return _searchableDashboardPerspective.Search(query);
     }
   }
 }

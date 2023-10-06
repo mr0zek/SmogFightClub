@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
 {
+  [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/admin/[controller]")]
   [ApiController]
@@ -16,9 +18,9 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery] AlertNotificationsWithUserDataModel query)
+    public ActionResult<DashboardResult> Get([FromQuery] AlertNotificationsWithUserDataModel query)
     {
-      return Json(_dashboardPerspective.Search(query));
+      return _dashboardPerspective.Search(query);
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace SFC.AdminApi.Features.SendNotificationsByUser
 {
+  [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/admin/[controller]")]
   [ApiController]
@@ -24,9 +26,9 @@ namespace SFC.AdminApi.Features.SendNotificationsByUser
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery] SendNotificationsByUserModel query)
+    public ActionResult<GetAllSendNotificationsByUserResponse> Get([FromQuery] SendNotificationsByUserModel query)
     {
-      return Json(_query.Query(new GetAllSendNotificationsByUserRequest(query.Top, query.Take)));
+      return _query.Query(new GetAllSendNotificationsByUserRequest(query.Top, query.Take));
     }
   }
 }

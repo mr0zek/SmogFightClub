@@ -80,8 +80,8 @@ namespace SFC.Tests.Notification
 
       Assert.Equal(loginName,entry.LoginName);
       Assert.Equal(1,entry.Count);
-      Assert.Equal(1,TestSmtpClient.SentEmails.Where(f=>f.Email == email).Count());
-      Assert.Equal(1,TestEventHandler<NotificationSentEvent>.Events.Count);
+      Assert.Single(TestSmtpClient.SentEmails.Where(f=>f.Email == email));
+      Assert.Single(TestEventHandler<NotificationSentEvent>.Events);
     }
   }
 }

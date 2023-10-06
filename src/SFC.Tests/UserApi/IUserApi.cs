@@ -8,6 +8,9 @@ namespace SFC.Tests.UserApi
 {
   public interface IUserApi
   {
+    [Header("Authorization")]
+    string Token { get; set; }
+
     [Post("api/v1.0/accounts")]
     Task<string> PostAccount([Body] PostAccountModel account);
 
