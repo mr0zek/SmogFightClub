@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
@@ -22,6 +23,7 @@ namespace SFC.SensorApi.Features.RegisterMeasurement
       _dateTimeProvider = dateTimeProvider;
     }
 
+    [AllowAnonymous]
     [HttpPost("sensors/{sensorId}/measurements")]
     public IActionResult Post([FromRoute] Guid sensorId, [FromBody] PostMeasurementModel model)
     {

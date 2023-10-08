@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using FluentValidation;
-using SFC.AuthenticationApi.Authentication;
+using SFC.AuthenticationApi.Features.Authentication;
 
 namespace SFC.AuthenticationApi
 {
-  public class AutofacAuthenticationApiModule : Module
+    public class AutofacAuthenticationApiModule : Module
   {
     protected override void Load(ContainerBuilder builder)
     {

@@ -7,8 +7,8 @@ namespace SFC.Accounts.Features.CreateAccount
   {
     public CreaateAccountCommandValidator()
     {
-      RuleFor(f => f.LoginName).NotEmpty();
-      RuleFor(f => f.PasswordHash).NotEmpty();
+      RuleFor(f => f.LoginName).NotNull().NotEmpty();
+      RuleFor(f => f.PasswordHash).NotNull().NotEmpty();
     }
   }
 }

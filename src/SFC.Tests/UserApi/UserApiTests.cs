@@ -64,10 +64,15 @@ namespace SFC.Tests.UserApi
     public async void NotificationShoudBeSentAfterAlertCreation()
     {
       // Arrange
-      await RestClient.For<IUserApi>(_url).PostUser(new PostUserModel("noreply@example.com"));
+      var userApi = RestClient.For<IUserApi>(_url);
+      var authApi = RestClient.For<IAuthenticationApi>(_url);      
+      
+      userApi.Token = "Bearer " + await authApi.Login(new CredentialsModel("admin", "password"));
+
+      await userApi.PostUser(new PostUserModel("noreply@example.com"));
 
       // Act
-      await RestClient.For<IUserApi>(_url).PostAlert(
+      await userApi.PostAlert(
         new PostAlertModel()
         {
           ZipCode = "01-102"
@@ -89,9 +94,7 @@ namespace SFC.Tests.UserApi
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
-      var provider = (FakeIdentityProvider)_app.Services.GetService(typeof(FakeIdentityProvider));
-      provider.SetLoginName(postAccountModel.LoginName);
-
+      
       // Act
       string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
       await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
@@ -103,6 +106,7 @@ namespace SFC.Tests.UserApi
 
       var api = RestClient.For<IUserApi>(_url);
       api.Token = $"Bearer {token}";
+
       var alerts = await api.GetAlerts();
 
       Assert.Single(alerts.Alerts);

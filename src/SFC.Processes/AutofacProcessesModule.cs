@@ -11,8 +11,6 @@ namespace SFC.Processes
   {
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterType<PasswordHasher>().AsImplementedInterfaces();
-
       builder.RegisterType<SagaRepository>().AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)

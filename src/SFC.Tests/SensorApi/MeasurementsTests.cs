@@ -15,6 +15,7 @@ using Xunit;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
 using SFC.SharedKernel;
+using SFC.AuthenticationApi;
 
 namespace SFC.Tests.SensorApi
 {
@@ -34,6 +35,8 @@ namespace SFC.Tests.SensorApi
       TestSmtpClient.Clear();
       Bootstrap.Run(new string[0],_url, new Module[]
         {
+          new AutofacAuthenticationApiModule(),
+          new AutofacAccountsModule(),
           new AutofacUserApiModule(),
           new AutofacSensorApiModule(),          
           new AutofacSensorsModule(),          
@@ -48,8 +51,11 @@ namespace SFC.Tests.SensorApi
     [Fact]
     public async void PostMeasurements_should_return_ok()
     {
-      // Arrange
-      Guid sensorId = await RestClient.For<IUserApi>(_url).PostSensor(new PostSensorModel() { ZipCode = "01-102"});
+      // Arrange      
+      var userApi = RestClient.For<IUserApi>(_url);
+      userApi.Token = "Bearer " + await RestClient.For<IAuthenticationApi>(_url).Login(new CredentialsModel("admin", "password"));
+
+      Guid sensorId = await userApi.PostSensor(new PostSensorModel() { ZipCode = "01-102"});
 
       // Act, Assert
       await RestClient.For<ISensorApi>(_url).PostMeasurements(sensorId, new PostMeasurementModel()

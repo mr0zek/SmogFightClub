@@ -9,6 +9,9 @@ namespace SFC.Tests.AdminApi
 {
   public interface IAdminApi
   {
+    [Header("Authorization")]
+    string Token { get; set; }
+
     [Get("api/v1.0/admin/alertNotificationsWithUserData")]
     Task<AlertNotificationsWithUserDataResult> GetAlertNotificationsWithUserData([Query] int skip, int take);
     [Get("api/v1.0/admin/searchableDashboard")]

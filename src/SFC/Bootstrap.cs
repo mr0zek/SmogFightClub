@@ -48,6 +48,7 @@ namespace SFC
       }
       mvc.AddControllersAsServices();
 
+      builder.Services.AddHttpContextAccessor();
       builder.Services.AddValidatorsFromAssembly(typeof(Bootstrap).Assembly);
 
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

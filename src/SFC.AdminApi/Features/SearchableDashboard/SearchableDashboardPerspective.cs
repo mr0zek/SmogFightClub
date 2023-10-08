@@ -29,7 +29,7 @@ namespace SFC.AdminApi.Features.SearchableDashboard
 
     public SearchableDashboardEntry Get(LoginName loginName)
     {
-      return _connection.QueryFirst<SearchableDashboardEntry>(
+      return _connection.QueryFirstOrDefault<SearchableDashboardEntry>(
         @"select id, loginName, alertsCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
     }
 

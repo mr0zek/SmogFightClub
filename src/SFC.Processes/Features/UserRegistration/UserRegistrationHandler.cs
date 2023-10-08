@@ -13,14 +13,12 @@ namespace SFC.Processes.Features.UserRegistration
   class UserRegistrationHandler : ICommandHandler<RegisterUserCommand>, ICommandHandler<ConfirmUserCommand>
   {
     private readonly ICommandBus _commandBus;
-    private readonly IPasswordHasher _passwordHasher;
     private readonly IQuery _query;
     private readonly IAccountRepository _accountRepository;
 
-    public UserRegistrationHandler(ICommandBus commandBus, IPasswordHasher passwordHasher, IQuery query, IAccountRepository accountRepository)
+    public UserRegistrationHandler(ICommandBus commandBus, IQuery query, IAccountRepository accountRepository)
     {
       _commandBus = commandBus;
-      _passwordHasher = passwordHasher;
       _query = query;
       _accountRepository = accountRepository;
     }
@@ -32,9 +30,7 @@ namespace SFC.Processes.Features.UserRegistration
         throw new LoginNameAlreadyUsedException(command.LoginName);
       }
       
-      var passwordHash = _passwordHasher.Hash(command.Password);
-
-      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, passwordHash));
+      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, command.PasswordHash));
 
       _commandBus.Send(new SetNotificationEmailCommand(
         command.Email,
@@ -58,11 +54,7 @@ namespace SFC.Processes.Features.UserRegistration
         throw new InvalidOperationException();
       }
 
-      _commandBus.Send(new CreateAccountCommand()
-      {
-        LoginName = account.LoginName,
-        PasswordHash = account.PasswordHash
-      });      
+      _commandBus.Send(new CreateAccountCommand(account.LoginName,account.PasswordHash));      
 
       _commandBus.Send(new CreateAlertCommand()
       {

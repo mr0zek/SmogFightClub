@@ -32,7 +32,7 @@ namespace SFC.Tests.Architecture
     {
       IArchRule allowedPublicTypesInModules =
         Types().That()
-          .AreNotAssignableTo(typeof(Migration)).And()
+          .AreNotAssignableTo(typeof(IMigration)).And()
           .AreNotAssignableTo(typeof(Exception)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()

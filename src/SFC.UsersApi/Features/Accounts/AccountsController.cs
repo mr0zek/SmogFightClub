@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
+using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
@@ -34,7 +35,7 @@ namespace SFC.UserApi.Features.Accounts
           LoginName = model.LoginName,
           ZipCode = model.ZipCode,
           Email = model.Email,
-          Password = model.Password
+          PasswordHash = PasswordHash.FromPassword(model.Password)
         });
       }
       catch (LoginNameAlreadyUsedSagaException)

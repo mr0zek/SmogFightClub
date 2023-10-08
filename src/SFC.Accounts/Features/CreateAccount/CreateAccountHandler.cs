@@ -7,7 +7,7 @@ using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Accounts.Features.CreateAccount
 {
-    class CreateAccountHandler : ICommandHandler<CreateAccountCommand>
+  class CreateAccountHandler : ICommandHandler<CreateAccountCommand>
   {
     private readonly IAccountRepository _accountRepository;
     private readonly IEventBus _eventBus;

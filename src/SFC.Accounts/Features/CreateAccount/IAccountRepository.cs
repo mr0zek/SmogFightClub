@@ -4,6 +4,6 @@ namespace SFC.Accounts.Features.CreateAccount
 {
   internal interface IAccountRepository
   {
-    void Add(LoginName commandLoginName, string passwordHash);
+    void Add(LoginName commandLoginName, PasswordHash passwordHash);
   }
 }

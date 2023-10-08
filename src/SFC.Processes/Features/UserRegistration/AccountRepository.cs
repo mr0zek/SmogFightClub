@@ -22,7 +22,7 @@ namespace SFC.Processes.Features.UserRegistration
             email = account.Email.ToString(), 
             zipCode = account.ZipCode.ToString(),
             loginName = account.LoginName.ToString(), 
-            passwordHash = account.PasswordHash });
+            passwordHash = account.PasswordHash.Value });
     }
 
     public Account Get(string id)

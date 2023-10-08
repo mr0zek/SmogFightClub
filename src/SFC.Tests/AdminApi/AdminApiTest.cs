@@ -5,6 +5,7 @@ using RestEase;
 using SFC.Accounts;
 using SFC.AdminApi;
 using SFC.Alerts;
+using SFC.AuthenticationApi;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Fake;
 using SFC.Notifications;
@@ -26,12 +27,12 @@ using Xunit;
 
 namespace SFC.Tests.AdminApi
 {
-    public class AdminApiTest
+  public class AdminApiTest
   {
     private string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
-    public AdminApiTest() 
+    public AdminApiTest()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appSettings.json");
@@ -44,6 +45,7 @@ namespace SFC.Tests.AdminApi
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
+          new AutofacAuthenticationApiModule(),
           new AutofacAdminApiModule(),
           new AutofacUserApiModule(),
           new AutofacSensorApiModule(),
@@ -71,12 +73,15 @@ namespace SFC.Tests.AdminApi
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
-      var provider = (FakeIdentityProvider)_app.Services.GetService(typeof(FakeIdentityProvider));
-      provider.SetLoginName(postAccountModel.LoginName);
-      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
-      await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
 
-      Guid sensorId = await RestClient.For<IUserApi>(_url).PostSensor(new PostSensorModel() { ZipCode = postAccountModel.ZipCode });
+      var userApi = RestClient.For<IUserApi>(_url);
+      var adminApi = RestClient.For<IAdminApi>(_url);
+      string confirmationId = await userApi.PostAccount(postAccountModel);
+      await userApi.PostAccountConfirmation(confirmationId);
+      
+      adminApi.Token = userApi.Token = "Bearer " + await RestClient.For<IAuthenticationApi>(_url).Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+      
+      Guid sensorId = await userApi.PostSensor(new PostSensorModel() { ZipCode = postAccountModel.ZipCode });
 
       await RestClient.For<ISensorApi>(_url).PostMeasurements(sensorId, new PostMeasurementModel()
       {
@@ -85,13 +90,13 @@ namespace SFC.Tests.AdminApi
 
 
       // Act
-      var result = await RestClient.For<IAdminApi>(_url).GetAlertNotificationsWithUserData(1, int.MaxValue);
+      var result = await adminApi.GetAlertNotificationsWithUserData(1, int.MaxValue);
 
       // Assert
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(postAccountModel.LoginName, entry.LoginName);
-      Assert.Equal(1, entry.AlertsSentCount);      
+      Assert.Equal(1, entry.AlertsSentCount);
     }
 
     [Fact]
@@ -105,23 +110,27 @@ namespace SFC.Tests.AdminApi
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
-      var provider = (FakeIdentityProvider)_app.Services.GetService(typeof(FakeIdentityProvider));
-      provider.SetLoginName(postAccountModel.LoginName);
-      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
-      await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
+
+      var userApi = RestClient.For<IUserApi>(_url);
+      var adminApi = RestClient.For<IAdminApi>(_url);
+      string confirmationId = await userApi.PostAccount(postAccountModel);
+      await userApi.PostAccountConfirmation(confirmationId);
+
+      adminApi.Token = userApi.Token = "Bearer " + await RestClient.For<IAuthenticationApi>(_url).Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+
       int expectedAlertsCount = 10;
       for (int i = 0; i < expectedAlertsCount; i++)
       {
-        await RestClient.For<IUserApi>(_url).PostAlert(new PostAlertModel() { ZipCode = Random.Shared.NextInt64(10000,99999).ToString() });
+        await userApi.PostAlert(new PostAlertModel() { ZipCode = Random.Shared.NextInt64(10000, 99999).ToString() });
       }
 
       // Act
-      var result = await RestClient.For<IAdminApi>(_url).GetSearchableDashboard(1, int.MaxValue, 10, 20);
+      var result = await adminApi.GetSearchableDashboard(1, int.MaxValue, 10, 20);
 
       // Assert
-      var entry = result.Results.FirstOrDefault(f=>f.LoginName == postAccountModel.LoginName);
+      var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
-      Assert.Equal(expectedAlertsCount+1, entry.AlertsCount);
+      Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);
     }
   }
 }

@@ -8,21 +8,20 @@ using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
+using SFC.SharedKernel;
 
 namespace SFC.Processes.Features.UserRegistrationSaga
 {
   public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
-    private readonly IPasswordHasher _passwordHasher;
     public Event<ConfirmUserCommandSaga> ConfirmUserCommand { get; set; }
     public Event<RegisterUserCommandSaga> RegisterUserCommand { get; set; }
     public State WaitingForConfirmation { get; set; }
 
-    public UserRegistrationSaga(ICommandBus commandBus, IPasswordHasher passwordHasher)
+    public UserRegistrationSaga(ICommandBus commandBus)
     {
       _commandBus = commandBus;
-      _passwordHasher = passwordHasher;
       UserRegistrationSagaData.States = States.ToDictionary(f => f.Name, f => f);
 
       Initially(
@@ -43,18 +42,14 @@ namespace SFC.Processes.Features.UserRegistrationSaga
     {
       context.Instance.BaseUrl = context.Data.BaseUrl;
       context.Instance.LoginName = context.Data.LoginName;
-      context.Instance.PasswordHash = _passwordHasher.Hash(context.Data.Password);
+      context.Instance.PasswordHash = context.Data.PasswordHash.Value;
       context.Instance.Email = context.Data.Email;
       context.Instance.ZipCode = context.Data.ZipCode;
     }
 
     private void CreateUserAccount(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new CreateAccountCommand()
-      {
-        LoginName = context.Instance.LoginName,
-        PasswordHash = context.Instance.PasswordHash
-      });
+      _commandBus.Send(new CreateAccountCommand(context.Instance.LoginName,new PasswordHash(context.Instance.PasswordHash)));
     }
 
     private void RegisterAlert(BehaviorContext<UserRegistrationSagaData> context)

@@ -10,18 +10,16 @@ namespace SFC.Processes.Features.UserRegistrationSaga
   {
     private readonly ICommandBus _commandBus;
     private readonly ISagaRepository _sagaRepository;
-    private readonly IPasswordHasher _passwordHasher;
 
-    public ConfirmUserHandler(ICommandBus commandBus, ISagaRepository sagaRepository, IPasswordHasher passwordHasher)
+    public ConfirmUserHandler(ICommandBus commandBus, ISagaRepository sagaRepository)
     {
       _commandBus = commandBus;
       _sagaRepository = sagaRepository;
-      _passwordHasher = passwordHasher;
     }
 
     public void Handle(ConfirmUserCommandSaga command)
     {
-      UserRegistrationSaga saga = new UserRegistrationSaga(_commandBus, _passwordHasher);
+      UserRegistrationSaga saga = new(_commandBus);
       UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
       if (data == null)
       {
