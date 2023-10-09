@@ -43,10 +43,6 @@ jobs:
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
-    
-    - name: Copy Unit Test Results
-      run: mkdir TestResults; cp SFC.Tests/**/test-results.trx TestResults/
-      shell: bash
 
     - name: Test Report
       uses: dorny/test-reporter@v1
