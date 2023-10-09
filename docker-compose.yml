@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  sfc.tests:
-    image: ${DOCKER_REGISTRY-}sfctests
-    build:
-      context: .
-      dockerfile: src/SFC.Tests/Dockerfile
