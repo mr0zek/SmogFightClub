@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure.Interfac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AuthenticationApi", "src\SFC.AuthenticationApi\SFC.AuthenticationApi.csproj", "{5D78C868-5691-4B18-98D9-2A811BEA4AC7}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{14879876-C1F2-47CB-80F6-BAA0CB191131}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14879876-C1F2-47CB-80F6-BAA0CB191131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14879876-C1F2-47CB-80F6-BAA0CB191131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14879876-C1F2-47CB-80F6-BAA0CB191131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14879876-C1F2-47CB-80F6-BAA0CB191131}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

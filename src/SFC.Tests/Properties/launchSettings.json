@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SFC.Tests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
