@@ -61,9 +61,20 @@ namespace SFC.Tests.SensorApi
     public async void PostMeasurements_should_return_ok()
     {
       // Arrange      
-      var api = RestClient.For<IApi>(_url);
-      api.Token = "Bearer " + await api.Login(new CredentialsModel("admin", "password"));
+      var postAccountModel = new PostAccountModel()
+      {
+        LoginName = Guid.NewGuid().ToString(),
+        Password = Guid.NewGuid().ToString(),
+        ZipCode = "12-234",
+        Email = "ala.ma.kotowska@gmail.com"
+      };
 
+      var api = RestClient.For<IApi>(_url);
+      string confirmationId = await api.PostAccount(postAccountModel);
+      await api.PostAccountConfirmation(confirmationId);
+
+      api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+      
       Guid sensorId = await api.PostSensor(new PostSensorModel() { ZipCode = "01-102"});
 
       // Act, Assert
