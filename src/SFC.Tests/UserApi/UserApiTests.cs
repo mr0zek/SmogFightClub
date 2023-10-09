@@ -27,7 +27,8 @@ using Xunit;
 
 namespace SFC.Tests.UserApi
 {
-  public class UserApiTests
+  [Collection("Sequential")]
+  public class UserApiTests : IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
@@ -58,6 +59,11 @@ namespace SFC.Tests.UserApi
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
         });
+    }
+
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
     }
 
     [Fact]

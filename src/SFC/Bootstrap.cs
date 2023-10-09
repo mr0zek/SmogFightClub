@@ -35,6 +35,8 @@ namespace SFC
 
       var builder = WebApplication.CreateBuilder(args);
 
+      builder.WebHost.UseUrls(url);
+
       builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.Console()
         .ReadFrom.Configuration(ctx.Configuration));
@@ -146,11 +148,17 @@ namespace SFC
 
       app.UseAuthorization();
 
-      app.MapControllers();
+      app.MapControllers();      
 
-      ThreadPool.QueueUserWorkItem(state => { app.Run(url); });
+      app.Start(); 
 
       return app;
+    }
+
+    public static void Stop(WebApplication app)
+    {
+      app.StopAsync().Wait();
+      app.WaitForShutdown();      
     }
   }
 }

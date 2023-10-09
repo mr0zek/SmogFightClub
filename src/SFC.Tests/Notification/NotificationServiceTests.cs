@@ -14,12 +14,13 @@ using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Infrastructure;
 using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
+using Microsoft.AspNetCore.Builder;
 
 namespace SFC.Tests.Notification
 {
 
-
-  public class NotificationServiceTests
+  [Collection("Sequential")]
+  public class NotificationServiceTests 
   {
     private readonly IContainer _container;
 
@@ -41,7 +42,7 @@ namespace SFC.Tests.Notification
       builder.RegisterInstance(new TestEventHandler<NotificationSentEvent>()).AsImplementedInterfaces();
 
       _container = builder.Build();
-    }
+    }    
 
     [Fact]
     public void Send_notification_suuccess_scenaio()

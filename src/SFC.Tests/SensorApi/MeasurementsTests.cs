@@ -16,13 +16,16 @@ using SFC.Tests.UserApi;
 using SFC.UserApi;
 using SFC.SharedKernel;
 using SFC.AuthenticationApi;
+using Microsoft.AspNetCore.Builder;
 
 namespace SFC.Tests.SensorApi
 {
-    public class MeasurementsTests
+  [Collection("Sequential")]
+  public class MeasurementsTests : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
-    
+    private WebApplication _app;
+
     public MeasurementsTests()
     {
       var confBuilder = new ConfigurationBuilder()
@@ -33,7 +36,7 @@ namespace SFC.Tests.SensorApi
       SFC.Infrastructure.DbMigrations.Run(connectionString);      
 
       TestSmtpClient.Clear();
-      Bootstrap.Run(new string[0],_url, new Module[]
+      _app = Bootstrap.Run(new string[0],_url, new Module[]
         {
           new AutofacAuthenticationApiModule(),
           new AutofacAccountsModule(),
@@ -47,7 +50,12 @@ namespace SFC.Tests.SensorApi
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();          
         });
     }
-        
+
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
+    }
+
     [Fact]
     public async void PostMeasurements_should_return_ok()
     {

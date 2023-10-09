@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using RestEase;
 using SFC.Accounts;
@@ -19,11 +20,12 @@ using Xunit;
 
 namespace SFC.Tests.UseStories
 {
-    public class UserUserStories : IClassFixture<UserStoriesFixture>
+    public class UserUserStories : IClassFixture<UserStoriesFixture>, IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
-   
+    private WebApplication _app;
+
     [Given]
     void GivenSystemWithNotRegisteredAccount()
     {
@@ -35,7 +37,7 @@ namespace SFC.Tests.UseStories
       SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
-      Bootstrap.Run(new string[0], _url, new Module[]
+      _app = Bootstrap.Run(new string[0], _url, new Module[]
         {
           new AutofacAdminApiModule(),
           new AutofacSensorApiModule(),
@@ -59,6 +61,11 @@ namespace SFC.Tests.UseStories
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
+    }
+
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
     }
 
     async void WhenUserPostRegistrationForm()

@@ -25,10 +25,11 @@ using Xunit;
 
 namespace SFC.Tests.AuthenticationApi
 {
-  public class AuthentiacationApiTest
+  [Collection("Sequential")]
+  public class AuthentiacationApiTest : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
-    private readonly WebApplication _app;
+    private WebApplication _app;
 
     public AuthentiacationApiTest()
     {
@@ -59,6 +60,8 @@ namespace SFC.Tests.AuthenticationApi
         });
     }
 
+
+
     [Fact]
     public void LoginFailedTest()
     {
@@ -78,6 +81,11 @@ namespace SFC.Tests.AuthenticationApi
       var token = await authApi.Login(new CredentialsModel("admin", "password"));     
 
       Assert.NotNull(token);
+    }
+
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
     }
   }
 }

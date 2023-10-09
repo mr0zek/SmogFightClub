@@ -27,7 +27,8 @@ using Xunit;
 
 namespace SFC.Tests.AdminApi
 {
-  public class AdminApiTest
+  [Collection("Sequential")]
+  public class AdminApiTest : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
@@ -131,6 +132,11 @@ namespace SFC.Tests.AdminApi
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);
+    }
+
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
     }
   }
 }
