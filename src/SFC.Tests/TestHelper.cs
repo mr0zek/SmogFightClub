@@ -6,7 +6,7 @@ namespace SFC.Tests
     {
         internal static string GenerateUrl()
         {
-            return $"http://localhost:{Random.Shared.NextInt64(5000, 7000)}";
+            return $"http://127.0.0.1:{Random.Shared.NextInt64(5000, 7000)}";
         }
     }
 }

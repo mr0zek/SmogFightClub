@@ -3,7 +3,7 @@
 namespace SFC.Processes.Features.UserRegistrationSaga.DbMigrations
 {
   [Migration(201903310852)]
-  public class AddSagasTable : Migration
+  public class M01_AddSagasTable : Migration
   {
     public override void Up()
     {
