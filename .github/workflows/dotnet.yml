@@ -20,7 +20,7 @@ jobs:
       with:
         install: sqlengine, sqlclient, sqlpackage, localdb
 
-    - name: Check sql
+    - name: Create database for testing
       run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database SFC_Test"
       
     - uses: actions/checkout@v3
@@ -35,7 +35,8 @@ jobs:
       
     - name: Update appsettings.json for tests
       run:
-        sed -i 's/{(localdb)\\MSSQLLocalDB}/{localhost}/g' src/SFC.Tests/appsettings.json        
+        sed -i 's/(localdb)\\\\MSSQLLocalDB}/localhost/g' src/SFC.Tests/appsettings.json        
+        cat src/SFC.Tests/appsettings.json        
     
     - name: Build
       run: dotnet build --no-restore
