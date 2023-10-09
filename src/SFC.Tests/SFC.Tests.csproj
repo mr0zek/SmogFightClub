@@ -7,7 +7,12 @@
 
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 
-    <DockerfileContext>..\..</DockerfileContext>
+    <DockerfileContext>..\..</DockerfileContext>    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
+    <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/TestResults/$(TargetFramework)</VSTestResultsDirectory>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,6 +43,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SFC\SFC.csproj" />
-  </ItemGroup>
-
+  </ItemGroup>    
 </Project>

@@ -16,6 +16,7 @@ using SFC.Tests.Infrastructure;
 using SFC.Tests.Mocks;
 using SFC.UserApi;
 using TestStack.BDDfy;
+using TestStack.BDDfy.Configuration;
 using Xunit;
 
 namespace SFC.Tests.UseStories
@@ -81,7 +82,9 @@ namespace SFC.Tests.UseStories
     [Fact]
     public void NewUserRegistration()
     {
-      this.Given(s => s.GivenSystemWithNotRegisteredAccount())
+      Configurator.BatchProcessors.HtmlReport.Enable();
+
+      this.Given(s => s.GivenSystemWithNotRegisteredAccount())        
         .When(s => s.WhenUserPostRegistrationForm())
         .Then(s => ThenSystemSendsConfirmationEmail())
         .BDDfy();
