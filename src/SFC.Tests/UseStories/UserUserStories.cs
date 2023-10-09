@@ -28,7 +28,7 @@ namespace SFC.Tests.UseStories
     void GivenSystemWithNotRegisteredAccount()
     {
       var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appSettings.json");
+        .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 

@@ -35,7 +35,7 @@ namespace SFC.Tests.AdminApi
     public AdminApiTest()
     {
       var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appSettings.json");
+        .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 

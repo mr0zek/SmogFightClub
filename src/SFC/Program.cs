@@ -22,7 +22,7 @@ namespace SFC
     public static void Main(string[] args)
     {
       var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appSettings.json");
+        .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 

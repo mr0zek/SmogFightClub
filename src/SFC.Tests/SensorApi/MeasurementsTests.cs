@@ -26,7 +26,7 @@ namespace SFC.Tests.SensorApi
     public MeasurementsTests()
     {
       var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appSettings.json");
+        .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
