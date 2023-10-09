@@ -35,7 +35,7 @@ jobs:
       
     - name: Update appsettings.json for tests
       run:
-        sed -i 's/(localdb)\\MSSQLLocalDB}/localhost/g' src/SFC.Tests/appsettings.json        
+        sed -i 's/(localdb)\\\\MSSQLLocalDB/localhost/g' src/SFC.Tests/appsettings.json        
     
     - name: Update appsettings.json for tests
       run:    
