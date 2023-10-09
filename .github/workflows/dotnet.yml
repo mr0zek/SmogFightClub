@@ -42,12 +42,16 @@ jobs:
       run: dotnet build --no-restore
     
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+    
+    - name: Copy Unit Test Results
+      run: mkdir TestResults; cp SFC.Tests/**/test-results.trx TestResults/
+      shell: bash
 
     - name: Test Report
       uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
+      if: success() || failure()   
       with:
-        name: JEST Tests            # Name of the check run which will be created
-        path: reports/jest-*.xml    # Path to test results
-        reporter: jest-junit        # Format of test results
+        name: Test Results
+        path: TestResults/*.trx
+        reporter: dotnet-trx
