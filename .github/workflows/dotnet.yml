@@ -36,7 +36,11 @@ jobs:
     - name: Update appsettings.json for tests
       run:
         sed -i 's/(localdb)\\\\MSSQLLocalDB}/localhost/g' src/SFC.Tests/appsettings.json        
+    
+    - name: Update appsettings.json for tests
+      run:    
         cat src/SFC.Tests/appsettings.json        
+        
     
     - name: Build
       run: dotnet build --no-restore
