@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using RestEase;
 using SFC.Accounts;
+using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Fake;
-using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
-using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
+using SFC.SensorApi;
 using SFC.Sensors;
-using SFC.SharedKernel;
 using SFC.Tests.Api;
 using SFC.Tests.Mocks;
+using SFC.Tests.UserApi;
 using SFC.UserApi;
 using System;
 using System.Collections.Generic;
@@ -24,15 +23,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SFC.Tests.UserApi
+namespace SFC.Tests.AuthenticationApi
 {
-
-    public class UserTests : IDisposable
+  
+  public class AuthentiacationApiTest : IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
-    public UserTests()
+    public AuthentiacationApiTest()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
@@ -46,6 +45,7 @@ namespace SFC.Tests.UserApi
         {
           new AutofacAuthenticationApiModule(),
           new AutofacUserApiModule(),
+          new AutofacSensorApiModule(),
           new AutofacAccountsModule(),
           new AutofacSensorsModule(),
           new AutofacAlertsModule(),
@@ -59,48 +59,22 @@ namespace SFC.Tests.UserApi
         });
     }
 
-    public void Dispose()
-    {
-      Bootstrap.Stop(_app);
-    }
+
 
     [Fact]
-    public async void NotificationShoudBeSentAfterAlertCreation()
+    public void LoginFailedTest()
     {
-      // Arrange
-      var api = RestClient.For<IApi>(_url);
+      var authApi = RestClient.For<IApi>(_url);
 
-      var postAccountModel = new PostAccountModel()
+      Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
       {
-        LoginName = Guid.NewGuid().ToString(),
-        Password = Guid.NewGuid().ToString(),
-        ZipCode = "12-234",
-        Email = "ala.ma.kotowska@gmail.com"
-      };
-      
-      string confirmationId = await RestClient.For<IApi>(_url).PostAccount(postAccountModel);
-      await RestClient.For<IApi>(_url).PostAccountConfirmation(confirmationId);
-
-      api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
-
-      await api.PostUser(new PostUserModel("noreply@example.com"));
-
-      // Act
-      await api.PostAlert(
-        new PostAlertModel()
-        {
-          ZipCode = "01-102"
-        });
-
-      // Assert
-      Assert.Equal(3, TestSmtpClient.SentEmails.Count);
-
+        await authApi.Login(new CredentialsModel(Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+      });
     }
 
     [Fact]
-    public async void AccountCreationSuccessScenario()
+    public async void LoginSuccessTest()
     {
-      // Arrange
       var postAccountModel = new PostAccountModel()
       {
         LoginName = Guid.NewGuid().ToString(),
@@ -109,21 +83,18 @@ namespace SFC.Tests.UserApi
         Email = "ala.ma.kotowska@gmail.com"
       };
 
-      // Act
       var api = RestClient.For<IApi>(_url);
       string confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
-      // Assert
-      Assert.Equal(2, TestSmtpClient.SentEmails.Count);
+      var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));     
 
-      api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new (postAccountModel.LoginName, postAccountModel.Password));      
+      Assert.NotNull(token);
+    }
 
-      var alerts = await api.GetAlerts();
-
-      Assert.Single(alerts.Alerts);
-      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);
-
+    public void Dispose()
+    {
+      Bootstrap.Stop(_app);
     }
   }
-} 
+}

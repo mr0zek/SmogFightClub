@@ -30,7 +30,7 @@ namespace SFC.Tests.AdminApi
 
   public class AdminApiTest : IDisposable
   {
-    private string _url = TestHelper.GenerateUrl();
+    private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
     public AdminApiTest()

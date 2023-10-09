@@ -14,7 +14,7 @@ namespace SFC.AuthenticationApi.Features.Authentication
 {
   public class TokenRepository : ITokenRepository
   {    
-    private IQuery _accountQuery;
+    private readonly IQuery _accountQuery;
     private readonly IConfiguration _configuration;
 
     public TokenRepository(IConfiguration configuration, IQuery accountQuery)

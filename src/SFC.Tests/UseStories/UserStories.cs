@@ -20,24 +20,24 @@ using Xunit;
 
 namespace SFC.Tests.UseStories
 {
-  public class UserUserStories : IClassFixture<UserStoriesFixture>, IDisposable
+  public class UserStories : IClassFixture<UserStoriesFixture>, IDisposable
   {
-    private string _url = TestHelper.GenerateUrl();
+    private readonly string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
     private WebApplication _app;
 
     [Given]
     void GivenSystemWithNotRegisteredAccount()
-    {
+    {            
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      SFC.Infrastructure.DbMigrations.Run(connectionString);
+      DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(new string[0], _url, new Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
           new AutofacAdminApiModule(),
           new AutofacSensorApiModule(),
