@@ -37,14 +37,14 @@ jobs:
       run: |
         sed -i 's/(localdb)\\\\MSSQLLocalDB/localhost/g' src/SFC.Tests/appsettings.json        
         sed -i 's/Trusted_Connection=True/Username=sa;Password=dbatools.I0/g' src/SFC.Tests/appsettings.json              
-    
-    - name: Update appsettings.json for tests
-      run:    
-        cat src/SFC.Tests/appsettings.json        
-        
+        cat src/SFC.Tests/appsettings.json               
     
     - name: Build
       run: dotnet build --no-restore
     
+    - name: Files list
+      run:
+        ls -R src/SFC.Tests
+        
     - name: Test
       run: dotnet test --no-build --verbosity normal
