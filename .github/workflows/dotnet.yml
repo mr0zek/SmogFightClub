@@ -33,11 +33,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       
-    - name: Update json-values description
-      uses: restack/update-json-values-action@v1.0.0
-      with:
-        file: src\SFC.Tests\appsettings.json
-        values: "{'(localdb)\\MSSQLLocalDB': 'localhost'}"
+    - name: Update appsettings.json for tests
+      run:
+        sed -i 's/{(localdb)\\MSSQLLocalDB}/{localhost}/g' src\SFC.Tests\appsettings.json        
     
     - name: Build
       run: dotnet build --no-restore
