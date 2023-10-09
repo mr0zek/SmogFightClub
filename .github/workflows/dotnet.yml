@@ -12,17 +12,35 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest    
+          
     steps:
+    - name: Install mssql
+        uses: potatoqualitee/mssqlsuite@v1.7
+        with:
+          install: sqlengine, sqlclient, sqlpackage, localdb
+
+    - name: Check sql
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database SFC_Test"
+      
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+    
     - name: Restore dependencies
       run: dotnet restore
+      
+    - name: Update json-values description
+      uses: restack/update-json-values-action@v1.0.0
+      with:
+        file: src\SFC.Tests\appsettings.json
+        values: "{'(localdb)\\MSSQLLocalDB': 'localhost'}"
+    
     - name: Build
       run: dotnet build --no-restore
+    
     - name: Test
       run: dotnet test --no-build --verbosity normal
