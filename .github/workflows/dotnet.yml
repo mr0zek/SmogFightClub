@@ -44,7 +44,7 @@ jobs:
     
     - name: Files list
       run:
-        tree src/SFC.Tests
+        ls -R -l src/SFC.Tests
         
     - name: Test
       run: dotnet test --no-build --verbosity normal
