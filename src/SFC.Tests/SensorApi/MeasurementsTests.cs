@@ -18,6 +18,7 @@ using SFC.SharedKernel;
 using SFC.AuthenticationApi;
 using Microsoft.AspNetCore.Builder;
 using SFC.Tests.Api;
+using SFC.Processes;
 
 namespace SFC.Tests.SensorApi
 {
@@ -41,7 +42,9 @@ namespace SFC.Tests.SensorApi
         {
           new AutofacAuthenticationApiModule(),
           new AutofacAccountsModule(),
+          new AutofacNotificationsModule(),
           new AutofacUserApiModule(),
+          new AutofacProcessesModule(),
           new AutofacSensorApiModule(),          
           new AutofacSensorsModule(),          
           new AutofacInfrastructureModule()
