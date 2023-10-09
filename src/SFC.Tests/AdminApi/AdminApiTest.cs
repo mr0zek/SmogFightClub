@@ -123,7 +123,7 @@ namespace SFC.Tests.AdminApi
       }
 
       // Act
-      var result = await api.GetSearchableDashboard(1, int.MaxValue, 10, 20);
+      var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);
 
       // Assert
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
