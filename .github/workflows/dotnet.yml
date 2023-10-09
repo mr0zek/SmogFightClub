@@ -49,5 +49,5 @@ jobs:
       if: success() || failure()   
       with:
         name: Test Results
-        path: TestResults/*.trx
+        path: src/SFC_Test/TestResults/*.trx
         reporter: dotnet-trx
