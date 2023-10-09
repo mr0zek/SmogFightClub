@@ -20,7 +20,7 @@ using Xunit;
 
 namespace SFC.Tests.UseStories
 {
-    public class UserUserStories : IClassFixture<UserStoriesFixture>, IDisposable
+  public class UserUserStories : IClassFixture<UserStoriesFixture>, IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
@@ -83,8 +83,8 @@ namespace SFC.Tests.UseStories
     {
       this.Given(s => s.GivenSystemWithNotRegisteredAccount())
         .When(s => s.WhenUserPostRegistrationForm())
-        .Then(s=> ThenSystemSendsConfirmationEmail())
-        .BDDfy();      
+        .Then(s => ThenSystemSendsConfirmationEmail())
+        .BDDfy();
     }
   }
 }

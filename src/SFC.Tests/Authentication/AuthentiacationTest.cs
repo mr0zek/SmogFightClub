@@ -87,7 +87,7 @@ namespace SFC.Tests.AuthenticationApi
       string confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
-      var token = await api.Login(new CredentialsModel("admin", "password"));     
+      var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));     
 
       Assert.NotNull(token);
     }

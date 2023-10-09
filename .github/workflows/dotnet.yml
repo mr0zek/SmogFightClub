@@ -36,8 +36,7 @@ jobs:
     - name: Update appsettings.json for tests
       run: |
         sed -i 's/(localdb)\\\\MSSQLLocalDB/localhost/g' src/SFC.Tests/appsettings.json        
-        sed -i 's/Trusted_Connection=True/User Id=sa;Password=dbatools.I0/g' src/SFC.Tests/appsettings.json              
-        cat src/SFC.Tests/appsettings.json               
+        sed -i 's/Trusted_Connection=True/User Id=sa;Password=dbatools.I0/g' src/SFC.Tests/appsettings.json                      
     
     - name: Build
       run: dotnet build --no-restore
