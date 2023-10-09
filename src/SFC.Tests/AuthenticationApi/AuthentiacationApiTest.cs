@@ -11,7 +11,6 @@ using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
-using SFC.Tests.DbMigrations;
 using SFC.Tests.Mocks;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
@@ -39,7 +38,6 @@ namespace SFC.Tests.AuthenticationApi
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
       SFC.Infrastructure.DbMigrations.Run(connectionString);
-      InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]

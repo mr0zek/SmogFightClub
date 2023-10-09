@@ -13,7 +13,6 @@ using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
 using SFC.Sensors;
 using SFC.SharedKernel;
-using SFC.Tests.DbMigrations;
 using SFC.Tests.Mocks;
 using SFC.UserApi;
 using SFC.UserApi.Features.Accounts;
@@ -41,7 +40,6 @@ namespace SFC.Tests.UserApi
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
       SFC.Infrastructure.DbMigrations.Run(connectionString);
-      InitializeDb.Init(connectionString);
 
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
