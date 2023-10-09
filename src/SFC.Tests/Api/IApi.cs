@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestEase;
 
-namespace SFC.Tests.UserApi
+namespace SFC.Tests.Api
 {
-  public interface IUserApi
+    public interface IApi
   {
     [Header("Authorization")]
     string Token { get; set; }
@@ -28,5 +28,17 @@ namespace SFC.Tests.UserApi
 
     [Get("api/v1.0/user/alerts")]
     Task<GetAlertsModel> GetAlerts();
+
+    [Post("api/v1.0/sensors/{sensorId}/measurements")]
+    Task<string> PostMeasurements([Path] Guid sensorId, [Body] PostMeasurementModel model);    
+
+    [Get("api/v1.0/admin/alertNotificationsWithUserData")]
+    Task<AlertNotificationsWithUserDataResult> GetAlertNotificationsWithUserData([Query] int skip, int take);
+    [Get("api/v1.0/admin/searchableDashboard")]
+    Task<SearchableDashboardResult> GetSearchableDashboard([Query] int skip, [Query] int take, [Query] int alertsMin, [Query] int alertsMax);
+
+    [Post("api/v1.0/authentication")]
+    Task<string> Login([Body] CredentialsModel model);
+
   }
 }

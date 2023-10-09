@@ -17,11 +17,12 @@ using SFC.UserApi;
 using SFC.SharedKernel;
 using SFC.AuthenticationApi;
 using Microsoft.AspNetCore.Builder;
+using SFC.Tests.Api;
 
 namespace SFC.Tests.SensorApi
 {
-  
-  public class MeasurementsTests : IDisposable
+
+    public class MeasurementsTests : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
     private WebApplication _app;
@@ -60,13 +61,13 @@ namespace SFC.Tests.SensorApi
     public async void PostMeasurements_should_return_ok()
     {
       // Arrange      
-      var userApi = RestClient.For<IUserApi>(_url);
-      userApi.Token = "Bearer " + await RestClient.For<IAuthenticationApi>(_url).Login(new CredentialsModel("admin", "password"));
+      var api = RestClient.For<IApi>(_url);
+      api.Token = "Bearer " + await api.Login(new CredentialsModel("admin", "password"));
 
-      Guid sensorId = await userApi.PostSensor(new PostSensorModel() { ZipCode = "01-102"});
+      Guid sensorId = await api.PostSensor(new PostSensorModel() { ZipCode = "01-102"});
 
       // Act, Assert
-      await RestClient.For<ISensorApi>(_url).PostMeasurements(sensorId, new PostMeasurementModel()
+      await api.PostMeasurements(sensorId, new PostMeasurementModel()
       {
         Values = new Dictionary<PolutionType, decimal>() { { PolutionType.PM2_5, 12 }, { PolutionType.NO2, 34 } }
       });

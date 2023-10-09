@@ -11,6 +11,7 @@ using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
+using SFC.Tests.Api;
 using SFC.Tests.Mocks;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
@@ -25,12 +26,12 @@ using Xunit;
 namespace SFC.Tests.AuthenticationApi
 {
   
-  public class AuthentiacationApiTest : IDisposable
+  public class AuthentiacationTest : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();
     private WebApplication _app;
 
-    public AuthentiacationApiTest()
+    public AuthentiacationTest()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
@@ -63,7 +64,7 @@ namespace SFC.Tests.AuthenticationApi
     [Fact]
     public void LoginFailedTest()
     {
-      var authApi = RestClient.For<IAuthenticationApi>(_url);
+      var authApi = RestClient.For<IApi>(_url);
 
       Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
       {
@@ -74,9 +75,19 @@ namespace SFC.Tests.AuthenticationApi
     [Fact]
     public async void LoginSuccessTest()
     {
-      var authApi = RestClient.For<IAuthenticationApi>(_url);
+      var postAccountModel = new PostAccountModel()
+      {
+        LoginName = Guid.NewGuid().ToString(),
+        Password = Guid.NewGuid().ToString(),
+        ZipCode = "12-234",
+        Email = "ala.ma.kotowska@gmail.com"
+      };
 
-      var token = await authApi.Login(new CredentialsModel("admin", "password"));     
+      var api = RestClient.For<IApi>(_url);
+      string confirmationId = await api.PostAccount(postAccountModel);
+      await api.PostAccountConfirmation(confirmationId);
+
+      var token = await api.Login(new CredentialsModel("admin", "password"));     
 
       Assert.NotNull(token);
     }

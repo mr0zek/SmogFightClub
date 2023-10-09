@@ -11,9 +11,9 @@ using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
+using SFC.Tests.Api;
 using SFC.Tests.Infrastructure;
 using SFC.Tests.Mocks;
-using SFC.Tests.UserApi;
 using SFC.UserApi;
 using TestStack.BDDfy;
 using Xunit;
@@ -70,7 +70,7 @@ namespace SFC.Tests.UseStories
 
     async void WhenUserPostRegistrationForm()
     {
-      await RestClient.For<IUserApi>(_url).PostAccount(_postAccountModel);
+      await RestClient.For<IApi>(_url).PostAccount(_postAccountModel);
     }
 
     void ThenSystemSendsConfirmationEmail()

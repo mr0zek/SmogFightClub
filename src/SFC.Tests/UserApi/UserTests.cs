@@ -13,9 +13,9 @@ using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
 using SFC.Sensors;
 using SFC.SharedKernel;
+using SFC.Tests.Api;
 using SFC.Tests.Mocks;
 using SFC.UserApi;
-using SFC.UserApi.Features.Accounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +26,13 @@ using Xunit;
 
 namespace SFC.Tests.UserApi
 {
-  
-  public class UserApiTests : IDisposable
+
+    public class UserTests : IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
-    public UserApiTests()
+    public UserTests()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
@@ -68,8 +68,7 @@ namespace SFC.Tests.UserApi
     public async void NotificationShoudBeSentAfterAlertCreation()
     {
       // Arrange
-      var userApi = RestClient.For<IUserApi>(_url);
-      var authApi = RestClient.For<IAuthenticationApi>(_url);
+      var api = RestClient.For<IApi>(_url);
 
       var postAccountModel = new PostAccountModel()
       {
@@ -79,22 +78,22 @@ namespace SFC.Tests.UserApi
         Email = "ala.ma.kotowska@gmail.com"
       };
       
-      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
-      await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
+      string confirmationId = await RestClient.For<IApi>(_url).PostAccount(postAccountModel);
+      await RestClient.For<IApi>(_url).PostAccountConfirmation(confirmationId);
 
-      userApi.Token = "Bearer " + await authApi.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+      api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
 
-      await userApi.PostUser(new PostUserModel("noreply@example.com"));
+      await api.PostUser(new PostUserModel("noreply@example.com"));
 
       // Act
-      await userApi.PostAlert(
+      await api.PostAlert(
         new PostAlertModel()
         {
           ZipCode = "01-102"
         });
 
       // Assert
-      Assert.Equal(3, TestSmtpClient.SentEmails.Count());
+      Assert.Equal(3, TestSmtpClient.SentEmails.Count);
 
     }
 
@@ -109,18 +108,16 @@ namespace SFC.Tests.UserApi
         ZipCode = "12-234",
         Email = "ala.ma.kotowska@gmail.com"
       };
-      
+
       // Act
-      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
-      await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
+      var api = RestClient.For<IApi>(_url);
+      string confirmationId = await api.PostAccount(postAccountModel);
+      await api.PostAccountConfirmation(confirmationId);
 
       // Assert
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
-      string token = await RestClient.For<IAuthenticationApi>(_url).Login(new (postAccountModel.LoginName, postAccountModel.Password));
-
-      var api = RestClient.For<IUserApi>(_url);
-      api.Token = $"Bearer {token}";
+      api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new (postAccountModel.LoginName, postAccountModel.Password));      
 
       var alerts = await api.GetAlerts();
 
