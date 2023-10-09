@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Builder;
 namespace SFC.Tests.Notification
 {
 
-  [Collection("Sequential")]
+  
   public class NotificationServiceTests 
   {
     private readonly IContainer _container;

@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace SFC.Tests.SensorApi
 {
-  [Collection("Sequential")]
+  
   public class MeasurementsTests : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();

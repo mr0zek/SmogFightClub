@@ -2,6 +2,6 @@
 {
     public interface ITokenRepository
     {
-        string Authenticate(CredentialsModel users);
+        string? Authenticate(CredentialsModel users);
     }
 }

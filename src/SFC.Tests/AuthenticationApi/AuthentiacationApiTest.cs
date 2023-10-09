@@ -25,7 +25,7 @@ using Xunit;
 
 namespace SFC.Tests.AuthenticationApi
 {
-  [Collection("Sequential")]
+  
   public class AuthentiacationApiTest : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();

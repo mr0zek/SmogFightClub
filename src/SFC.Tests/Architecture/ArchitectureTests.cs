@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace SFC.Tests.Architecture
 {
-  [Collection("Sequential")]
+  
   public class ArchitectureTests
   {
     private static readonly ArchUnitNET.Domain.Architecture Architecture =

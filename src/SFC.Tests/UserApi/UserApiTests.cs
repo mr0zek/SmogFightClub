@@ -27,7 +27,7 @@ using Xunit;
 
 namespace SFC.Tests.UserApi
 {
-  [Collection("Sequential")]
+  
   public class UserApiTests : IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
@@ -71,9 +71,20 @@ namespace SFC.Tests.UserApi
     {
       // Arrange
       var userApi = RestClient.For<IUserApi>(_url);
-      var authApi = RestClient.For<IAuthenticationApi>(_url);      
+      var authApi = RestClient.For<IAuthenticationApi>(_url);
+
+      var postAccountModel = new PostAccountModel()
+      {
+        LoginName = Guid.NewGuid().ToString(),
+        Password = Guid.NewGuid().ToString(),
+        ZipCode = "12-234",
+        Email = "ala.ma.kotowska@gmail.com"
+      };
       
-      userApi.Token = "Bearer " + await authApi.Login(new CredentialsModel("admin", "password"));
+      string confirmationId = await RestClient.For<IUserApi>(_url).PostAccount(postAccountModel);
+      await RestClient.For<IUserApi>(_url).PostAccountConfirmation(confirmationId);
+
+      userApi.Token = "Bearer " + await authApi.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
 
       await userApi.PostUser(new PostUserModel("noreply@example.com"));
 
@@ -85,7 +96,7 @@ namespace SFC.Tests.UserApi
         });
 
       // Assert
-      Assert.Single(TestSmtpClient.SentEmails);
+      Assert.Equal(3, TestSmtpClient.SentEmails.Count());
 
     }
 

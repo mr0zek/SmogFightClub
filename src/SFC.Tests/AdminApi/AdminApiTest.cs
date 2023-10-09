@@ -27,7 +27,7 @@ using Xunit;
 
 namespace SFC.Tests.AdminApi
 {
-  [Collection("Sequential")]
+  
   public class AdminApiTest : IDisposable
   {
     private string _url = TestHelper.GenerateUrl();

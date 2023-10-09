@@ -14,7 +14,7 @@ namespace SFC.Tests.DbMigrations
   {
     public static void Init(string connectionString)
     {
-      new SqlConnection(connectionString).Execute("delete from Alerts.Alerts");
+      //new SqlConnection(connectionString).Execute("delete from Alerts.Alerts");
     }
   }
 }

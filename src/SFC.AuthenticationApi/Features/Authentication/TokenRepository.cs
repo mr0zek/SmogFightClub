@@ -24,7 +24,7 @@ namespace SFC.AuthenticationApi.Features.Authentication
     }
 
 
-    public string Authenticate(CredentialsModel credentials)
+    public string? Authenticate(CredentialsModel credentials)
     {
       if (!_accountQuery.Query(new AuthenticateRequest(credentials.LoginName,PasswordHash.FromPassword(credentials.Password))).Success)      
       {
