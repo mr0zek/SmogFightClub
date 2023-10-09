@@ -36,7 +36,7 @@ jobs:
     - name: Update appsettings.json for tests
       run: |
         sed -i 's/(localdb)\\\\MSSQLLocalDB/localhost/g' src/SFC.Tests/appsettings.json        
-        sed -i 's/MultipleActiveResultSets=true/MultipleActiveResultSets=true;Username=sa;Password=dbatools.I0/g' src/SFC.Tests/appsettings.json              
+        sed -i 's/Trusted_Connection=True/Username=sa;Password=dbatools.I0/g' src/SFC.Tests/appsettings.json              
     
     - name: Update appsettings.json for tests
       run:    
