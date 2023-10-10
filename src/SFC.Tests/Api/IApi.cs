@@ -48,5 +48,11 @@ namespace SFC.Tests.Api
 
     [Get("api/v1.0/user/alerts/{id}")]
     Task<GetAlertModel> GetAlert([Path]Guid id);
+    
+    [Get("api/v1.0/user/sensors/{id}")]
+    Task<GetSensorModel> GetSensor([Path]Guid id);
+
+    [Get("api/v1.0/user/sensors/")]
+    Task<GetSensorsModel> GetAllSensor();
   }
 }

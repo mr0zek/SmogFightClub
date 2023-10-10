@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,7 +52,7 @@ namespace SFC
       mvc.AddControllersAsServices();
 
       builder.Services.AddHttpContextAccessor();
-      builder.Services.AddValidatorsFromAssembly(typeof(Bootstrap).Assembly);
+      builder.Services.AddFluentValidationAutoValidation();
 
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       builder.Services.AddEndpointsApiExplorer();
@@ -144,7 +145,7 @@ namespace SFC
 
       app.UseSerilogRequestLogging();
 
-      app.UseAuthentication();
+      app.UseAuthentication();      
 
       app.UseAuthorization();
 

@@ -2,6 +2,7 @@
 using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.UserApi.Features.Sensors;
 
 namespace SFC.UserApi
 {
@@ -19,7 +20,7 @@ namespace SFC.UserApi
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
-        .InstancePerLifetimeScope();
+        .InstancePerLifetimeScope();      
     }
   }
 }
