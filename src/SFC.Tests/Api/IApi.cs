@@ -53,6 +53,6 @@ namespace SFC.Tests.Api
     Task<GetSensorModel> GetSensor([Path]Guid id);
 
     [Get("api/v1.0/user/sensors/")]
-    Task<GetSensorsModel> GetAllSensor();
+    Task<GetSensorsModel> GetAllSensors();
   }
 }

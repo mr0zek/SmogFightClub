@@ -92,6 +92,10 @@ namespace SFC.Tests.UserApi
       // Assert
       var sensor2 = await api.GetSensor(id);
       Assert.Equal(sensor.ZipCode, sensor2.ZipCode);
+
+      var allSensors = await api.GetAllSensors();
+      Assert.Single(allSensors.Sensors);
+      Assert.Contains(allSensors.Sensors, f =>f.ZipCode == sensor.ZipCode);
     }
 
     [Fact]
