@@ -1,10 +1,11 @@
 ﻿using SFC.Infrastructure.Interfaces;
+using System;
 
 namespace SFC.Alerts.Features.GetAlert
 {
   public class AlertResponse : IResponse
   {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string ZipCode { get; set; }
   }
 }

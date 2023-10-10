@@ -3,7 +3,7 @@
 namespace SFC.Processes.Features.UserRegistrationSaga.DbMigrations
 {
   [Migration(201903310852)]
-  public class M01_AddSagasTable : Migration
+  public class M01_AddSagasTable : ForwardOnlyMigration
   {
     public override void Up()
     {
@@ -14,9 +14,5 @@ namespace SFC.Processes.Features.UserRegistrationSaga.DbMigrations
         .WithColumn("Data").AsString(int.MaxValue).NotNullable();
     }
 
-    public override void Down()
-    {
-      Delete.Table("Sagas");
-    }
   }
 }

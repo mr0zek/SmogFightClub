@@ -3,7 +3,7 @@
 namespace SFC.Notifications.Infrastructure.DbMigrations
 {
   [Migration(201903311041)]
-  public class M01_InitTables : Migration
+  public class M01_InitTables : ForwardOnlyMigration
   {
     public override void Up()
     {
@@ -25,10 +25,5 @@ namespace SFC.Notifications.Infrastructure.DbMigrations
         .WithColumn("Email").AsString().NotNullable();
     }
 
-    public override void Down()
-    {
-      Delete.Table("Notifications").InSchema("Notifications");
-      Delete.Table("Emails").InSchema("Notifications");
-    }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SFC.Infrastructure.Interfaces;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -22,10 +23,10 @@ namespace SFC.Processes.Features.UserRegistration
             email = account.Email.ToString(), 
             zipCode = account.ZipCode.ToString(),
             loginName = account.LoginName.ToString(), 
-            passwordHash = account.PasswordHash.Value });
+            passwordHash = account.PasswordHash });
     }
 
-    public Account Get(string id)
+    public Account Get(Guid id)
     {
       return _connection.QueryFirstOrDefault<Account>(
         "select id, email, zipCode, loginName, passwordHash from Processes.Accounts where id = @id",

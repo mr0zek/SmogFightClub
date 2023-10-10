@@ -1,17 +1,18 @@
 ﻿using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
+using System;
 
 namespace SFC.Alerts.Features.GetAlert
 {
   public class GetAlertRequest : IRequest<GetAlertResponse>
   {
-    public GetAlertRequest(string id, LoginName loginName)
+    public GetAlertRequest(Guid id, LoginName loginName)
     {
       Id = id;
       LoginName = loginName;
     }
 
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     public LoginName LoginName { get; set; }
   }

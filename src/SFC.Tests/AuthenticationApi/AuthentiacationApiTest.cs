@@ -38,6 +38,8 @@ namespace SFC.Tests.AuthenticationApi
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
+      DBReset.ResetDatabase.Reset(connectionString);
+
       SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
@@ -84,7 +86,7 @@ namespace SFC.Tests.AuthenticationApi
       };
 
       var api = RestClient.For<IApi>(_url);
-      string confirmationId = await api.PostAccount(postAccountModel);
+      Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
       var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));     

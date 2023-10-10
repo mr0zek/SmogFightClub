@@ -1,5 +1,6 @@
 ﻿using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
+using System;
 
 namespace SFC.Processes.Features.UserRegistration.Contract
 {
@@ -10,6 +11,6 @@ namespace SFC.Processes.Features.UserRegistration.Contract
     public PasswordHash PasswordHash { get; set; }
     public ZipCode ZipCode { get; set; }
     public string BaseUrl { get; set; }
-    public string Id { get; set; }
+    public Guid Id { get; set; }
   }
 }

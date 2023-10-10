@@ -30,7 +30,7 @@ namespace SFC.Processes.Features.UserRegistration
         throw new LoginNameAlreadyUsedException(command.LoginName);
       }
       
-      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, command.PasswordHash));
+      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, command.PasswordHash.Value));
 
       _commandBus.Send(new SetNotificationEmailCommand(
         command.Email,
@@ -54,13 +54,14 @@ namespace SFC.Processes.Features.UserRegistration
         throw new InvalidOperationException();
       }
 
-      _commandBus.Send(new CreateAccountCommand(account.LoginName,account.PasswordHash));      
+      _commandBus.Send(new CreateAccountCommand(account.LoginName, new SharedKernel.PasswordHash(account.PasswordHash)));
 
       _commandBus.Send(new CreateAlertCommand()
       {
+        Id = Guid.NewGuid(),
         LoginName = account.LoginName,
         ZipCode = account.ZipCode
-      });
+      }) ;
     }
   }
 }

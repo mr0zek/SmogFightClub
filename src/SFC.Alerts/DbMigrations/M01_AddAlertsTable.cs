@@ -3,21 +3,16 @@
 namespace SFC.Alerts.DbMigrations
 {
   [Migration(20190331041)]
-  public class M01_AddAlertsTable : Migration
+  public class M01_AddAlertsTable : ForwardOnlyMigration
   {
     public override void Up()
     {
       Create.Schema("Alerts");
       Create.Table("Alerts")
         .InSchema("Alerts")
-        .WithColumn("Id").AsInt64().PrimaryKey().Identity()
+        .WithColumn("Id").AsGuid().PrimaryKey()
         .WithColumn("LoginName").AsString().NotNullable()
         .WithColumn("ZipCode").AsString().NotNullable();
-    }
-
-    public override void Down()
-    {
-      Delete.Table("Alerts").InSchema("Alerts");
-    }
+    }    
   }
 }

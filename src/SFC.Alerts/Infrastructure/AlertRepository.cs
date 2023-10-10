@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -19,10 +20,10 @@ namespace SFC.Alerts.Infrastructure
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public void Add(ZipCode zipCode, LoginName loginName)
+    public void Add(Guid id, ZipCode zipCode, LoginName loginName)
     {
-      _connection.Execute("insert into Alerts.Alerts(zipCode, loginName)values(@zipCode,@loginName)",
-        new { zipCode = zipCode.ToString(), loginName = loginName.ToString() });
+      _connection.Execute("insert into Alerts.Alerts(id, zipCode, loginName)values(@id,@zipCode,@loginName)",
+        new { id, zipCode = zipCode.ToString(), loginName = loginName.ToString() });
     }
 
     public bool Exists(ZipCode zipCode, LoginName loginName)

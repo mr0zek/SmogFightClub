@@ -1,9 +1,10 @@
 ﻿using SFC.Infrastructure.Interfaces;
+using System;
 
 namespace SFC.Processes.Features.UserRegistration.Contract
 {
   public class ConfirmUserCommand : ICommand
   {
-    public string ConfirmationId { get; set; }
+    public Guid ConfirmationId { get; set; }
   }
 }

@@ -31,6 +31,8 @@ namespace SFC.Tests.Notification
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
+      DBReset.ResetDatabase.Reset(connectionString);
+
       SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       var builder = new ContainerBuilder();

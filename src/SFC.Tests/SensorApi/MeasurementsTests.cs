@@ -25,8 +25,8 @@ namespace SFC.Tests.SensorApi
 
     public class MeasurementsTests : IDisposable
   {
-    private string _url = TestHelper.GenerateUrl();
-    private WebApplication _app;
+    private readonly string _url = TestHelper.GenerateUrl();
+    private readonly WebApplication _app;
 
     public MeasurementsTests()
     {
@@ -35,13 +35,16 @@ namespace SFC.Tests.SensorApi
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
+      DBReset.ResetDatabase.Reset(connectionString);
+
       SFC.Infrastructure.DbMigrations.Run(connectionString);      
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(new string[0],_url, new Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
           new AutofacAuthenticationApiModule(),
           new AutofacAccountsModule(),
+          new AutofacAlertsModule(),
           new AutofacNotificationsModule(),
           new AutofacUserApiModule(),
           new AutofacProcessesModule(),
@@ -73,7 +76,7 @@ namespace SFC.Tests.SensorApi
       };
 
       var api = RestClient.For<IApi>(_url);
-      string confirmationId = await api.PostAccount(postAccountModel);
+      Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));

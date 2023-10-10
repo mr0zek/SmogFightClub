@@ -35,6 +35,8 @@ namespace SFC.Tests.UseStories
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
+      DBReset.ResetDatabase.Reset(connectionString);
+
       DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();

@@ -24,7 +24,7 @@ namespace SFC.Alerts.Features.CreateAlert
         throw new AlertExistsException(command.ZipCode);
       }
 
-      _repository.Add(command.ZipCode, command.LoginName);
+      _repository.Add(command.Id, command.ZipCode, command.LoginName);
 
       _eventBus.Publish(new AlertCreatedEvent()
       {

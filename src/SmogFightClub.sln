@@ -3,42 +3,42 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure", "src\SFC.Infrastructure\SFC.Infrastructure.csproj", "{5B864BC4-E570-48C9-B185-272E9918BC3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure", "SFC.Infrastructure\SFC.Infrastructure.csproj", "{5B864BC4-E570-48C9-B185-272E9918BC3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC", "src\SFC\SFC.csproj", "{737E580B-F5F7-4733-B250-321DD92CEDCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC", "SFC\SFC.csproj", "{737E580B-F5F7-4733-B250-321DD92CEDCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{CC89DF66-24C4-47C6-A47C-AC05E6485208}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Alerts", "src\SFC.Alerts\SFC.Alerts.csproj", "{3EAF84F3-88EA-460F-873C-AA84D491FE29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Alerts", "SFC.Alerts\SFC.Alerts.csproj", "{3EAF84F3-88EA-460F-873C-AA84D491FE29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{99B2DDFD-21F5-4A1D-A01E-2B09F27D97BF}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Notifications", "src\SFC.Notifications\SFC.Notifications.csproj", "{07A23A6D-1DA6-420D-93A9-8E10F5A98A60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Notifications", "SFC.Notifications\SFC.Notifications.csproj", "{07A23A6D-1DA6-420D-93A9-8E10F5A98A60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Processes", "src\SFC.Processes\SFC.Processes.csproj", "{9973E752-DAB2-4979-BAD4-EF612E57154B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Processes", "SFC.Processes\SFC.Processes.csproj", "{9973E752-DAB2-4979-BAD4-EF612E57154B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.SharedKernel", "src\SFC.SharedKernel\SFC.SharedKernel.csproj", "{EE6CFBE9-8C5C-4597-9990-EA0A50A9BDA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.SharedKernel", "SFC.SharedKernel\SFC.SharedKernel.csproj", "{EE6CFBE9-8C5C-4597-9990-EA0A50A9BDA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.SensorApi", "src\SFC.SensorApi\SFC.SensorApi.csproj", "{901D2842-EB18-4B93-8233-4C79DF73A75D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.SensorApi", "SFC.SensorApi\SFC.SensorApi.csproj", "{901D2842-EB18-4B93-8233-4C79DF73A75D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.UserApi", "src\SFC.UsersApi\SFC.UserApi.csproj", "{B7A0B2C9-FE34-4239-A62C-8B6527F5AF1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.UserApi", "SFC.UsersApi\SFC.UserApi.csproj", "{B7A0B2C9-FE34-4239-A62C-8B6527F5AF1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Sensors", "src\SFC.Sensors\SFC.Sensors.csproj", "{0F5FEF7A-66AE-41E6-A5FE-006F20C9EACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Sensors", "SFC.Sensors\SFC.Sensors.csproj", "{0F5FEF7A-66AE-41E6-A5FE-006F20C9EACE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AdminApi", "src\SFC.AdminApi\SFC.AdminApi.csproj", "{C3606D1D-E6FB-477D-8009-32CA1C315F1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AdminApi", "SFC.AdminApi\SFC.AdminApi.csproj", "{C3606D1D-E6FB-477D-8009-32CA1C315F1F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{7CD3D1FD-3FE4-4240-9A8E-5FC471E94988}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Tests", "src\SFC.Tests\SFC.Tests.csproj", "{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Tests", "SFC.Tests\SFC.Tests.csproj", "{BBD9AD7D-0779-487E-B673-B2EAF7F5AF82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Accounts", "src\SFC.Accounts\SFC.Accounts.csproj", "{25214CB0-3818-44A5-95D8-CE48034EA8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Accounts", "SFC.Accounts\SFC.Accounts.csproj", "{25214CB0-3818-44A5-95D8-CE48034EA8A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure.Interfaces", "src\SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj", "{04C93F60-66B0-40D0-A283-0868A10B44DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure.Interfaces", "SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj", "{04C93F60-66B0-40D0-A283-0868A10B44DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AuthenticationApi", "src\SFC.AuthenticationApi\SFC.AuthenticationApi.csproj", "{5D78C868-5691-4B18-98D9-2A811BEA4AC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AuthenticationApi", "SFC.AuthenticationApi\SFC.AuthenticationApi.csproj", "{5D78C868-5691-4B18-98D9-2A811BEA4AC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

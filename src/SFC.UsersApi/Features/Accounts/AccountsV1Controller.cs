@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.Processes.Features.UserRegistrationSaga.Contract;
+using SFC.Processes.Features.UserRegistration.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
   [ApiVersion("1.0")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/v1.0/accounts")]
   [ApiController]
-  public class AccountsController : ControllerBase
+  public class AccountsV1Controller : ControllerBase
   {
     private readonly ICommandBus _commandBus;
 
-    public AccountsController(ICommandBus commandBus)
+    public AccountsV1Controller(ICommandBus commandBus)
     {
       _commandBus = commandBus;
     }
@@ -24,11 +24,11 @@ namespace SFC.UserApi.Features.Accounts
     [HttpPost]
     public IActionResult PostAccount([FromBody]PostAccountModel model)
     {
-      string id = Guid.NewGuid().ToString().Replace("-","");
+      Guid id = Guid.NewGuid();
 
       try
       {
-        _commandBus.Send(new RegisterUserCommandSaga()
+        _commandBus.Send(new RegisterUserCommand()
         {
           Id = id,
           BaseUrl = BaseUrl.Current,
@@ -38,7 +38,7 @@ namespace SFC.UserApi.Features.Accounts
           PasswordHash = PasswordHash.FromPassword(model.Password)
         });
       }
-      catch (LoginNameAlreadyUsedSagaException)
+      catch (LoginNameAlreadyUsedException)
       {
         var mds = new ModelStateDictionary();
         mds.AddModelError("loginName", "Already exists");
@@ -49,11 +49,11 @@ namespace SFC.UserApi.Features.Accounts
     }
 
     [HttpPost("{id}/confirmation")]
-    public IActionResult PostConfirmation([FromRoute]string id)
+    public IActionResult PostConfirmation([FromRoute]Guid id)
     {
       try
       {
-        _commandBus.Send(new ConfirmUserCommandSaga()
+        _commandBus.Send(new ConfirmUserCommand()
         {
           ConfirmationId = id
         });

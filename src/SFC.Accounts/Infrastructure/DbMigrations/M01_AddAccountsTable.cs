@@ -3,8 +3,8 @@
 namespace SFC.Accounts.Infrastructure.DbMigrations
 {
   [Migration(201903312139)]
-    public class M01_AddAccountsTable : Migration
-    {
+    public class M01_AddAccountsTable : ForwardOnlyMigration
+  {
         public override void Up()
         {
             Create.Schema("Accounts");
@@ -14,9 +14,5 @@ namespace SFC.Accounts.Infrastructure.DbMigrations
               .WithColumn("LoginName").AsString(int.MaxValue).NotNullable();
         }
 
-        public override void Down()
-        {
-            Delete.Table("Accounts");
-        }
     }
 }

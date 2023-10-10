@@ -3,7 +3,7 @@
 namespace SFC.Sensors.Infrastructure.DbMigrations
 {
   [Migration(201904040952)]
-  public class M01_CreateTables : Migration
+  public class M01_CreateTables : ForwardOnlyMigration
   {
     public override void Up()
     {
@@ -21,12 +21,6 @@ namespace SFC.Sensors.Infrastructure.DbMigrations
         .WithColumn("Date").AsDateTime2().NotNullable()
         .WithColumn("ElementName").AsString().NotNullable()
         .WithColumn("ElementValue").AsDecimal().NotNullable();
-    }
-
-    public override void Down()
-    {
-      Delete.Table("Measurements").InSchema("Sensors");
-      Delete.Table("Sensors").InSchema("Sensors");
-    }
+    }    
   }
 }

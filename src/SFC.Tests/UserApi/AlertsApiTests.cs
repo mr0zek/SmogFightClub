@@ -6,33 +6,27 @@ using SFC.Accounts;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Fake;
-using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
-using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
 using SFC.Sensors;
-using SFC.SharedKernel;
 using SFC.Tests.Api;
 using SFC.Tests.Mocks;
 using SFC.UserApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace SFC.Tests.UserApi
 {
-
-  public class UserApiTests : IDisposable
+  public class AlertsApiTests : IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
 
-    public UserApiTests()
+    public AlertsApiTests()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
@@ -67,7 +61,7 @@ namespace SFC.Tests.UserApi
     }
 
     [Fact]
-    public async void NotificationShoudBeSentAfterAlertCreation()
+    public async void AddGetGetAllTest()
     {
       // Arrange
       var api = RestClient.For<IApi>(_url);
@@ -88,71 +82,16 @@ namespace SFC.Tests.UserApi
       await api.PostUser(new PostUserModel("noreply@example.com"));
 
       // Act
-      await api.PostAlert(
-        new PostAlertModel()
-        {
-          ZipCode = "01-102"
-        });
-
-      // Assert      
-      Assert.Equal(3, TestSmtpClient.SentEmails.Count);
-
-    }
-
-    [Fact]
-    public async void AccountCreationV1SuccessScenario()
-    {
-      // Arrange
-      var postAccountModel = new PostAccountModel()
+      var alert = new PostAlertModel()
       {
-        LoginName = Guid.NewGuid().ToString(),
-        Password = Guid.NewGuid().ToString(),
-        ZipCode = "12-234",
-        Email = "ala.ma.kotowska@gmail.com"
+        ZipCode = "01-102"
       };
 
-      // Act
-      var api = RestClient.For<IApi>(_url);
-      Guid confirmationId = await api.PostAccount(postAccountModel);
-      await api.PostAccountConfirmation(confirmationId);
+      var id = await api.PostAlert(alert);
 
       // Assert
-      Assert.Equal(2, TestSmtpClient.SentEmails.Count);
-
-      api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new(postAccountModel.LoginName, postAccountModel.Password));
-
-      var alerts = await api.GetAlerts();
-
-      Assert.Single(alerts.Alerts);
-      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);
-    }
-
-    [Fact]
-    public async void AccountCreationV2SuccessScenario()
-    {
-      // Arrange
-      var postAccountModel = new PostAccountModel()
-      {
-        LoginName = Guid.NewGuid().ToString(),
-        Password = Guid.NewGuid().ToString(),
-        ZipCode = "12-234",
-        Email = "ala.ma.kotowska@gmail.com"
-      };
-
-      // Act
-      var api = RestClient.For<IApi>(_url);
-      string confirmationId = await api.PostAccountV2(postAccountModel);
-      await api.PostAccountConfirmationV2(confirmationId);
-
-      // Assert
-      Assert.Equal(2, TestSmtpClient.SentEmails.Count);
-
-      api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new(postAccountModel.LoginName, postAccountModel.Password));
-
-      var alerts = await api.GetAlerts();
-
-      Assert.Single(alerts.Alerts);
-      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);
+      var alert2 = await api.GetAlert(id);
+      Assert.Equal(alert.ZipCode, alert2.ZipCode);
     }
   }
 }

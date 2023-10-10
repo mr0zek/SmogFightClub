@@ -47,7 +47,7 @@ namespace SFC.UserApi.Features.Alerts
     }    
 
     [HttpGet("{id}")]
-    public IActionResult Get([FromRoute]string id)
+    public IActionResult Get([FromRoute]Guid id)
     {
       return Json(_query.Query(new GetAlertRequest(id, _identityProvider.GetLoginName())));
     }

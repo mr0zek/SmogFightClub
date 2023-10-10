@@ -3,7 +3,7 @@
 namespace SFC.AdminApi.Features.SearchableDashboard.DbMigrations
 {
   [Migration(201904042139)]
-  public class M01_AddSearchableDashboardTable : Migration
+  public class M01_AddSearchableDashboardTable : ForwardOnlyMigration
   {
     public override void Up()
     {
@@ -15,9 +15,5 @@ namespace SFC.AdminApi.Features.SearchableDashboard.DbMigrations
         .WithColumn("alertsCount").AsInt16().NotNullable();
     }
 
-    public override void Down()
-    {
-      Delete.Table("SearchableDashboard");
-    }
   }
 }

@@ -3,6 +3,7 @@ using FluentValidation;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistrationSaga;
 
 namespace SFC.Processes
@@ -12,6 +13,7 @@ namespace SFC.Processes
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<SagaRepository>().AsImplementedInterfaces();
+      builder.RegisterType<AccountRepository>().AsImplementedInterfaces();
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

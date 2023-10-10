@@ -1,4 +1,4 @@
-﻿namespace SFC.Accounts.Features.CreateAccount.Contract
+﻿namespace SFC.Processes
 {
   public class Password
   {

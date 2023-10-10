@@ -7,9 +7,9 @@ namespace SFC.Alerts.Features.CreateAlert
     {
         public CreateAlertCommandValidator()
         {
-            RuleFor(x => x.LoginName).NotEmpty();
-            RuleFor(x => x.ZipCode).NotEmpty();
-            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.LoginName).NotNull().NotEmpty();
+            RuleFor(x => x.ZipCode).NotNull().NotEmpty();
+            RuleFor(x => x.Id).NotNull().NotEmpty();
         }
     }
 }

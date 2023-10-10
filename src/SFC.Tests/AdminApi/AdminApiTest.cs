@@ -40,6 +40,8 @@ namespace SFC.Tests.AdminApi
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
+      DBReset.ResetDatabase.Reset(connectionString);
+
       DbMigrations.Run(connectionString);
 
       TestSmtpClient.Clear();
@@ -75,7 +77,7 @@ namespace SFC.Tests.AdminApi
       };
 
       var api = RestClient.For<IApi>(_url);
-      string confirmationId = await api.PostAccount(postAccountModel);
+      Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
@@ -111,7 +113,7 @@ namespace SFC.Tests.AdminApi
       };
 
       var api = RestClient.For<IApi>(_url);
-      string confirmationId = await api.PostAccount(postAccountModel);
+      Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
