@@ -20,6 +20,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.Tracing;
+using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
 
 namespace SFC
@@ -44,7 +46,12 @@ namespace SFC
 
 
       builder.Services.AddControllers();
-      var mvc = builder.Services.AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)));
+      var mvc = builder.Services.AddMvc(opt =>
+      {
+        opt.Filters.Add(typeof(FluentValidationActionFilter));
+        opt.Filters.Add(typeof(TraceActionFilter));
+      });
+
       foreach (var m in modules)
       {
         mvc.AddApplicationPart(m.GetType().Assembly);
@@ -142,7 +149,7 @@ namespace SFC
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-
+      
       app.UseSerilogRequestLogging();
 
       app.UseAuthentication();      

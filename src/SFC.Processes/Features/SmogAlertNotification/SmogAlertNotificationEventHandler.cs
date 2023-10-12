@@ -5,7 +5,7 @@ using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.Processes.Features.SmogAlertNotification
 {
-  public class SmogAlertEventHandler : IEventHandler<SmogAlertEvent>
+  class SmogAlertEventHandler : IEventHandler<SmogAlertEvent>
   {
     private readonly ICommandBus _commandBus;
 

@@ -19,6 +19,11 @@ any suggestions contact me https://www.szylhabel.pl/contactme/
 - CRUD module Template
 - Integrate with identity server
 - Implement delayed commands based on hangfire
+- correlationId pattern 
+- component diagrams generation using PlantUml
+- sequence diagram generation using PlantUml
+- integrate with external services
+- time related actions
   
 ## Design patterns
 - Command - Command Handler

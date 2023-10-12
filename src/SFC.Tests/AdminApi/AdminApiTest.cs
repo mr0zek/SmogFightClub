@@ -7,7 +7,6 @@ using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Fake;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -47,16 +46,16 @@ namespace SFC.Tests.AdminApi
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
-          new AutofacAuthenticationApiModule(),
-          new AutofacAdminApiModule(),
-          new AutofacUserApiModule(),
-          new AutofacSensorApiModule(),
-          new AutofacAccountsModule(),
-          new AutofacSensorsModule(),
-          new AutofacAlertsModule(),
-          new AutofacProcessesModule(),
-          new AutofacNotificationsModule(),
-          new AutofacInfrastructureModule()
+          new AuthenticationApiModule(),
+          new AdminApiModule(),
+          new UserApiModule(),
+          new SensorApiModule(),
+          new AccountsModule(),
+          new SensorsModule(),
+          new AlertsModule(),
+          new ProcessesModule(),
+          new NotificationsModule(),
+          new InfrastructureModule()
         },
         builder =>
         {

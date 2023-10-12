@@ -5,7 +5,7 @@ using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.Processes.Features.AlertConditionCreatedNotification
 {
-  public class AlertNotificationEventHandler : IEventHandler<AlertCreatedEvent>
+  class AlertNotificationEventHandler : IEventHandler<AlertCreatedEvent>
   {
     private readonly ICommandBus _commandBus;
 

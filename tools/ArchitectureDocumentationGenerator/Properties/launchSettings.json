@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ArchitectureDocumentationGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\..\\..\\..\\src\\SFC\\bin\\debug\\net6.0\\ ..\\..\\..\\..\\..\\docs\\ArchitectureDocumentation"
+    }
+  }
+}

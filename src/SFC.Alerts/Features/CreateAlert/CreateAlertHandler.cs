@@ -6,7 +6,7 @@ using SFC.Infrastructure.Interfaces;
 
 namespace SFC.Alerts.Features.CreateAlert
 {
-    internal class CreateAlertHandler : ICommandHandler<CreateAlertCommand>
+  internal class CreateAlertHandler : ICommandHandler<CreateAlertCommand>
   {
     private readonly IEventBus _eventBus;
     private readonly IAlertWriteRepository _repository;

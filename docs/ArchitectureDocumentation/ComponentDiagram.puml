@@ -1,0 +1,37 @@
+
+@startuml
+!theme aws-orange
+
+skinparam ranksep 100
+skinparam nodesep 100
+
+package SFC {
+frame Backend {
+[SFC.Accounts]
+[SFC.Alerts]
+[SFC.Notifications]
+[SFC.Sensors]
+}
+frame Api {
+[SFC.AdminApi]
+[SFC.AuthenticationApi]
+[SFC.SensorApi]
+[SFC.UserApi]
+}
+frame Task {
+[SFC.Processes]
+}
+[SFC.AdminApi] --> [SFC.Notifications] : [Q]
+[SFC.AdminApi] --> [SFC.Accounts] : [E, Q]
+[SFC.AdminApi] --> [SFC.Alerts] : [E]
+[SFC.Alerts] --> [SFC.Sensors] : [E]
+[SFC.AuthenticationApi] --> [SFC.Accounts] : [Q]
+[SFC.Processes] --> [SFC.Accounts] : [Q, C]
+[SFC.Processes] --> [SFC.Notifications] : [C]
+[SFC.Processes] --> [SFC.Alerts] : [C, E]
+[SFC.SensorApi] --> [SFC.Sensors] : [C]
+[SFC.UserApi] --> [SFC.Notifications] : [C]
+[SFC.UserApi] --> [SFC.Sensors] : [C, Q]
+[SFC.UserApi] --> [SFC.Alerts] : [C, Q]
+[SFC.UserApi] --> [SFC.Processes] : [C]
+@enduml

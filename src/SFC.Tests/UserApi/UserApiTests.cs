@@ -6,7 +6,6 @@ using SFC.Accounts;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Fake;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
@@ -46,14 +45,14 @@ namespace SFC.Tests.UserApi
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
-          new AutofacAuthenticationApiModule(),
-          new AutofacUserApiModule(),
-          new AutofacAccountsModule(),
-          new AutofacSensorsModule(),
-          new AutofacAlertsModule(),
-          new AutofacProcessesModule(),
-          new AutofacNotificationsModule(),
-          new AutofacInfrastructureModule()
+          new AuthenticationApiModule(),
+          new UserApiModule(),
+          new AccountsModule(),
+          new SensorsModule(),
+          new AlertsModule(),
+          new ProcessesModule(),
+          new NotificationsModule(),
+          new InfrastructureModule()
         },
         builder =>
         {

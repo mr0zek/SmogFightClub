@@ -36,8 +36,8 @@ namespace SFC.Tests.Notification
       SFC.Infrastructure.DbMigrations.Run(connectionString);
 
       var builder = new ContainerBuilder();
-      builder.RegisterModule(new AutofacNotificationsModule());
-      builder.RegisterModule(new AutofacInfrastructureModule());
+      builder.RegisterModule(new NotificationsModule());
+      builder.RegisterModule(new InfrastructureModule());
       builder.RegisterInstance(new ConnectionString(connectionString));
       builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TestDateTimeProvider>().AsImplementedInterfaces();

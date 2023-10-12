@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Alerts", "SFC.Alerts\SF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{99B2DDFD-21F5-4A1D-A01E-2B09F27D97BF}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Notifications", "SFC.Notifications\SFC.Notifications.csproj", "{07A23A6D-1DA6-420D-93A9-8E10F5A98A60}"
@@ -39,6 +39,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.Infrastructure.Interfaces", "SFC.Infrastructure.Interfaces\SFC.Infrastructure.Interfaces.csproj", "{04C93F60-66B0-40D0-A283-0868A10B44DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFC.AuthenticationApi", "SFC.AuthenticationApi\SFC.AuthenticationApi.csproj", "{5D78C868-5691-4B18-98D9-2A811BEA4AC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D467C74B-0F05-4785-B04D-2070F897A25D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureDocumentationGenerator", "..\tools\ArchitectureDocumentationGenerator\ArchitectureDocumentationGenerator.csproj", "{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +106,10 @@ Global
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +125,7 @@ Global
 		{7CD3D1FD-3FE4-4240-9A8E-5FC471E94988} = {CC89DF66-24C4-47C6-A47C-AC05E6485208}
 		{25214CB0-3818-44A5-95D8-CE48034EA8A4} = {CC89DF66-24C4-47C6-A47C-AC05E6485208}
 		{5D78C868-5691-4B18-98D9-2A811BEA4AC7} = {7CD3D1FD-3FE4-4240-9A8E-5FC471E94988}
+		{6E8CEC3B-AF51-41B0-A133-730CEC70CBA1} = {D467C74B-0F05-4785-B04D-2070F897A25D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D70B1CA3-D71D-4BA5-8185-8A14B80228BB}
