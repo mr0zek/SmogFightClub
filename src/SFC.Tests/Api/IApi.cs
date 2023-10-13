@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestEase;
+using SFC.Infrastructure.Interfaces.Communication;
+using SFC.SharedKernel;
 
 namespace SFC.Tests.Api
 {
@@ -47,12 +49,26 @@ namespace SFC.Tests.Api
     Task<string> Login([Body] CredentialsModel model);
 
     [Get("api/v1.0/user/alerts/{id}")]
-    Task<GetAlertModel> GetAlert([Path]Guid id);
+    Task<GetAlertResult> GetAlert([Path]Guid id);
     
     [Get("api/v1.0/user/sensors/{id}")]
-    Task<GetSensorModel> GetSensor([Path]Guid id);
+    Task<GetSensorResult> GetSensor([Path]Guid id);
 
     [Get("api/v1.0/user/sensors/")]
-    Task<GetSensorsModel> GetAllSensors();
+    Task<GetSensorsResult> GetAllSensors();
+
+    [Get("api/v1.0/admin/sendNotificationsByUser")]
+    Task<GetAllSendNotificationsByUserResult> GetSendNotificationsByUser([Query]int skip, [Query]int take);
+  }
+
+  public class GetAllSendNotificationsByUserResult 
+  {    
+    public class SendNotification 
+    {
+      public string LoginName { get; set; }
+      public int Count { get; set; }
+    }
+
+    public IEnumerable<SendNotification> Result { get; set; }
   }
 }

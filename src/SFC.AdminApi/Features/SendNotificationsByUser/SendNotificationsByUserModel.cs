@@ -3,6 +3,6 @@
   public class SendNotificationsByUserModel
   {
     public int Take { get; set; }
-    public int Top { get; set; }
+    public int Skip { get; set; }
   }
 }

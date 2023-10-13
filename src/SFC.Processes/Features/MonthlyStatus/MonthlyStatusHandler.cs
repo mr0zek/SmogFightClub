@@ -13,8 +13,7 @@ namespace SFC.Processes.Features.MonthlyStatus
   internal class MonthlyStatusHandler : IEventHandler<TimeEvent>
   {
     public void Handle(TimeEvent @event)
-    {
-
+    {      
     }
   }
 }

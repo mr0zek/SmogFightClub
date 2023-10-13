@@ -2,7 +2,7 @@
 
 namespace SFC.Tests.Api
 {
-  public class GetSensorModel
+  public class GetSensorResult
   {
     public string ZipCode { get; set; }
   }

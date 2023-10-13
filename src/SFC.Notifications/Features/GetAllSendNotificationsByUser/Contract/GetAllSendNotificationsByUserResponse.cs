@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
 {
-    public class GetAllSendNotificationsByUserResponse : IResponse
+  public class GetAllSendNotificationsByUserResponse : IResponse
   {
     public GetAllSendNotificationsByUserResponse(IEnumerable<SendNotification> result)
     {
@@ -13,7 +13,7 @@ namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
 
     public class SendNotification : IResponse
     {
-      public LoginName LoginName { get; set; }
+      public string LoginName { get; set; }
       public int Count { get; set; }
     }
 

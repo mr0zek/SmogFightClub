@@ -1,6 +1,6 @@
 ﻿namespace SFC.Tests.Api
 {
-    public class GetAlertModel
+    public class GetAlertResult
     {
         public string ZipCode { get; set; }
     }

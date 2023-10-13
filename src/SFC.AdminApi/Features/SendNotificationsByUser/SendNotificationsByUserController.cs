@@ -28,7 +28,7 @@ namespace SFC.AdminApi.Features.SendNotificationsByUser
     [HttpGet]
     public ActionResult<GetAllSendNotificationsByUserResponse> Get([FromQuery] SendNotificationsByUserModel query)
     {
-      return _query.Query(new GetAllSendNotificationsByUserRequest(query.Top, query.Take));
+      return _query.Query(new GetAllSendNotificationsByUserRequest(query.Skip, query.Take));
     }
   }
 }

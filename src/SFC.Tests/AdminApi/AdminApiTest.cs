@@ -100,6 +100,34 @@ namespace SFC.Tests.AdminApi
     }
 
     [Fact]
+    public async void SendNotificationsByUser()
+    {
+      // Arrange
+      // Arrange
+      var postAccountModel = new PostAccountModel()
+      {
+        LoginName = Guid.NewGuid().ToString(),
+        Password = Guid.NewGuid().ToString(),
+        ZipCode = "12-234",
+        Email = "ala.ma.kotowska@gmail.com"
+      };
+
+      var api = RestClient.For<IApi>(_url);
+      Guid confirmationId = await api.PostAccount(postAccountModel);
+      await api.PostAccountConfirmation(confirmationId);
+
+      api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+
+      // Act
+      var result = await api.GetSendNotificationsByUser(0,int.MaxValue);
+
+      // Assert
+      Assert.Single(result.Result);
+      Assert.Equal(postAccountModel.LoginName, result.Result.First().LoginName);
+      Assert.Equal(2, result.Result.First().Count);
+    }
+
+    [Fact]
     public async void SearchableDashboardTest()
     {
       // Arrange
