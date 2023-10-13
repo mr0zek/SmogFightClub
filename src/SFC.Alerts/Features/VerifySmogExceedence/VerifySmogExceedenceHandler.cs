@@ -1,5 +1,5 @@
 ﻿using SFC.Alerts.Features.VerifySmogExceedence.Contract;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using System;
 using System.Collections.Generic;

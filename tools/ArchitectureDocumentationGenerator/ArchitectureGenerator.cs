@@ -38,6 +38,7 @@ namespace ArchitectureDocumentationGenerator
       {
         AnalyseAssembly(file, result);
       }
+      result.AddModule(new ArchModule("Time", "Time"));
 
       result.RemoveInvalidReferences();
 
@@ -53,13 +54,20 @@ package SFC {");
 
       foreach (var g in result.Modules.GroupBy(f => f.Type))
       {
-        sb.AppendLine($"frame {g.Key} {{");
-        foreach (var module in g)
+        if (g.Key == "Time")
         {
-          sb.AppendLine($"[{module.Name}]");
+          sb.AppendLine($":Time:");
         }
-        sb.AppendLine("}");
-      }
+        else
+        {
+          sb.AppendLine($"frame {g.Key} {{");
+          foreach (var module in g)
+          {
+            sb.AppendLine($"[{module.Name}]");
+          }
+          sb.AppendLine("}");
+        }
+      }      
 
       foreach (var module in result.Modules)
       {
@@ -78,21 +86,28 @@ package SFC {");
     private static void AnalyseAssembly(string file, AnalysisResult result)
     {
       var assembly = AssemblyDefinition.ReadAssembly(file);
-      var t = assembly.MainModule.GetTypes().FirstOrDefault(f => f.CustomAttributes.Any(f => f.AttributeType.Resolve().MetadataToken == result.ModuleDefinitionAttribute.MetadataToken));
+      
+      
+      var t = assembly.MainModule.GetTypes().FirstOrDefault(f => f.CustomAttributes.Any(f =>
+        f.AttributeType.FullName == result.ModuleDefinitionAttribute.FullName));
 
       if (t != null)
-      {
-        var attr = t.CustomAttributes.First(f => f.AttributeType.Resolve().MetadataToken == result.ModuleDefinitionAttribute.MetadataToken);
+      {        
+        var attr = t.CustomAttributes.First(f => f.AttributeType.FullName == result.ModuleDefinitionAttribute.FullName);
         var type = attr.ConstructorArguments[0].Value.ToString();
         var module = new ArchModule(assembly.Name.Name, type);
 
         foreach (var f in assembly.MainModule.GetTypes())
         {
-          foreach (var h in f.Interfaces.Where(c => c.InterfaceType.GetElementType().Resolve().MetadataToken == result.EventHandlerInterface.MetadataToken))
+          foreach (var h in f.Interfaces.Where(c => c.InterfaceType.GetElementType().FullName == result.EventHandlerInterface.FullName))
           {
             if (h.InterfaceType is GenericInstanceType)
             {
               string name = (h.InterfaceType as GenericInstanceType).GenericArguments[0].Scope.Name;
+              if((h.InterfaceType as GenericInstanceType).GenericArguments[0].Name == "TimeEvent")
+              {
+                name = "Time";
+              }
               module.AddReference(name, ReferenceType.Event);
             }
           }
@@ -114,12 +129,12 @@ package SFC {");
                   {
                     continue;
                   }
-                  if ((i.Operand as GenericInstanceMethod).DeclaringType.Resolve().MetadataToken == result.CommandBusMarkerInterface.MetadataToken)
+                  if ((i.Operand as GenericInstanceMethod).DeclaringType.FullName == result.CommandBusMarkerInterface.FullName)
                   {
                     string name = (i.Operand as GenericInstanceMethod).GenericArguments[0].Scope.Name;
                     module.AddReference(name, ReferenceType.Command);
                   }
-                  if ((i.Operand as GenericInstanceMethod).DeclaringType.Resolve().MetadataToken == result.QueryBusMarkerInterface.MetadataToken)
+                  if ((i.Operand as GenericInstanceMethod).DeclaringType.FullName == result.QueryBusMarkerInterface.FullName)
                   {
                     string name = (i.Operand as GenericInstanceMethod).GenericArguments[0].Scope.Name;
                     module.AddReference(name, ReferenceType.Query);

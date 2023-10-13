@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Processes.Features.UserRegistrationSaga.Contract
 {
-  public class RegisterUserCommandSaga : ICommand
+    public class RegisterUserCommandSaga : ICommand
   {
     public LoginName LoginName { get; set; }
     public Email Email { get; set; }

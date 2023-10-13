@@ -1,5 +1,6 @@
 ﻿using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Smtp;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.SharedKernel;

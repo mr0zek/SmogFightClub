@@ -1,7 +1,7 @@
 ﻿using System;
 using Automatonymous;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
 
 namespace SFC.Processes.Features.UserRegistrationSaga

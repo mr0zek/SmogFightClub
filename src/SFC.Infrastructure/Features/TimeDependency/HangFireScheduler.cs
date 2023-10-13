@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Hangfire;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-  internal class HangFireScheduler : IScheduler
+    internal class HangFireScheduler : IScheduler
   {
     private readonly IComponentContext _componentContext;
 

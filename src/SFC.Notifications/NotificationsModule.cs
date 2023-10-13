@@ -2,6 +2,7 @@
 using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification;
 using SFC.Notifications.Infrastructure;
 

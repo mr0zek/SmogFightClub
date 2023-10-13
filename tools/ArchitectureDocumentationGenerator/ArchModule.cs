@@ -2,13 +2,9 @@
 {
   internal class ArchModule
   {
-    public ArchModule(string name)
+    public ArchModule(string name, string type) 
     {
       Name = name;
-    }
-
-    public ArchModule(string name, string type) : this(name)
-    {
       Type = type;
     }
 

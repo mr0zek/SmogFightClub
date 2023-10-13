@@ -1,4 +1,6 @@
-﻿namespace SFC.Infrastructure.Interfaces
+﻿using SFC.Infrastructure.Interfaces.Communication;
+
+namespace SFC.Infrastructure.Interfaces
 {
   public interface IQueryHandlerAction<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System;
 
 namespace SFC.Alerts.Features.GetAlert
 {
-  public class AlertResponse : IResponse
+    public class AlertResponse : IResponse
   {
     public Guid Id { get; set; }
     public string ZipCode { get; set; }

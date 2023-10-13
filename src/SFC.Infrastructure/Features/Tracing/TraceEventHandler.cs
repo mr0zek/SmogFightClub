@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System.Diagnostics;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
-  class TraceEventHandlerAction<T> : IEventHandlerAction<T>
+    class TraceEventHandlerAction<T> : IEventHandlerAction<T>
   {
     private readonly IExecutionContext _executionContext;
 

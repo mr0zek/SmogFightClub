@@ -14,11 +14,12 @@ using Autofac;
 using FluentMigrator;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Tests.Architecture
 {
 
-  public class ArchitectureTests
+    public class ArchitectureTests
   {
     private static readonly ArchUnitNET.Domain.Architecture Architecture =
     new ArchLoader().LoadAssemblies(

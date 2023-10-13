@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Infrastructure.Features.Communication
 {
-  class EventBus : IEventBus
+    class EventBus : IEventBus
   {
     private readonly IComponentContext _container;
 

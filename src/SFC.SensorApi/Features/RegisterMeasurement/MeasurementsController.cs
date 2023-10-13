@@ -3,14 +3,14 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasurementCommand;
 
 namespace SFC.SensorApi.Features.RegisterMeasurement
 {
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}")]
   [ApiController]
   public class MeasurementsController : Controller

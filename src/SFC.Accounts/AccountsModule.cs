@@ -2,6 +2,7 @@
 using FluentValidation;
 using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Accounts
 {

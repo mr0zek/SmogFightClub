@@ -15,11 +15,12 @@ using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Infrastructure;
 using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
 using Microsoft.AspNetCore.Builder;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Tests.Notification
 {
 
-  
+
   public class NotificationServiceTests 
   {
     private readonly IContainer _container;

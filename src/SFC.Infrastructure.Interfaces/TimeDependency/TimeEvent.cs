@@ -1,4 +1,4 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Interfaces.TimeDependency
 {
-  public class TimeEvent : IEvent
+    public class TimeEvent : IEvent
   {
   }
 }

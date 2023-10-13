@@ -1,5 +1,5 @@
 ﻿using Serilog;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ namespace SFC.Processes.Features.MonthlyStatus
 {
   [Crontab("* * * * *")]
   internal class MonthlyStatusHandler : IEventHandler<TimeEvent>
-  {    
+  {
     public void Handle(TimeEvent @event)
     {
-      
+
     }
   }
 }

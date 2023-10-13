@@ -3,6 +3,7 @@ using FluentValidation;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistrationSaga;
 using SFC.Sensors;

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Smtp;
 using SFC.SharedKernel;
 
 namespace SFC.Tests.Mocks
 {
-  public class TestSmtpClient : ISmtpClient
+    public class TestSmtpClient : ISmtpClient
   {
     public static List<SmtpClientEmail> SentEmails { get; set; } = new List<SmtpClientEmail>();
     public void Send(Email email, string title, string body)

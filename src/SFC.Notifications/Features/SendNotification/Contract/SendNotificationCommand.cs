@@ -1,10 +1,10 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.GetAllSendNotificationsCount.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Features.SendNotification.Contract
 {
-  public class SendNotificationCommand : ICommand
+    public class SendNotificationCommand : ICommand
   {
     public LoginName LoginName { get; set; }
     public string Body { get; set; }

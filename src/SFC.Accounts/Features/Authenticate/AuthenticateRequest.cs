@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.Authenticate
 {
-  public class AuthenticateRequest : IRequest<AuthenticateResponse>
+    public class AuthenticateRequest : IRequest<AuthenticateResponse>
   {
     public AuthenticateRequest(LoginName loginName, PasswordHash passwordHash)
     {

@@ -21,17 +21,17 @@ frame Api {
 frame Task {
 [SFC.Processes]
 }
-[SFC.AdminApi] --> [SFC.Notifications] : [Q]
-[SFC.AdminApi] --> [SFC.Accounts] : [E, Q]
+:Time:
+[SFC.AdminApi] --> [SFC.Accounts] : [E]
 [SFC.AdminApi] --> [SFC.Alerts] : [E]
 [SFC.Alerts] --> [SFC.Sensors] : [E]
-[SFC.AuthenticationApi] --> [SFC.Accounts] : [Q]
-[SFC.Processes] --> [SFC.Accounts] : [Q, C]
 [SFC.Processes] --> [SFC.Notifications] : [C]
+[SFC.Processes] --> [SFC.Accounts] : [C]
 [SFC.Processes] --> [SFC.Alerts] : [C, E]
+[SFC.Processes] --> [Time] : [E]
 [SFC.SensorApi] --> [SFC.Sensors] : [C]
 [SFC.UserApi] --> [SFC.Notifications] : [C]
-[SFC.UserApi] --> [SFC.Sensors] : [C, Q]
-[SFC.UserApi] --> [SFC.Alerts] : [C, Q]
+[SFC.UserApi] --> [SFC.Sensors] : [C]
+[SFC.UserApi] --> [SFC.Alerts] : [C]
 [SFC.UserApi] --> [SFC.Processes] : [C]
 @enduml

@@ -4,12 +4,12 @@ using System.Text;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  class SearchableDashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<AlertCreatedEvent>
+    class SearchableDashboardHandler : IEventHandler<AccountCreatedEvent>, IEventHandler<AlertCreatedEvent>
   {
     private readonly IWriteDashboardPerspective _searchableDashboardPerspective;
 

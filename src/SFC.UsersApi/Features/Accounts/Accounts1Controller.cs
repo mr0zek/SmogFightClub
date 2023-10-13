@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistration.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v1.0/accounts")]
   [ApiController]
   public class Accounts1Controller : ControllerBase

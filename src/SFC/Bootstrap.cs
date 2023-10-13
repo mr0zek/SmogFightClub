@@ -57,8 +57,8 @@ namespace SFC
         .UseRecommendedSerializerSettings()
         .UseSqlServerStorage(connectionString)
         );
-      builder.Services.AddHangfireServer();      
-
+      builder.Services.AddHangfireServer();     
+      
       builder.Services.AddControllers();
       var mvc = builder.Services.AddMvc(opt =>
       {
@@ -172,6 +172,8 @@ namespace SFC
       app.UseAuthentication();      
 
       app.UseAuthorization();
+
+      app.UseHangfireDashboard();
 
       app.MapControllers();      
 

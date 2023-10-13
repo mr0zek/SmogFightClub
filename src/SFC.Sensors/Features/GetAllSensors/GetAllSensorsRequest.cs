@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Sensors.Features.GetAllSensors
 {
-  public class GetAllSensorsRequest : IRequest<GetAllSensorsResponse>
+    public class GetAllSensorsRequest : IRequest<GetAllSensorsResponse>
   {
     public GetAllSensorsRequest(LoginName loginName)
     {

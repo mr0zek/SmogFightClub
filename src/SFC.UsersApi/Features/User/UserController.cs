@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Sensors.Features.GetAllSensors;
 using SFC.Sensors.Features.GetSensor;
@@ -9,7 +10,7 @@ using SFC.Sensors.Features.RegisterSensor.Contract;
 
 namespace SFC.UserApi.Features.User
 {
-  [Authorize]
+    [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]

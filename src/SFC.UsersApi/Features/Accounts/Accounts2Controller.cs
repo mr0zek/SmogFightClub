@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
-{ 
-  [Route("api/v2.0/accounts")]
+{
+    [Route("api/v2.0/accounts")]
   [ApiController]
   public class Accounts2Controller : ControllerBase
   {

@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Notifications.Features.SetNotificationEmail.Contract
 {
-  public class SetNotificationEmailCommand : ICommand
+    public class SetNotificationEmailCommand : ICommand
   {
     public SetNotificationEmailCommand(string email, LoginName loginName)
     {

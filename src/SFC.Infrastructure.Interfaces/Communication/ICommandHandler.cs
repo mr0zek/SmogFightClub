@@ -1,4 +1,4 @@
-﻿namespace SFC.Infrastructure.Interfaces
+﻿namespace SFC.Infrastructure.Interfaces.Communication
 {
   public interface ICommandHandler<T>
   {

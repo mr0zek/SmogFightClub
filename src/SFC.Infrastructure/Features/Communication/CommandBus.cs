@@ -4,6 +4,7 @@ using Autofac.Core;
 using FluentValidation;
 using FluentValidation.Results;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Infrastructure.Features.Communication
 {

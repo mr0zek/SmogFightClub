@@ -1,12 +1,12 @@
 ﻿using Autofac;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
 using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-  internal class HandlerActivator
+    internal class HandlerActivator
   {
     private readonly IComponentContext _componentContext;
 

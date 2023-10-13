@@ -2,7 +2,7 @@
 using SFC.Alerts.Features.VerifySmogExceedence;
 using SFC.Alerts.Features.VerifySmogExceedence.Contract;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Alerts.Features.CreateAlert
 {

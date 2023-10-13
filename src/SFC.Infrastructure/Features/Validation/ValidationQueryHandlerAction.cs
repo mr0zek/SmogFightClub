@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using System;
 
 namespace SFC.Infrastructure.Features.Validation

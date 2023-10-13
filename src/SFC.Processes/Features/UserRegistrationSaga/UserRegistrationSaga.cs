@@ -4,7 +4,7 @@ using Automatonymous;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
@@ -12,7 +12,7 @@ using SFC.SharedKernel;
 
 namespace SFC.Processes.Features.UserRegistrationSaga
 {
-  public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
+    public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
     public Event<ConfirmUserCommandSaga> ConfirmUserCommand { get; set; }
