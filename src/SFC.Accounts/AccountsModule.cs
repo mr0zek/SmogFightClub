@@ -2,7 +2,6 @@
 using FluentValidation;
 using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
-using SFC.Sensors;
 
 namespace SFC.Accounts
 {

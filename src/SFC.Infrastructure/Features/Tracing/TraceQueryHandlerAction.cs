@@ -8,12 +8,10 @@ namespace SFC.Infrastructure.Features.Tracing
     where TRequest : IRequest<TResponse>
     where TResponse : IResponse
   {
-    private readonly ITraceRepository _traceRepository;
     private readonly IExecutionContext _executionContext;
 
-    public TraceQueryHandlerAction(ITraceRepository traceRepository, IExecutionContext executionContext)
+    public TraceQueryHandlerAction(IExecutionContext executionContext)
     {
-      _traceRepository = traceRepository;
       _executionContext = executionContext;
     }
 

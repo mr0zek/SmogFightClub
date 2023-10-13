@@ -5,12 +5,10 @@ namespace SFC.Infrastructure.Features.Tracing
 {
   class TraceCommandHandlerAction<T> : ICommandHandlerAction<T>
   {
-    private readonly ITraceRepository _traceRepository;
     private readonly IExecutionContext _executionContext;
 
-    public TraceCommandHandlerAction(ITraceRepository traceRepository, IExecutionContext executionContext)
+    public TraceCommandHandlerAction(IExecutionContext executionContext)
     {
-      _traceRepository = traceRepository;
       _executionContext = executionContext;
     }
 

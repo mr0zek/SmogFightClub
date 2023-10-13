@@ -10,12 +10,10 @@ namespace SFC.Infrastructure.Features.Tracing
   public class TraceActionFilter : IActionFilter
   {
     private readonly IExecutionContext _context;
-    private readonly ITraceRepository _traceRepository;
 
-    public TraceActionFilter(IExecutionContext context, ITraceRepository traceRepository)
+    public TraceActionFilter(IExecutionContext context)
     {
       _context = context;
-      _traceRepository = traceRepository;
     }
     public void OnActionExecuted(ActionExecutedContext context)
     {

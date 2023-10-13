@@ -17,7 +17,8 @@ namespace SFC.Infrastructure
       builder.RegisterType<CommandBus>().AsImplementedInterfaces();
       builder.RegisterType<EventBus>().AsImplementedInterfaces();
       builder.RegisterType<QueryBus>().AsImplementedInterfaces();
-      builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();      
+      builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
+      builder.RegisterType<HangFireScheduler>().AsImplementedInterfaces();
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TraceRepository>().AsImplementedInterfaces();
       builder.RegisterType<HttpExecutionContext>().InstancePerLifetimeScope().AsImplementedInterfaces();

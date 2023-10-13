@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-    class DateTimeProvider : IDateTimeProvider
+  class DateTimeProvider : IDateTimeProvider
     {
         public DateTime Now()
         {

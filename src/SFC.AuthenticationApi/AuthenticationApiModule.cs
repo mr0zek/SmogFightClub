@@ -2,7 +2,6 @@
 using FluentValidation;
 using SFC.AuthenticationApi.Features.Authentication;
 using SFC.Infrastructure.Interfaces;
-using SFC.Sensors;
 
 namespace SFC.AuthenticationApi
 {

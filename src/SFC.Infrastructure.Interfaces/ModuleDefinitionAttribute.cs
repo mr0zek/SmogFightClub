@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFC.Sensors
+namespace SFC.Infrastructure.Interfaces
 {
   [AttributeUsage(AttributeTargets.All)]
   public class ModuleDefinitionAttribute : Attribute
