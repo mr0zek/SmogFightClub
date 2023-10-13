@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.GetAccountByLoginName
 {
-  public class GetAccountByLoginNameRequest : IRequest<GetAccountByLoginNameResponse>
+    public class GetAccountByLoginNameRequest : IRequest<GetAccountByLoginNameResponse>
   {
     public GetAccountByLoginNameRequest(LoginName loginName)
     {

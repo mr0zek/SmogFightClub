@@ -1,8 +1,8 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Sensors.Features.RegisterMeasurement.Contract
 {
-  public class AcceptableLevelExceededEvent : IEvent
+    public class AcceptableLevelExceededEvent : IEvent
   {
     public AcceptableLevelExceededEvent(string zipCode)
     {

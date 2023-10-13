@@ -1,4 +1,4 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;

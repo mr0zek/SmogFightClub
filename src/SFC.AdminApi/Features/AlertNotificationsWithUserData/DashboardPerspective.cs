@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Linq;
 using SFC.Accounts.Features.SearchAccount;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
 
 namespace SFC.AdminApi.Features.AlertNotificationsWithUserData

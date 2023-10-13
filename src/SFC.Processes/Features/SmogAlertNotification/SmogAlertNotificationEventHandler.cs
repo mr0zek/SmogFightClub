@@ -1,11 +1,11 @@
 ﻿using SFC.Alerts.Features.VerifySmogExceedence.Contract;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
 
 namespace SFC.Processes.Features.SmogAlertNotification
 {
-  public class SmogAlertEventHandler : IEventHandler<SmogAlertEvent>
+    class SmogAlertEventHandler : IEventHandler<SmogAlertEvent>
   {
     private readonly ICommandBus _commandBus;
 

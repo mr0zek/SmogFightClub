@@ -1,13 +1,13 @@
 ﻿using Dapper;
 using SFC.Infrastructure;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using SFC.Sensors.Features.RegisterSensor.Contract;
 
 namespace SFC.Sensors.Features.RegisterSensor
 {
-    internal class RegisterSensorHandler : ICommandHandler<RegisterSensorCommand>
+  internal class RegisterSensorHandler : ICommandHandler<RegisterSensorCommand>
   {
     private readonly ISensorRepository _sensorRepository;
 

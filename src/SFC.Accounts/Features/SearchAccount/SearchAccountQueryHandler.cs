@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SFC.Accounts.Features.GetAccountByLoginName;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;

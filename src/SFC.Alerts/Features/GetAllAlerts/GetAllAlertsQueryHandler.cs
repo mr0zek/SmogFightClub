@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SFC.Alerts.Features.GetAlert;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using System.Data;
 using System.Data.SqlClient;
 

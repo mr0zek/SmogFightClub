@@ -1,9 +1,9 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System.Collections.Generic;
 
 namespace SFC.Sensors.Features.GetAllSensors
 {
-  public class GetAllSensorsResponse : IResponse
+    public class GetAllSensorsResponse : IResponse
   {
     public GetAllSensorsResponse(IEnumerable<SensorReadModel> sensors)
     {

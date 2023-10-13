@@ -1,10 +1,10 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System.Collections.Generic;
 
 namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
 {
-  public class GetAllSendNotificationsByUserResponse : IResponse
+    public class GetAllSendNotificationsByUserResponse : IResponse
   {
     public GetAllSendNotificationsByUserResponse(IEnumerable<SendNotification> result)
     {

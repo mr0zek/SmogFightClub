@@ -1,4 +1,4 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
 
 namespace SFC.Tests.Mocks

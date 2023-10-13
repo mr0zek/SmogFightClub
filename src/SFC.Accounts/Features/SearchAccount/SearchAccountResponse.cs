@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using SFC.Accounts.Features.GetAccountByLoginName;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.SearchAccount
 {
-  public class SearchAccountResponse : IResponse
+    public class SearchAccountResponse : IResponse
   {
     public SearchAccountResponse(IEnumerable<Account> accounts)
     {

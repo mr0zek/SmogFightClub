@@ -42,15 +42,15 @@ namespace SFC.Tests.UseStories
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
         {
-          new AutofacAdminApiModule(),
-          new AutofacSensorApiModule(),
-          new AutofacUserApiModule(),
-          new AutofacAlertsModule(),
-          new AutofacProcessesModule(),
-          new AutofacNotificationsModule(),
-          new AutofacSensorsModule(),
-          new AutofacAccountsModule(),
-          new AutofacInfrastructureModule()
+          new AdminApiModule(),
+          new SensorApiModule(),
+          new UserApiModule(),
+          new AlertsModule(),
+          new ProcessesModule(),
+          new NotificationsModule(),
+          new SensorsModule(),
+          new AccountsModule(),
+          new InfrastructureModule()
         },
         builder =>
       {

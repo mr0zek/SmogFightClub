@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using SFC.Alerts.Features.GetAlert;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Alerts.Features.GetAllAlerts
 {
-  public class GetAllAlertsResponse : IResponse
+    public class GetAllAlertsResponse : IResponse
     {
         public IEnumerable<AlertResponse> Alerts { get; }
 

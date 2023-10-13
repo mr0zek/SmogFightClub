@@ -1,5 +1,5 @@
 ﻿using System;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 
 namespace SFC.Sensors.Features.RegisterSensor.Contract

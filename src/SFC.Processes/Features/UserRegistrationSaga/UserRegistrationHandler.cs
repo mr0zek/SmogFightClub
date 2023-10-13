@@ -1,6 +1,6 @@
 ﻿using Automatonymous;
 using SFC.Accounts.Features.GetAccountByLoginName;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
 
 namespace SFC.Processes.Features.UserRegistrationSaga

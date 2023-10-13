@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System;
 using System.Collections.Generic;

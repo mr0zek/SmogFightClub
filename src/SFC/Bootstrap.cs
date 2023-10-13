@@ -9,10 +9,12 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -20,7 +22,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.TimeDependency;
+using SFC.Infrastructure.Features.Tracing;
+using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.TimeDependency;
 
 namespace SFC
 {
@@ -36,15 +42,30 @@ namespace SFC
 
       var builder = WebApplication.CreateBuilder(args);
 
+      string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+
       builder.WebHost.UseUrls(url);
 
       builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.Debug()
         .WriteTo.Console()
         .ReadFrom.Configuration(ctx.Configuration));
 
-
+      builder.Services.AddHangfire(conf => conf
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseSqlServerStorage(connectionString)
+        );
+      builder.Services.AddHangfireServer();     
+      
       builder.Services.AddControllers();
-      var mvc = builder.Services.AddMvc(opt => opt.Filters.Add(typeof(FluentValidationActionFilter)));
+      var mvc = builder.Services.AddMvc(opt =>
+      {
+        opt.Filters.Add(typeof(FluentValidationActionFilter));
+        opt.Filters.Add(typeof(TraceActionFilter));
+      });
+
       foreach (var m in modules)
       {
         mvc.AddApplicationPart(m.GetType().Assembly);
@@ -119,9 +140,7 @@ namespace SFC
       builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
       BaseUrl.Current = url;
-
-      string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
-
+      
       // Register services directly with Autofac here.
       // Don't call builder.Populate(), that happens in AutofacServiceProviderFactory.
       builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
@@ -136,18 +155,25 @@ namespace SFC
 
       var app = builder.Build();
 
+      GlobalConfiguration.Configuration.UseActivator(new ContainerJobActivator(app.Services));
+      GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
+
+      app.Services.GetService<IScheduler>().RegisterRecurrentTasks();
+
       // Configure the HTTP request pipeline.
       if (app.Environment.IsDevelopment())
       {
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-
+      
       app.UseSerilogRequestLogging();
 
       app.UseAuthentication();      
 
       app.UseAuthorization();
+
+      app.UseHangfireDashboard();
 
       app.MapControllers();      
 

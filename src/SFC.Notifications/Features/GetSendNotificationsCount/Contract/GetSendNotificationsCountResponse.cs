@@ -1,10 +1,10 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System.Collections.Generic;
 
 namespace SFC.Notifications.Features.GetSendNotificationsCount.Contract
 {
-  public class GetSendNotificationsCountResponse : IResponse
+    public class GetSendNotificationsCountResponse : IResponse
   {
     public GetSendNotificationsCountResponse(IEnumerable<SendNotificaton> result)
     {

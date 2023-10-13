@@ -1,10 +1,10 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System;
 
 namespace SFC.Sensors.Features.GetSensor
 {
-  public class GetSensorRequest : IRequest<GetSensorResponse>
+    public class GetSensorRequest : IRequest<GetSensorResponse>
   {
     public GetSensorRequest(Guid sensorId, LoginName loginName)
     {

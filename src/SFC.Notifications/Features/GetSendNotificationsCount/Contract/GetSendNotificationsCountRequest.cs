@@ -1,4 +1,4 @@
-﻿using SFC.Infrastructure.Interfaces;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFC.Notifications.Features.GetSendNotificationsCount.Contract
 {
 
-  public class GetSendNotificationsCountRequest : IRequest<GetSendNotificationsCountResponse>
+    public class GetSendNotificationsCountRequest : IRequest<GetSendNotificationsCountResponse>
   {
     public string NotificationType { get; set; }
     public LoginName[] LoginNames { get; set; }

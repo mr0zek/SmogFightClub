@@ -30,16 +30,16 @@ namespace SFC
 
       Bootstrap.Run(args,"http://localhost:5000", new Module[]
       {
-        new AutofacAuthenticationApiModule(),
-        new AutofacAdminApiModule(),
-        new AutofacSensorApiModule(),
-        new AutofacUserApiModule(),
-        new AutofacAlertsModule(),
-        new AutofacProcessesModule(),
-        new AutofacNotificationsModule(),
-        new AutofacSensorsModule(),
-        new AutofacAccountsModule(),
-        new AutofacInfrastructureModule()
+        new AuthenticationApiModule(),
+        new AdminApiModule(),
+        new SensorApiModule(),
+        new UserApiModule(),
+        new AlertsModule(),
+        new ProcessesModule(),
+        new NotificationsModule(),
+        new SensorsModule(),
+        new AccountsModule(),
+        new InfrastructureModule()
     });
 
       Console.ReadKey();

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Sensors.Features.GetAllSensors;
 using SFC.Sensors.Features.GetSensor;
 using SFC.Sensors.Features.RegisterSensor.Contract;

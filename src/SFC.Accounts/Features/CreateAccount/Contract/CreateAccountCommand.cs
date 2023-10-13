@@ -1,11 +1,11 @@
-﻿using SFC.Infrastructure.Interfaces;
-using SFC.SharedKernel;
+﻿using SFC.SharedKernel;
 using System.Text;
 using System.Security.Cryptography;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Accounts.Features.CreateAccount.Contract
 {
-  public class CreateAccountCommand : ICommand
+    public class CreateAccountCommand : ICommand
   {
     public LoginName LoginName { get; set; }
     public PasswordHash PasswordHash { get; set; }

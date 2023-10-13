@@ -5,6 +5,7 @@ using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Alerts.Features.GetAlert;
 using SFC.Alerts.Features.GetAllAlerts;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.UserApi.Features.Alerts
 {

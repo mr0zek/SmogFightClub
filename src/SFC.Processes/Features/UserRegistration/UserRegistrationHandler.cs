@@ -2,7 +2,7 @@
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Accounts.Features.GetAccountByLoginName;
 using SFC.Alerts.Features.CreateAlert.Contract;
-using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes.Features.UserRegistration.Contract;

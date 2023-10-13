@@ -14,19 +14,20 @@ using Autofac;
 using FluentMigrator;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Tests.Architecture
 {
-  
-  public class ArchitectureTests
+
+    public class ArchitectureTests
   {
     private static readonly ArchUnitNET.Domain.Architecture Architecture =
     new ArchLoader().LoadAssemblies(
-      typeof(AutofacAccountsModule).Assembly,
-      typeof(AutofacAlertsModule).Assembly,
-      typeof(AutofacNotificationsModule).Assembly,
-      typeof(AutofacAlertsModule).Assembly,
-      typeof(AutofacSensorsModule).Assembly).Build();
+      typeof(AccountsModule).Assembly,
+      typeof(AlertsModule).Assembly,
+      typeof(NotificationsModule).Assembly,
+      typeof(AlertsModule).Assembly,
+      typeof(SensorsModule).Assembly).Build();
 
     [Fact]
     public void CheckPublicTypesInModules()
@@ -35,11 +36,11 @@ namespace SFC.Tests.Architecture
         Types().That()
           .AreNotAssignableTo(typeof(IMigration)).And()
           .AreNotAssignableTo(typeof(Exception)).And()
+          .DoNotHaveAnyAttributes(typeof(ModuleDefinitionAttribute)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()
           .DoNotImplementInterface(typeof(ICommand)).And()
-          .DoNotImplementInterface(typeof(IEvent)).And()
-          .AreNotAssignableTo(typeof(Module))
+          .DoNotImplementInterface(typeof(IEvent))
           .Should().NotBePublic();
 
       allowedPublicTypesInModules.Check(Architecture);
