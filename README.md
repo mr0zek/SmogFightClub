@@ -9,7 +9,8 @@ any suggestions contact me https://www.szylhabel.pl/contactme/
 
 ## Architecture documentation
 - [C4 documentation](https://github.com/mr0zek/SmogFightClub/blob/master/c4.md)
-
+- ![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/ComponentDiagram.puml)
+  
 ## Technologies
 - AspNetCore 
 - FluentMigrator 
