@@ -91,5 +91,22 @@ namespace SFC.Tests.UseStories
         .Then(s => ThenSystemSendsConfirmationEmail())
         .BDDfy();
     }
+
+    public void t()
+    {
+      //Given().System
+      //  .WithRegisteredAccoun(f => f.Login = "test")
+      //  .WithRegisteredSensor(f => f.ZipCode = "12-234")
+      //  .WithRegisteredAlarm(f => f.ZipCode = "12-233");
+
+      //When().User(f => f.LoginName = "test")
+      //  .AddsSensor()
+      //  .CreatesAlarm();
+
+      //Assert()
+      //  .User(f => f.LoginName = "test")
+      //    .HasSensor(f => f.ZipCode)
+      //    .HasAlert(f => f.ZipCode);
+    }
   }
 }

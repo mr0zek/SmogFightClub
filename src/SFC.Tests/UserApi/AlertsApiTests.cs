@@ -6,6 +6,7 @@ using SFC.Accounts;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.Tracing;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.Sensors;
@@ -52,6 +53,7 @@ namespace SFC.Tests.UserApi
         builder =>
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
+          builder.RegisterType<MyTraceRepository>().AsImplementedInterfaces();
         });
     }
 

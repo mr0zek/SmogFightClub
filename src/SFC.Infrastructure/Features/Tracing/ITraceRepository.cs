@@ -2,6 +2,9 @@
 {
   public interface ITraceRepository
   {
-    void Add(Trace trace);
+    void BeginRequest(string correlationId);
+    void EndRequest(string correlationId);
+
+    void AddCall(Trace trace);
   }
 }

@@ -40,10 +40,6 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="tree $(solutiondir)" />
-  </Target>  
+  </ItemGroup>  
 
 </Project>
