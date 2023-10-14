@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(solutiondir)/../tools/ArchitectureDocumentationGenerator/bin/debug/net6.0/ArchitectureDocumentationGenerator.exe $(outDir) ..\..\docs\ArchitectureDocumentation" />
+    <Exec Command="tree $(solutiondir)" />
   </Target>  
 
 </Project>
