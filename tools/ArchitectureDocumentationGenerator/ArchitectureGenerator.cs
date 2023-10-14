@@ -80,7 +80,7 @@ package SFC {");
       sb.AppendLine(@"@enduml");
 
       Directory.CreateDirectory(outputPath);
-      File.WriteAllText(Path.Combine(outputPath, "ComponentDiagram.puml"), sb.ToString());      
+      File.WriteAllText(Path.Combine(outputPath, "ComponentDiagram.puml"), sb.ToString());
     }
 
     private static void AnalyseAssembly(string file, AnalysisResult result)
