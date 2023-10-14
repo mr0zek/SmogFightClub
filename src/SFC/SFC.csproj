@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\tools\ArchitectureDocumentationGenerator\ArchitectureDocumentationGenerator.csproj" />
     <ProjectReference Include="..\SFC.AdminApi\SFC.AdminApi.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.AuthenticationApi\SFC.AuthenticationApi.csproj" />
@@ -42,7 +43,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="..\..\bin\ArchitectureDocumentationGenerator\ArchitectureDocumentationGenerator.exe bin\Debug\net6.0\ ..\..\docs\ArchitectureDocumentation" />
+    <Exec Command="..\..\tools\ArchitectureDocumentationGenerator\bin\debug\net6.0\ArchitectureDocumentationGenerator.exe bin\Debug\net6.0\ ..\..\docs\ArchitectureDocumentation" />
   </Target>  
 
 </Project>
