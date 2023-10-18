@@ -32,7 +32,18 @@ namespace SFC.Tests.AdminApi
       }
 
       sb.AppendLine(@"@enduml");
-      File.WriteAllText(filePath, sb.ToString());
+      File.WriteAllText(filePath, sb.ToString());      
+    }
+
+    internal static void GenerateDocumentationFile(string path)
+    {
+      var fileNames = Directory.GetFiles(path);
+      StringBuilder sb = new StringBuilder();
+      foreach (var file in fileNames)
+      {
+        sb.AppendLine("![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/"+Path.GetFileName(file));
+      }
+      File.WriteAllText(path+"\\sequenceDiagrams.md", sb.ToString());
     }
   }
 }

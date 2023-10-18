@@ -2,6 +2,12 @@
 header /api/v1.0/sensors/{sensorId}/measurements
 User -> SFC.SensorApi : <<POST>> /api/v1.0/sensors/{sensorId}/measurements
 SFC.SensorApi -> SFC.Sensors : <<Command>> RegisterMeasurementCommand
+SFC.Sensors -> SFC.Alerts : <<Event>> AcceptableLevelExceededEvent
+SFC.Alerts -> SFC.Processes : <<Event>> SmogAlertEvent
+SFC.Processes -> SFC.Notifications : <<Command>> SendNotificationCommand
+SFC.Notifications -> SFC.Processes : <<Return>> 
+SFC.Processes -> SFC.Alerts : <<Return>> 
+SFC.Alerts -> SFC.Sensors : <<Return>> 
 SFC.Sensors -> SFC.SensorApi : <<Return>> 
 SFC.SensorApi -> User: <<Return>> 200
 @enduml

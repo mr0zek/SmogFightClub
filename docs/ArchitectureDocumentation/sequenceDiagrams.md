@@ -1,0 +1,17 @@
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/ComponentDiagram.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/sequenceDiagrams.md
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_accounts.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_accounts_{id}_confirmation.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_admin_alertNotificationsWithUserData.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_admin_searchableDashboard.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_admin_sendNotificationsByUser.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_authentication.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_sensors_{sensorId}_measurements.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_alerts.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_alerts_{id}.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_sensors.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_sensors_.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v1.0_user_sensors_{id}.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v2.0_accounts.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/_api_v2.0_accounts_{id}_confirmation.puml

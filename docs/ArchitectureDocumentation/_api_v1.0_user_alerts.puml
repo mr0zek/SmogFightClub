@@ -1,7 +1,13 @@
 @startuml
 header /api/v1.0/user/alerts
-User -> SFC.UserApi : <<GET>> /api/v1.0/user/alerts
-SFC.UserApi -> SFC.Alerts : <<Query>> GetAllAlertsRequest
-SFC.Alerts -> SFC.UserApi : <<Return>> GetAllAlertsResponse
+User -> SFC.UserApi : <<POST>> /api/v1.0/user/alerts
+SFC.UserApi -> SFC.Alerts : <<Command>> CreateAlertCommand
+SFC.Alerts -> SFC.AdminApi : <<Event>> AlertCreatedEvent
+SFC.AdminApi -> SFC.Alerts : <<Return>> 
+SFC.Alerts -> SFC.Processes : <<Event>> AlertCreatedEvent
+SFC.Processes -> SFC.Notifications : <<Command>> SendNotificationCommand
+SFC.Notifications -> SFC.Processes : <<Return>> 
+SFC.Processes -> SFC.Alerts : <<Return>> 
+SFC.Alerts -> SFC.UserApi : <<Return>> 
 SFC.UserApi -> User: <<Return>> 200
 @enduml

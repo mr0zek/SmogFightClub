@@ -1,5 +1,5 @@
-
 @startuml
+header Component diagram
 !theme aws-orange
 
 skinparam ranksep 100
