@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/admin/searchableDashboard
+center header <font size=25>/api/v1.0/admin/searchableDashboard</font>
 User -> SFC.AdminApi : <<GET>> /api/v1.0/admin/searchableDashboard
 SFC.AdminApi -> User: <<Return>> 200
 @enduml

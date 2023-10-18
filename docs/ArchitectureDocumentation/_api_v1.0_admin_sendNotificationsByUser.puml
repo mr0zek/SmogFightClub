@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/admin/sendNotificationsByUser
+center header <font size=25>/api/v1.0/admin/sendNotificationsByUser</font>
 User -> SFC.AdminApi : <<GET>> /api/v1.0/admin/sendNotificationsByUser
 SFC.AdminApi -> SFC.Notifications : <<Query>> GetAllSendNotificationsByUserRequest
 SFC.Notifications -> SFC.AdminApi : <<Return>> GetAllSendNotificationsByUserResponse

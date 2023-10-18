@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/admin/alertNotificationsWithUserData
+center header <font size=25>/api/v1.0/admin/alertNotificationsWithUserData</font>
 User -> SFC.AdminApi : <<GET>> /api/v1.0/admin/alertNotificationsWithUserData
 SFC.AdminApi -> SFC.Accounts : <<Query>> SearchAccountRequest
 SFC.Accounts -> SFC.AdminApi : <<Return>> SearchAccountResponse

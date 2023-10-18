@@ -15,7 +15,7 @@ namespace SFC.Tests.AdminApi
     {
       StringBuilder sb = new StringBuilder();
       sb.AppendLine(@"@startuml");
-      sb.AppendLine($"header {title}");
+      sb.AppendLine($"center header <font size=25>{title}</font>");
       foreach (var v in t)
       {
         if (string.IsNullOrEmpty(v.CallingModuleName))

@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/authentication
+center header <font size=25>/api/v1.0/authentication</font>
 User -> SFC.AuthenticationApi : <<POST>> /api/v1.0/authentication
 SFC.AuthenticationApi -> SFC.Accounts : <<Query>> AuthenticateRequest
 SFC.Accounts -> SFC.AuthenticationApi : <<Return>> AuthenticateResponse

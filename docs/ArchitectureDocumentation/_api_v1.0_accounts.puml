@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/accounts
+center header <font size=25>/api/v1.0/accounts</font>
 User -> SFC.UserApi : <<POST>> /api/v1.0/accounts
 SFC.UserApi -> SFC.Processes : <<Command>> RegisterUserCommand
 SFC.Processes -> SFC.Accounts : <<Query>> GetAccountByLoginNameRequest

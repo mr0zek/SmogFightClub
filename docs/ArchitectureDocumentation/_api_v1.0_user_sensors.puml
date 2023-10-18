@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/user/sensors
+center header <font size=25>/api/v1.0/user/sensors</font>
 User -> SFC.UserApi : <<POST>> /api/v1.0/user/sensors
 SFC.UserApi -> SFC.Sensors : <<Command>> RegisterSensorCommand
 SFC.Sensors -> SFC.UserApi : <<Return>> 

@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/accounts/{id}/confirmation
+center header <font size=25>/api/v1.0/accounts/{id}/confirmation</font>
 User -> SFC.UserApi : <<POST>> /api/v1.0/accounts/{id}/confirmation
 SFC.UserApi -> SFC.Processes : <<Command>> ConfirmUserCommand
 SFC.Processes -> SFC.Accounts : <<Command>> CreateAccountCommand

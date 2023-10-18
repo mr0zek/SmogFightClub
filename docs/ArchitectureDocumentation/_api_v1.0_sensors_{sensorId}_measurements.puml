@@ -1,5 +1,5 @@
 @startuml
-header /api/v1.0/sensors/{sensorId}/measurements
+center header <font size=25>/api/v1.0/sensors/{sensorId}/measurements</font>
 User -> SFC.SensorApi : <<POST>> /api/v1.0/sensors/{sensorId}/measurements
 SFC.SensorApi -> SFC.Sensors : <<Command>> RegisterMeasurementCommand
 SFC.Sensors -> SFC.Alerts : <<Event>> AcceptableLevelExceededEvent
