@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -39,9 +40,9 @@ namespace SFC.Tests.AdminApi
     {
       var fileNames = Directory.GetFiles(path);
       StringBuilder sb = new StringBuilder();
-      foreach (var file in fileNames)
+      foreach (var file in fileNames.Where(f=>Path.GetExtension(f).ToLower() == ".puml"))
       {
-        sb.AppendLine("![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/"+Path.GetFileName(file));
+        sb.AppendLine($"![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/{Path.GetFileName(file)})");
       }
       File.WriteAllText(path+"\\sequenceDiagrams.md", sb.ToString());
     }
