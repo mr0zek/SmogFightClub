@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
 {
@@ -17,6 +18,7 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
       _dashboardPerspective = dashboardPerspective;
     }
 
+    [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
     public ActionResult<DashboardResult> Get([FromQuery] AlertNotificationsWithUserDataModel query)
     {

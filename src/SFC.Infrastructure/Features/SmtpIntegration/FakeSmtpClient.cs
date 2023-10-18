@@ -10,7 +10,7 @@ namespace SFC.Infrastructure.Features.SmtpIntegration
   {
     public void Send(Email email, string title, string body)
     {
-      Log.Debug("mail sent to: {@email}, with title: {@title} and body: {@body}", email, title, body);
+      Log.Debug("mail sent to: {email}, with title: {title} and body: {body}", email, title, body);
     }
   }
 }

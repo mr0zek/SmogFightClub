@@ -12,8 +12,9 @@ using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes;
 using SFC.Sensors;
 using SFC.SharedKernel;
-using SFC.Tests.Api;
-using SFC.Tests.Mocks;
+using SFC.Tests.Tools;
+using SFC.Tests.Tools.Api;
+using SFC.Tests.Tools.Mocks;
 using SFC.UserApi;
 using System;
 using System.Collections.Generic;
@@ -22,47 +23,15 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SFC.Tests.UserApi
 {
 
-  public class UserApiTests : IDisposable
+    public class UserApiTests : TestBase
   {
-    private readonly string _url = TestHelper.GenerateUrl();
-    private readonly WebApplication _app;
-
-    public UserApiTests()
+    public UserApiTests(ITestOutputHelper output) : base(output)
     {
-      var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json");
-      var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
-
-      DBReset.ResetDatabase.Reset(connectionString);
-
-      SFC.Infrastructure.DbMigrations.Run(connectionString);
-
-      TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
-        {
-          new AuthenticationApiModule(),
-          new UserApiModule(),
-          new AccountsModule(),
-          new SensorsModule(),
-          new AlertsModule(),
-          new ProcessesModule(),
-          new NotificationsModule(),
-          new InfrastructureModule()
-        },
-        builder =>
-        {
-          builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-        });
-    }
-
-    public void Dispose()
-    {
-      Bootstrap.Stop(_app);
     }
 
     [Fact]

@@ -6,13 +6,14 @@ using SFC.Alerts.Features.GetAlert;
 using SFC.Alerts.Features.GetAllAlerts;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.UserApi.Features.Alerts
 {
   [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/user/[controller]")]
-  [ApiController]
+  [ApiController] 
   public class AlertsController : Controller
   {
     private readonly ICommandBus _commandBus;
@@ -26,6 +27,7 @@ namespace SFC.UserApi.Features.Alerts
       _query = query;
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public IActionResult Post(PostAlertModel model)
     {
@@ -41,12 +43,14 @@ namespace SFC.UserApi.Features.Alerts
       return Created($"/api/alerts/{id}",id);
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet]
     public IActionResult Get()
     {
       return Json(_query.Query(new GetAllAlertsRequest(_identityProvider.GetLoginName())));
-    }    
+    }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet("{id}")]
     public IActionResult Get([FromRoute]Guid id)
     {

@@ -1,0 +1,13 @@
+@startuml
+header /api/v2.0/accounts
+User -> SFC.UserApi : <<POST>> /api/v2.0/accounts
+SFC.UserApi -> SFC.Processes : <<Command>> RegisterUserCommandSaga
+SFC.Processes -> SFC.Accounts : <<Query>> GetAccountByLoginNameRequest
+SFC.Accounts -> SFC.Processes : <<Return>> null
+SFC.Processes -> SFC.Notifications : <<Command>> SetNotificationEmailCommand
+SFC.Notifications -> SFC.Processes : <<Return>> 
+SFC.Processes -> SFC.Notifications : <<Command>> SendNotificationCommand
+SFC.Notifications -> SFC.Processes : <<Return>> 
+SFC.Processes -> SFC.UserApi : <<Return>> 
+SFC.UserApi -> User: <<Return>> 200
+@enduml

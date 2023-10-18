@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-    internal class HandlerActivator
+  internal class HandlerActivator
   {
     private readonly IComponentContext _componentContext;
     private readonly IDateTimeProvider _dateTimeProvider;
@@ -20,23 +21,45 @@ namespace SFC.Infrastructure.Features.TimeDependency
     }
 
     public async Task Run(Type type)
-    {      
+    {
       IEnumerable<IEventHandlerAction<TimeEvent>> actions = (IEnumerable<IEventHandlerAction<TimeEvent>>)_componentContext.Resolve(typeof(IEnumerable<IEventHandlerAction<TimeEvent>>));
 
-      IEventHandler<TimeEvent> handler = (IEventHandler<TimeEvent>)_componentContext.Resolve(type);
+      EventExecutionContext<TimeEvent> executionContext = new EventExecutionContext<TimeEvent>();
+      executionContext.Handler = (IEventHandler<TimeEvent>)_componentContext.Resolve(type);
 
       TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());
 
       foreach (var action in actions)
       {
-        action.BeforeHandle(@event, handler);
+        try
+        {
+          action.BeforeHandle(executionContext);
+        }
+        catch (Exception ex)
+        {
+          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+        }
       }
 
-      handler.Handle(@event);
+      try
+      {
+        executionContext.Handler.Handle(@event);
+      }
+      catch(Exception ex)
+      {
+        executionContext.Exception = ex;
+      }
 
       foreach (var action in actions)
       {
-        action.AfterHandle();
+        try
+        {
+          action.AfterHandle(executionContext);
+        }
+        catch (Exception ex)
+        {
+          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+        }
       }
     }
   }

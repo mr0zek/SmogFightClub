@@ -4,11 +4,15 @@
 
 skinparam ranksep 100
 skinparam nodesep 100
-
-package SFC {
+:Admin:
+:User:
+[GIOS]
+[Sensor]
+rectangle SFC #line.dashed {
 frame Backend {
 [SFC.Accounts]
 [SFC.Alerts]
+[SFC.GiosGateway]
 [SFC.Notifications]
 [SFC.Sensors]
 }
@@ -22,16 +26,34 @@ frame Task {
 [SFC.Processes]
 }
 :Time:
-[SFC.AdminApi] --> [SFC.Accounts] : [E]
-[SFC.AdminApi] --> [SFC.Alerts] : [E]
-[SFC.Alerts] --> [SFC.Sensors] : [E]
-[SFC.Processes] --> [SFC.Notifications] : [C]
-[SFC.Processes] --> [SFC.Accounts] : [C]
-[SFC.Processes] --> [SFC.Alerts] : [C, E]
-[SFC.Processes] --> [Time] : [E]
-[SFC.SensorApi] --> [SFC.Sensors] : [C]
-[SFC.UserApi] --> [SFC.Notifications] : [C]
-[SFC.UserApi] --> [SFC.Sensors] : [C]
-[SFC.UserApi] --> [SFC.Alerts] : [C]
-[SFC.UserApi] --> [SFC.Processes] : [C]
+[Admin] -d-> [SFC.AdminApi] : [Q]
+[Admin] -d-> [SFC.AuthenticationApi] : [C]
+[SFC.AdminApi] -d-> [SFC.Notifications] : [Q]
+[SFC.AdminApi] -d-> [SFC.Accounts] : [E, Q]
+[SFC.AdminApi] -d-> [SFC.Alerts] : [E]
+[SFC.Alerts] -d-> [SFC.Sensors] : [E]
+[User] -d-> [SFC.AuthenticationApi] : [C]
+[User] -d-> [SFC.UserApi] : [C, Q]
+[SFC.AuthenticationApi] -d-> [SFC.Accounts] : [Q]
+[SFC.GiosGateway] -d-> [Time] : [E]
+[SFC.GiosGateway] -d-> [GIOS] : [Q]
+[SFC.Processes] -d-> [SFC.Accounts] : [Q, C]
+[SFC.Processes] -d-> [SFC.Notifications] : [C]
+[SFC.Processes] -d-> [SFC.Alerts] : [C, E]
+[SFC.Processes] -d-> [Time] : [E]
+[Sensor] -d-> [SFC.SensorApi] : [C]
+[SFC.SensorApi] -d-> [SFC.Sensors] : [C]
+[SFC.UserApi] -d-> [SFC.Notifications] : [C]
+[SFC.UserApi] -d-> [SFC.Sensors] : [C, Q]
+[SFC.UserApi] -d-> [SFC.Alerts] : [C, Q]
+[SFC.UserApi] -d-> [SFC.Processes] : [C]
+
+
+legend right
+    |Communication type | Description|
+    |[C]                | [C]ommand  |
+    |[E]                | [E]vent    |
+    |[Q]                | [Q]uery    |
+endlegend
+
 @enduml

@@ -6,14 +6,16 @@ namespace ArchitectureDocumentationGenerator
   {
     public List<ArchModule> Modules { get; } = new List<ArchModule>();
 
-    public TypeReference ModuleDefinitionAttribute { get; internal set; }
-    public TypeDefinition EventMarkerInterface { get; internal set; }
-    public TypeDefinition CommandMarkerInterface { get; internal set; }
-    public TypeDefinition RequestMarkerInterface { get; internal set; }
-    public TypeDefinition EventBusMarkerInterface { get; internal set; }
-    public TypeDefinition CommandBusMarkerInterface { get; internal set; }
-    public TypeDefinition QueryBusMarkerInterface { get; internal set; }
-    public TypeDefinition EventHandlerInterface { get; internal set; }
+    public string ModuleDefinitionAttribute { get; internal set; }
+    public string EventMarkerInterface { get; internal set; }
+    public string CommandMarkerInterface { get; internal set; }
+    public string RequestMarkerInterface { get; internal set; }
+    public string EventBusMarkerInterface { get; internal set; }
+    public string CommandBusMarkerInterface { get; internal set; }
+    public string QueryBusMarkerInterface { get; internal set; }
+    public string EventHandlerInterface { get; internal set; }
+    public string EntryPointForAttribute { get; internal set; }
+    public string? ExitPointToAttribute { get; internal set; }
 
     public void AddModule(ArchModule module)
     {

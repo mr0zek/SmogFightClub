@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Sensors.Features.GetAllSensors;
 using SFC.Sensors.Features.GetSensor;
 using SFC.Sensors.Features.RegisterSensor.Contract;
@@ -12,7 +13,7 @@ namespace SFC.UserApi.Features.Sensors
   [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/user/[controller]")]
-  [ApiController]
+  [ApiController]  
   public class SensorsController : Controller
   {
     private readonly ICommandBus _commandBus;
@@ -26,6 +27,7 @@ namespace SFC.UserApi.Features.Sensors
       _query = query;
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public IActionResult Post([FromBody]PostSensorModel model)
     {
@@ -41,12 +43,14 @@ namespace SFC.UserApi.Features.Sensors
       return Accepted($"api/v1/sensors/{id}",id);
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet]
     public IActionResult Get()
     {
       return Json(_query.Query(new GetAllSensorsRequest(_identityProvider.GetLoginName())));
-    }    
+    }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {

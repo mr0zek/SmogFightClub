@@ -4,6 +4,7 @@
   {
     Event,
     Command,
-    Query
+    Query,
+    Unspecifed
   }
 }

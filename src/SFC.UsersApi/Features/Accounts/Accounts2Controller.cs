@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
-    [Route("api/v2.0/accounts")]
-  [ApiController]
+  [Route("api/v2.0/accounts")]
+  [ApiController]  
   public class Accounts2Controller : ControllerBase
   {
     private readonly ICommandBus _commandBus;
@@ -20,10 +21,11 @@ namespace SFC.UserApi.Features.Accounts
       _commandBus = commandBus;
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
-    public IActionResult PostAccount([FromBody]PostAccountModel model)
+    public IActionResult PostAccount([FromBody] PostAccountModel model)
     {
-      string id = Guid.NewGuid().ToString().Replace("-","");
+      string id = Guid.NewGuid().ToString().Replace("-", "");
 
       try
       {
@@ -44,11 +46,12 @@ namespace SFC.UserApi.Features.Accounts
         return BadRequest(mds);
       }
 
-      return Created(new Uri($"{BaseUrl.Current}/api/v2.0/accounts/{id}"),id);
+      return Created(new Uri($"{BaseUrl.Current}/api/v2.0/accounts/{id}"), id);
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost("{id}/confirmation")]
-    public IActionResult PostConfirmation([FromRoute]string id)
+    public IActionResult PostConfirmation([FromRoute] string id)
     {
       try
       {
@@ -61,7 +64,7 @@ namespace SFC.UserApi.Features.Accounts
       {
         return BadRequest();
       }
-      
+
       return Ok();
     }
   }

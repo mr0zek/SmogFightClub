@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SFC.AdminApi.Features.AlertNotificationsWithUserData;
+using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
   [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/admin/[controller]")]
-  [ApiController]
+  [ApiController]  
   public class SearchableDashboardController : Controller
   {
     private readonly ISearchabelDashboardPerspective _searchableDashboardPerspective;
@@ -17,6 +19,7 @@ namespace SFC.AdminApi.Features.SearchableDashboard
       _searchableDashboardPerspective = searchableDashboardPerspective;
     }
 
+    [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
     public ActionResult<SearchableDashboardResult> Get([FromQuery]SearchableDashboardQueryModel query)
     {

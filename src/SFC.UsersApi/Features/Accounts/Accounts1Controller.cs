@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Processes.Features.UserRegistration.Contract;
 using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
-    [ApiVersion("1.0")]
+  [ApiVersion("1.0")]
   [Route("api/v1.0/accounts")]
-  [ApiController]
+  [ApiController]  
   public class Accounts1Controller : ControllerBase
   {
     private readonly ICommandBus _commandBus;
@@ -21,6 +22,7 @@ namespace SFC.UserApi.Features.Accounts
       _commandBus = commandBus;
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public IActionResult PostAccount([FromBody]PostAccountModel model)
     {
@@ -48,6 +50,7 @@ namespace SFC.UserApi.Features.Accounts
       return Created(new Uri($"{BaseUrl.Current}/api/v1.0/accounts/{id}"),id);
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost("{id}/confirmation")]
     public IActionResult PostConfirmation([FromRoute]Guid id)
     {

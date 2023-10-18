@@ -1,0 +1,7 @@
+@startuml
+header /api/v1.0/user/alerts/{id}
+User -> SFC.UserApi : <<GET>> /api/v1.0/user/alerts/{id}
+SFC.UserApi -> SFC.Alerts : <<Query>> GetAlertRequest
+SFC.Alerts -> SFC.UserApi : <<Return>> GetAlertResponse
+SFC.UserApi -> User: <<Return>> 200
+@enduml

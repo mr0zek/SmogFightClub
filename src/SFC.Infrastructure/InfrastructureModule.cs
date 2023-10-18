@@ -21,7 +21,7 @@ namespace SFC.Infrastructure
       builder.RegisterType<HangFireScheduler>().AsImplementedInterfaces();
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TraceRepository>().AsImplementedInterfaces();
-      builder.RegisterType<ExecutionContext>().InstancePerLifetimeScope().AsImplementedInterfaces();
+      builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
       
       builder.RegisterAssemblyOpenGenericTypes(GetType().Assembly)
         .AsImplementedInterfaces()

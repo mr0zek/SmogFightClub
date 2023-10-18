@@ -5,6 +5,7 @@ using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Sensors;
 
 namespace SFC.AdminApi

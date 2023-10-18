@@ -1,0 +1,7 @@
+@startuml
+header /api/v1.0/user/sensors/{id}
+User -> SFC.UserApi : <<GET>> /api/v1.0/user/sensors/{id}
+SFC.UserApi -> SFC.Sensors : <<Query>> GetSensorRequest
+SFC.Sensors -> SFC.UserApi : <<Return>> GetSensorResponse
+SFC.UserApi -> User: <<Return>> 200
+@enduml

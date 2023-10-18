@@ -11,9 +11,11 @@ using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
-using SFC.Tests.Api;
-using SFC.Tests.Infrastructure;
-using SFC.Tests.Mocks;
+using SFC.Tests.Tools;
+using SFC.Tests.Tools.Api;
+using SFC.Tests.Tools.DBReset;
+using SFC.Tests.Tools.Infrastructure;
+using SFC.Tests.Tools.Mocks;
 using SFC.UserApi;
 using TestStack.BDDfy;
 using TestStack.BDDfy.Configuration;
@@ -21,7 +23,7 @@ using Xunit;
 
 namespace SFC.Tests.UseStories
 {
-  public class UserStories : IClassFixture<UserStoriesFixture>, IDisposable
+    public class UserStories : IClassFixture<UserStoriesFixture>, IDisposable
   {
     private readonly string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
@@ -35,7 +37,7 @@ namespace SFC.Tests.UseStories
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      DBReset.ResetDatabase.Reset(connectionString);
+      ResetDatabase.Reset(connectionString);
 
       DbMigrations.Run(connectionString);
 

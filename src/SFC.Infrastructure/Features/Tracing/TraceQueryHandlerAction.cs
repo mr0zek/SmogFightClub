@@ -1,31 +1,43 @@
-﻿using SFC.Infrastructure.Interfaces;
-using SFC.Infrastructure.Interfaces.Communication;
+﻿using SFC.Infrastructure.Interfaces.Communication;
 using System.Diagnostics;
 using System.Threading;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
   class TraceQueryHandlerAction<TRequest, TResponse> : IQueryHandlerAction<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
-    where TResponse : IResponse
+  where TRequest : IRequest<TResponse>
+  where TResponse : IResponse
   {
-    private readonly IExecutionContext _executionContext;
+    private readonly ICallStack _callStack;
 
-    public TraceQueryHandlerAction(IExecutionContext executionContext)
+    public TraceQueryHandlerAction(ICallStack callStack)
     {
-      _executionContext = executionContext;
+      _callStack = callStack;
     }
 
-    public void AfterHandleQuery(TResponse response)
+    public void AfterHandle(IQueryExecutionContext<TRequest, TResponse> executionContext)
     {
-      _executionContext.FinishCall();
+      if (executionContext.Exception != null)
+      {
+        _callStack.FinishCall(executionContext.Exception.GetType().Name);
+      }
+      else
+      {
+        if (executionContext.Response != null)
+        {
+          _callStack.FinishCall(executionContext.Response.GetType().Name);
+        }
+        else
+        {
+          _callStack.FinishCall("null");
+        }
+      }
     }
 
-    public void BeforeHandleQuery(TRequest query, IQueryHandler<TRequest, TResponse> handler)
+    public void BeforeHandle(IQueryExecutionContext<TRequest, TResponse> executionContext)
     {
-      _executionContext.StartCall(
-        handler.GetType().Assembly.GetName().Name,
-        typeof(TRequest).Name);
+      _callStack.StartCall(
+        executionContext.Handler.GetType().Assembly.GetName().Name, typeof(TRequest).Name, "Query");
     }
   }
 }

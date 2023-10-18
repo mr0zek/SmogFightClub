@@ -7,6 +7,7 @@ using SFC.Accounts;
 using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
+using SFC.GiosGateway;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
@@ -39,8 +40,9 @@ namespace SFC
         new NotificationsModule(),
         new SensorsModule(),
         new AccountsModule(),
-        new InfrastructureModule()
-    });
+        new InfrastructureModule(),
+        new GiosGatewayModule()
+      });
 
       Console.ReadKey();
     }

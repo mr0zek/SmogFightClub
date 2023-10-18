@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasurementCommand;
 
 namespace SFC.SensorApi.Features.RegisterMeasurement
 {
-    [ApiVersion("1.0")]
+  [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}")]
-  [ApiController]
+  [ApiController]  
   public class MeasurementsController : Controller
   {
     private readonly ICommandBus _commandBus;
@@ -24,6 +25,7 @@ namespace SFC.SensorApi.Features.RegisterMeasurement
       _dateTimeProvider = dateTimeProvider;
     }
 
+    [EntryPointFor("Sensor", CallerType.ExternalSystem, CallType.Command)]
     [AllowAnonymous]
     [HttpPost("sensors/{sensorId}/measurements")]
     public IActionResult Post([FromRoute] Guid sensorId, [FromBody] PostMeasurementModel model)

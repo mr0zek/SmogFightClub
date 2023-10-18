@@ -1,0 +1,7 @@
+@startuml
+header /api/v1.0/user/
+User -> SFC.UserApi : <<POST>> /api/v1.0/user/
+SFC.UserApi -> SFC.Notifications : <<Command>> SetNotificationEmailCommand
+SFC.Notifications -> SFC.UserApi : <<Return>> 
+SFC.UserApi -> User: <<Return>> 200
+@enduml

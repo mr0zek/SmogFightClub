@@ -9,20 +9,25 @@ namespace SFC.Infrastructure.Features.Tracing
 {
   public class TraceActionFilter : IActionFilter
   {
-    private readonly IExecutionContext _context;
+    private readonly ICallStack _context;
 
-    public TraceActionFilter(IExecutionContext context)
+    public TraceActionFilter(ICallStack context)
     {
       _context = context;
     }
     public void OnActionExecuted(ActionExecutedContext context)
     {
-      _context.FinishCall();
+      _context.FinishCall(context.HttpContext.Response.StatusCode.ToString());
     }
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-      _context.StartCall(context.Controller.GetType().Assembly.GetName().Name, context.HttpContext.Request.Path);
+      string methodname = context.HttpContext.Request.Path;
+      foreach (var arg in context.ActionArguments)
+      {
+        methodname = methodname.Replace(arg.Value.ToString(), $"{{{arg.Key}}}");
+      }
+      _context.StartCall(context.Controller.GetType().Assembly.GetName().Name, methodname, context.HttpContext.Request.Method);
     }
   }
 }

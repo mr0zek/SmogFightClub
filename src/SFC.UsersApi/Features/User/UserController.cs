@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Sensors.Features.GetAllSensors;
 using SFC.Sensors.Features.GetSensor;
@@ -10,10 +11,10 @@ using SFC.Sensors.Features.RegisterSensor.Contract;
 
 namespace SFC.UserApi.Features.User
 {
-    [Authorize]
+  [Authorize]
   [ApiVersion("1.0")]
   [Route("api/v{version:apiVersion}/[controller]")]
-  [ApiController]
+  [ApiController]  
   public class UserController : Controller
   {
     private readonly ICommandBus _commandBus;
@@ -25,6 +26,7 @@ namespace SFC.UserApi.Features.User
       _identityProvider = identityProvider;
     }
 
+    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public IActionResult Post([FromBody] PostUserModel model)
     {

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 using FluentValidation;
 using FluentValidation.Results;
-using SFC.Infrastructure.Interfaces;
+using Serilog;
 using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Infrastructure.Features.Communication
@@ -21,18 +22,47 @@ namespace SFC.Infrastructure.Features.Communication
     {
       IEnumerable<ICommandHandlerAction<T>> actions = (IEnumerable<ICommandHandlerAction<T>>)_container.Resolve(typeof(IEnumerable<ICommandHandlerAction<T>>));
 
-      ICommandHandler<T> commandHandler = (ICommandHandler<T>)_container.Resolve(typeof(ICommandHandler<T>));
+      CommandExecutionContext<T> executionContext = new CommandExecutionContext<T>();
+      executionContext.Handler = (ICommandHandler<T>)_container.Resolve(typeof(ICommandHandler<T>));
+      executionContext.Command = command;
+
 
       foreach (var action in actions)
       {
-        action.BeforeHandle(command, commandHandler);
+        try
+        {
+          action.BeforeHandle(executionContext);
+        }
+        catch (Exception ex)
+        {
+          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+        }
       }
 
-      commandHandler.Handle(command);
+      try
+      {
+        executionContext.Handler.Handle(command);
+      }
+      catch (Exception ex)
+      {
+        executionContext.Exception = ex;
+      }
 
       foreach (var action in actions)
       {
-        action.AfterHandle();
+        try
+        {
+          action.AfterHandle(executionContext);
+        }
+        catch (Exception ex)
+        {
+          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+        }
+      }
+
+      if (executionContext.Exception != null)
+      {
+        throw executionContext.Exception;
       }
     }
   }

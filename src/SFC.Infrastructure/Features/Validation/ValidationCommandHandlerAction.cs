@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using FluentValidation;
-using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 namespace SFC.Infrastructure.Features.Validation
 {
   internal class ValidationCommandHandlerAction<T> : ICommandHandlerAction<T>
+  where T : ICommand
   {
     private readonly IComponentContext _container;
 
@@ -19,21 +19,21 @@ namespace SFC.Infrastructure.Features.Validation
       _container = container;
     }
 
-    public void AfterHandle()
+    public void AfterHandle(ICommandExecutionContext<T> executionContext)
     {
     }
 
-    public void BeforeHandle(T command, ICommandHandler<T> handler)
+    public void BeforeHandle(ICommandExecutionContext<T> executionContext)
     {
       if (_container.IsRegistered<IValidator<T>>())
       {
         var validator = _container.Resolve<IValidator<T>>();
 
-        var validationResult = validator.Validate(command);
+        var validationResult = validator.Validate(executionContext.Command);
 
         if (!validationResult.IsValid)
         {
-          throw new ArgumentException(validationResult.ToString(), nameof(command));
+          throw new ArgumentException(validationResult.ToString(), "command");
         }
       }
     }

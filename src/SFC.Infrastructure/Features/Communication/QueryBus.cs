@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Autofac;
-using SFC.Infrastructure.Interfaces;
+using Serilog;
 using SFC.Infrastructure.Interfaces.Communication;
 
 namespace SFC.Infrastructure.Features.Communication
@@ -18,31 +18,67 @@ namespace SFC.Infrastructure.Features.Communication
 
     public TResponse Query<TResponse>(IRequest<TResponse> request) where TResponse : IResponse
     {
-      Type generic = typeof(IQueryHandler<,>);
-      generic = generic.MakeGenericType(request.GetType(), typeof(TResponse));
+      Type handlerType = typeof(IQueryHandler<,>);
+      handlerType = handlerType.MakeGenericType(request.GetType(), typeof(TResponse));
 
-      Type genericAction = typeof(IQueryHandlerAction<,>);
-      genericAction = genericAction.MakeGenericType(request.GetType(), typeof(TResponse));
+      Type genericActionType = typeof(IQueryHandlerAction<,>);
+      genericActionType = genericActionType.MakeGenericType(request.GetType(), typeof(TResponse));
 
       Type enumerable = typeof(IEnumerable<>);
-      enumerable = enumerable.MakeGenericType(genericAction);
+      enumerable = enumerable.MakeGenericType(genericActionType);
 
-      var queryHandler = _container.Resolve(generic);
+      Type executionContextType = typeof(QueryExecutionContext<,>);
+      executionContextType = executionContextType.MakeGenericType(request.GetType(), typeof(TResponse));
+
+      var executionContext = Activator.CreateInstance(executionContextType);
+
+      var queryHandler = _container.Resolve(handlerType);
+
+      executionContextType.InvokeMember("Handler", System.Reflection.BindingFlags.SetProperty, null, executionContext, new[] { queryHandler });
+      executionContextType.InvokeMember("Request", System.Reflection.BindingFlags.SetProperty, null, executionContext, new[] { request });
 
       IEnumerable actions = (IEnumerable)_container.Resolve(enumerable);
       foreach (var action in actions)
       {
-        action.GetType().InvokeMember("BeforeHandleQuery", System.Reflection.BindingFlags.InvokeMethod, null, action, new[] { request, queryHandler });
+        action.GetType().InvokeMember("BeforeHandle", System.Reflection.BindingFlags.InvokeMethod, null, action, new[] { executionContext });
       }
-      
-      var result = (TResponse)queryHandler.GetType().InvokeMember("HandleQuery", System.Reflection.BindingFlags.InvokeMethod, null, queryHandler, new[] { request });
 
-      foreach (var action in actions)
+      try
       {
-        action.GetType().InvokeMember("AfterHandleQuery", System.Reflection.BindingFlags.InvokeMethod, null, action, new object[] { result });
-      }
+        TResponse response = (TResponse)queryHandler.GetType().InvokeMember("HandleQuery", System.Reflection.BindingFlags.InvokeMethod, null, queryHandler, new[] { request });
+        executionContextType.InvokeMember("Response", System.Reflection.BindingFlags.SetProperty, null, executionContext, new[] { (object)response });
 
-      return result;
+        foreach (var action in actions)
+        {
+          try
+          {
+            action.GetType().InvokeMember("AfterHandle", System.Reflection.BindingFlags.InvokeMethod, null, action, new object[] { executionContext });
+          }
+          catch (Exception ex)
+          {
+            Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          }
+        }
+
+        return response;
+      }
+      catch (Exception ex)
+      {
+        executionContextType.InvokeMember("Exception", System.Reflection.BindingFlags.SetProperty, null, executionContext, new[] { ex });
+
+        foreach (var action in actions)
+        {
+          try
+          {
+            action.GetType().InvokeMember("AfterHandle", System.Reflection.BindingFlags.InvokeMethod, null, action, new object[] { executionContext });
+          }
+          catch (Exception ex2)
+          {
+            Log.Error(ex2, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          }
+        }
+        throw;
+      }
     }
   }
 }

@@ -8,13 +8,13 @@ using SFC.Accounts;
 using SFC.Alerts;
 using SFC.Notifications;
 using SFC.Sensors;
-using SFC.Infrastructure.Interfaces;
 using ArchUnitNET.xUnit;
 using Autofac;
 using FluentMigrator;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.Tests.Architecture
 {
@@ -44,6 +44,12 @@ namespace SFC.Tests.Architecture
           .Should().NotBePublic();
 
       allowedPublicTypesInModules.Check(Architecture);
+    }
+
+    [Fact]
+    public void EveryControllerHaveToHaveEntryPointForDeclared()
+    {
+
     }
 
     [Fact]

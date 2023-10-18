@@ -12,9 +12,9 @@ using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
 using SFC.SharedKernel;
-using SFC.Tests.Api;
-using SFC.Tests.Mocks;
 using SFC.Tests.SensorApi;
+using SFC.Tests.Tools;
+using SFC.Tests.Tools.Api;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
 using System;
@@ -23,44 +23,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SFC.Tests.AdminApi
 {
 
-  public class AdminApiTest : IDisposable
+    public class AdminApiTest : TestBase
   {
-    private readonly string _url = TestHelper.GenerateUrl();
-    private readonly WebApplication _app;
-
-    public AdminApiTest()
+    public AdminApiTest(ITestOutputHelper output) : base(output)
     {
-      var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json");
-      var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
-
-      DBReset.ResetDatabase.Reset(connectionString);
-
-      DbMigrations.Run(connectionString);
-
-      TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
-        {
-          new AuthenticationApiModule(),
-          new AdminApiModule(),
-          new UserApiModule(),
-          new SensorApiModule(),
-          new AccountsModule(),
-          new SensorsModule(),
-          new AlertsModule(),
-          new ProcessesModule(),
-          new NotificationsModule(),
-          new InfrastructureModule()
-        },
-        builder =>
-        {
-          builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-        });
     }
 
     [Fact]
@@ -102,8 +73,7 @@ namespace SFC.Tests.AdminApi
     [Fact]
     public async void SendNotificationsByUser()
     {
-      // Arrange
-      // Arrange
+      // Arrange      
       var postAccountModel = new PostAccountModel()
       {
         LoginName = Guid.NewGuid().ToString(),
@@ -119,7 +89,7 @@ namespace SFC.Tests.AdminApi
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
 
       // Act
-      var result = await api.GetSendNotificationsByUser(0,int.MaxValue);
+      var result = await api.GetSendNotificationsByUser(0, int.MaxValue);
 
       // Assert
       Assert.Single(result.Result);
@@ -158,11 +128,6 @@ namespace SFC.Tests.AdminApi
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);
-    }
-
-    public void Dispose()
-    {
-      Bootstrap.Stop(_app);
     }
   }
 }

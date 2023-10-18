@@ -1,0 +1,7 @@
+@startuml
+header /api/v1.0/user/sensors
+User -> SFC.UserApi : <<POST>> /api/v1.0/user/sensors
+SFC.UserApi -> SFC.Sensors : <<Command>> RegisterSensorCommand
+SFC.Sensors -> SFC.UserApi : <<Return>> 
+SFC.UserApi -> User: <<Return>> 200
+@enduml

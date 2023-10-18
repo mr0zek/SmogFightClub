@@ -11,8 +11,8 @@ using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
 using SFC.Sensors;
-using SFC.Tests.Api;
-using SFC.Tests.Mocks;
+using SFC.Tests.Tools;
+using SFC.Tests.Tools.Api;
 using SFC.Tests.UserApi;
 using SFC.UserApi;
 using System;
@@ -22,43 +22,15 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SFC.Tests.AuthenticationApi
 {
-  
-  public class AuthentiacationApiTest : IDisposable
+
+    public class AuthentiacationApiTest : TestBase
   {
-    private readonly string _url = TestHelper.GenerateUrl();
-    private readonly WebApplication _app;
-
-    public AuthentiacationApiTest()
+    public AuthentiacationApiTest(ITestOutputHelper output) : base(output)
     {
-      var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json");
-      var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
-
-      DBReset.ResetDatabase.Reset(connectionString);
-
-      SFC.Infrastructure.DbMigrations.Run(connectionString);
-
-      TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
-        {
-          new AuthenticationApiModule(),
-          new UserApiModule(),
-          new SensorApiModule(),
-          new AccountsModule(),
-          new SensorsModule(),
-          new AlertsModule(),
-          new ProcessesModule(),
-          new NotificationsModule(),
-          new InfrastructureModule()
-        },
-        builder =>
-        {
-          builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-        });
     }
 
 
@@ -92,11 +64,6 @@ namespace SFC.Tests.AuthenticationApi
       var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));     
 
       Assert.NotNull(token);
-    }
-
-    public void Dispose()
-    {
-      Bootstrap.Stop(_app);
-    }
+    }    
   }
 }
