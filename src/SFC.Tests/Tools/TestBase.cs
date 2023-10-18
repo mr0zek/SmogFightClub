@@ -71,8 +71,7 @@ namespace SFC.Tests.Tools
       foreach (var test in MyTraceRepository.Traces)
       {
         SequenceDiagramGenerator.Generate(@"..\..\..\..\..\docs\ArchitectureDocumentation\"+test.Value.First().CallName.Replace("/","_") + ".puml", test.Value.First().CallName, test.Value);
-      }
-      SequenceDiagramGenerator.GenerateDocumentationFile(@"..\..\..\..\..\docs\ArchitectureDocumentation\");
+      }      
     }
   }
 

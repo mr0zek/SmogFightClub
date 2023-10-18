@@ -8,7 +8,7 @@ any suggestions contact me https://www.szylhabel.pl/contactme/
 [![Coverage Status](https://coveralls.io/repos/github/mr0zek/SmogFightClub/badge.svg?branch=master)](https://coveralls.io/github/mr0zek/SmogFightClub?branch=master)
 
 ## Architecture documentation
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/ComponentDiagram.puml)
+[Auto generated documentation](docs/ArchitectureDocumentation/sequenceDiagrams.md)
 
 ## Technologies
 - AspNetCore 

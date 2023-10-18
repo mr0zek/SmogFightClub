@@ -204,5 +204,16 @@ endlegend
         result.AddModule(module);
       }
     }
+
+    public static void GenerateDocumentationFile(string path)
+    {
+      var fileNames = Directory.GetFiles(path);
+      StringBuilder sb = new StringBuilder();
+      foreach (var file in fileNames.Where(f => Path.GetExtension(f).ToLower() == ".puml"))
+      {
+        sb.AppendLine($"![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/mr0zek/SmogFightClub/master/docs/ArchitectureDocumentation/{Path.GetFileName(file)})");
+      }
+      File.WriteAllText(path + "\\sequenceDiagrams.md", sb.ToString());
+    }
   }
 }

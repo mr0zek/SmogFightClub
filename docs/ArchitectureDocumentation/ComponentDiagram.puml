@@ -1,5 +1,5 @@
+
 @startuml
-header Component diagram
 !theme aws-orange
 
 skinparam ranksep 100
@@ -26,6 +26,7 @@ frame Task {
 [SFC.Processes]
 }
 :Time:
+}
 [Admin] -d-> [SFC.AdminApi] : [Q]
 [Admin] -d-> [SFC.AuthenticationApi] : [C]
 [SFC.AdminApi] -d-> [SFC.Notifications] : [Q]

@@ -9,3 +9,5 @@ if(args.Length != 2)
 
 ArchitectureGenerator.GenerateComponentDiagrams(args[0], args[1]);
 
+ArchitectureGenerator.GenerateDocumentationFile(@"..\..\..\..\..\docs\ArchitectureDocumentation\");
+
