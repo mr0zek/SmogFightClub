@@ -5,6 +5,7 @@ using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Sensors;
+using SFC.UserApi.Features.Accounts;
 using SFC.UserApi.Features.Sensors;
 
 namespace SFC.UserApi
@@ -24,7 +25,7 @@ namespace SFC.UserApi
 
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
-        .InstancePerLifetimeScope();      
+        .InstancePerLifetimeScope();
     }
   }
 }

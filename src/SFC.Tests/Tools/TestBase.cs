@@ -6,6 +6,7 @@ using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.Database;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -23,7 +24,7 @@ using Xunit.Abstractions;
 
 namespace SFC.Tests.Tools
 {
-  public abstract class TestBase : IDisposable
+    public abstract class TestBase : IDisposable
   {
     protected readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
@@ -42,8 +43,6 @@ namespace SFC.Tests.Tools
 
       ResetDatabase.Reset(connectionString);
 
-      DbMigrations.Run(connectionString);
-
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Autofac.Module[]
         {
@@ -61,7 +60,7 @@ namespace SFC.Tests.Tools
         builder =>
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-          builder.RegisterInstance(new MyTraceRepository()).AsImplementedInterfaces();
+          builder.RegisterInstance(new MyTraceRepository("")).AsImplementedInterfaces();
         });
     }
 
@@ -70,7 +69,8 @@ namespace SFC.Tests.Tools
       Bootstrap.Stop(_app);
       foreach (var test in MyTraceRepository.Traces)
       {
-        SequenceDiagramGenerator.Generate(@"..\..\..\..\..\docs\ArchitectureDocumentation\"+test.Value.First().CallName.Replace("/","_") + ".puml", test.Value.First().CallName, test.Value);
+        
+        SequenceDiagramGenerator.Generate(test.Value.First().CallName.Replace("/","_") + ".puml", test.Value.First().CallName, test.Value);
       }      
     }
   }

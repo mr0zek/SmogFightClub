@@ -9,5 +9,5 @@ if(args.Length != 2)
 
 ArchitectureGenerator.GenerateComponentDiagrams(args[0], args[1]);
 
-ArchitectureGenerator.GenerateDocumentationFile(@"..\..\..\..\..\docs\ArchitectureDocumentation\");
+ArchitectureGenerator.GenerateDocumentationFile(@"..\..\..\..\..\src\SFC.Tests\bin\debug\net6.0\", @"..\..\..\..\..\docs\ArchitectureDocumentation\");
 

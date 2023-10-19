@@ -8,11 +8,11 @@ using System.Text;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-    internal class HangFireScheduler : IScheduler
+  internal class HangFireScheduler : IScheduler
   {
     private readonly IComponentContext _componentContext;
 
-    public HangFireScheduler(IComponentContext componentContext) 
+    public HangFireScheduler(IComponentContext componentContext)
     {
       _componentContext = componentContext;
     }
@@ -26,7 +26,7 @@ namespace SFC.Infrastructure.Features.TimeDependency
           .GetType()
           .CustomAttributes
           .FirstOrDefault(f => f.AttributeType == typeof(CrontabAttribute));
-        if(crontabAttribute == null )
+        if (crontabAttribute == null)
         {
           throw new TimeConfigurationException();
         }

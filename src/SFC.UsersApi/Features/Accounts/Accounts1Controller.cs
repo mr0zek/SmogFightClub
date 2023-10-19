@@ -10,10 +10,10 @@ using SFC.SharedKernel;
 
 namespace SFC.UserApi.Features.Accounts
 {
-  [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
   [Route("api/v1.0/accounts")]
   [ApiController]  
-  public class Accounts1Controller : ControllerBase
+  public class Accounts1Controller : Controller
   {
     private readonly ICommandBus _commandBus;
 
@@ -33,7 +33,7 @@ namespace SFC.UserApi.Features.Accounts
         _commandBus.Send(new RegisterUserCommand()
         {
           Id = id,
-          BaseUrl = BaseUrl.Current,
+          BaseUrl = Request.BaseUrl(),
           LoginName = model.LoginName,
           ZipCode = model.ZipCode,
           Email = model.Email,
@@ -47,7 +47,7 @@ namespace SFC.UserApi.Features.Accounts
         return BadRequest(mds);
       }
 
-      return Created(new Uri($"{BaseUrl.Current}/api/v1.0/accounts/{id}"),id);
+      return Created(Request.BaseUrl($"api/v1.0/accounts/{id}"),id);
     }
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]

@@ -1,10 +1,11 @@
-﻿using SFC.SharedKernel;
+﻿using SFC.Infrastructure.Interfaces.Communication;
+using SFC.SharedKernel;
 using System;
 using System.Collections.Generic;
 
 namespace SFC.SensorApi.Features.RegisterMeasurement
 {
-  public class PostMeasurementModel
+  public class PostMeasurementModel : ICommand
   {
     
 

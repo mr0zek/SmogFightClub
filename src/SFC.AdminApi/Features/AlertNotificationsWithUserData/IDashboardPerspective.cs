@@ -2,6 +2,6 @@
 {
   public interface IDashboardPerspective
   {
-    DashboardResult Search(AlertNotificationsWithUserDataModel query);
+    DashboardResponse Search(AlertNotificationsWithUserRequest query);
   }
 }

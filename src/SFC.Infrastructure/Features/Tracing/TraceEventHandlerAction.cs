@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System.Diagnostics;
 
 namespace SFC.Infrastructure.Features.Tracing

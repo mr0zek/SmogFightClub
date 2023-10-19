@@ -7,6 +7,7 @@ using SFC.Accounts;
 using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.Database;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -37,9 +38,7 @@ namespace SFC.Tests.UseStories
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
-      ResetDatabase.Reset(connectionString);
-
-      DbMigrations.Run(connectionString);
+      ResetDatabase.Reset(connectionString);      
 
       TestSmtpClient.Clear();
       _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]

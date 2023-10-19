@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
-  public class TraceActionFilter : IActionFilter
+  public class TraceActionFilter : ITraceActionFilter
   {
     private readonly ICallStack _context;
 

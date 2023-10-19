@@ -18,7 +18,7 @@ namespace SFC.AdminApi
       builder.RegisterType<DashboardPerspective>().AsImplementedInterfaces();
       builder.RegisterType<SearchableDashboardPerspective>()
         .AsImplementedInterfaces();
-
+      
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();

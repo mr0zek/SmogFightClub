@@ -12,7 +12,7 @@ namespace SFC.UserApi.Features.Accounts
 {
   [Route("api/v2.0/accounts")]
   [ApiController]  
-  public class Accounts2Controller : ControllerBase
+  public class Accounts2Controller : Controller
   {
     private readonly ICommandBus _commandBus;
 
@@ -32,7 +32,7 @@ namespace SFC.UserApi.Features.Accounts
         _commandBus.Send(new RegisterUserCommandSaga()
         {
           Id = id,
-          BaseUrl = BaseUrl.Current,
+          BaseUrl = Request.BaseUrl(""),
           LoginName = model.LoginName,
           ZipCode = model.ZipCode,
           Email = model.Email,
@@ -46,7 +46,7 @@ namespace SFC.UserApi.Features.Accounts
         return BadRequest(mds);
       }
 
-      return Created(new Uri($"{BaseUrl.Current}/api/v2.0/accounts/{id}"), id);
+      return Created(new Uri(Request.BaseUrl($"api/v2.0/accounts/{id}")), id);
     }
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]

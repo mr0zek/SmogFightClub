@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +27,9 @@ using SFC.Infrastructure.Features.TimeDependency;
 using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Database;
 using SFC.Infrastructure.Interfaces.TimeDependency;
+using SFC.Infrastructure.Interfaces.Tracing;
 
 namespace SFC
 {
@@ -57,9 +60,9 @@ namespace SFC
         .UseRecommendedSerializerSettings()
         .UseSqlServerStorage(connectionString)
         );
-      builder.Services.AddHangfireServer();     
-      
+      builder.Services.AddHangfireServer();      
       builder.Services.AddControllers();
+
       var mvc = builder.Services.AddMvc(opt =>
       {
         opt.Filters.Add(typeof(FluentValidationActionFilter));
@@ -138,8 +141,6 @@ namespace SFC
       });
 
       builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-
-      BaseUrl.Current = url;
       
       // Register services directly with Autofac here.
       // Don't call builder.Populate(), that happens in AutofacServiceProviderFactory.
@@ -155,9 +156,10 @@ namespace SFC
 
       var app = builder.Build();
 
-      GlobalConfiguration.Configuration.UseActivator(new ContainerJobActivator(app.Services));
+      GlobalConfiguration.Configuration.UseActivator(app.Services.GetService<JobActivator>());
       GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
 
+      app.Services.GetService<IDatabaseMigrator>().Run();
       app.Services.GetService<IScheduler>().RegisterRecurrentTasks();
 
       // Configure the HTTP request pipeline.
@@ -166,7 +168,7 @@ namespace SFC
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-      
+          
       app.UseSerilogRequestLogging();
 
       app.UseAuthentication();      

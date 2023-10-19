@@ -15,14 +15,27 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure;
+using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using SFC.UserApi;
+using SFC.AdminApi;
+using SFC.SensorApi;
 
 namespace SFC.Tests.Architecture
 {
 
-    public class ArchitectureTests
+  public class ArchitectureTests
   {
     private static readonly ArchUnitNET.Domain.Architecture Architecture =
     new ArchLoader().LoadAssemblies(
+      typeof(ExitPointToAttribute).Assembly,
+      typeof(UserApiModule).Assembly,
+      typeof(AdminApiModule).Assembly,
+      typeof(SensorApiModule).Assembly,
+      typeof(Controller).Assembly,
+      typeof(InfrastructureModule).Assembly,
       typeof(AccountsModule).Assembly,
       typeof(AlertsModule).Assembly,
       typeof(NotificationsModule).Assembly,
@@ -34,10 +47,14 @@ namespace SFC.Tests.Architecture
     {
       IArchRule allowedPublicTypesInModules =
         Types().That()
+          .ResideInAssembly("SFC.*",true).And()          
+          .DoNotResideInAssembly(typeof(ICommand).Assembly).And()
           .AreNotAssignableTo(typeof(IMigration)).And()
           .AreNotAssignableTo(typeof(Exception)).And()
+          .AreNotAssignableTo(typeof(Controller)).And()
           .DoNotHaveAnyAttributes(typeof(ModuleDefinitionAttribute)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
+          .DoNotImplementInterface(typeof(IActionFilter)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()
           .DoNotImplementInterface(typeof(ICommand)).And()
           .DoNotImplementInterface(typeof(IEvent))
@@ -47,10 +64,47 @@ namespace SFC.Tests.Architecture
     }
 
     [Fact]
-    public void EveryControllerHaveToHaveEntryPointForDeclared()
+    public void EveryControllerHaveToHaveEntryPointForAttributeDeclared()
     {
-
+      var controllers = Types().That()
+        .ResideInAssembly("SFC.*", true)
+        .And()
+        .AreAssignableTo(typeof(Controller)).GetObjects(Architecture);
+      MethodMembers().That().AreDeclaredIn(controllers)
+        .And()
+        .AreNoConstructors()
+        .Should()        
+        .HaveAnyAttributes(typeof(EntryPointForAttribute)).Check(Architecture);
     }
+
+    [Fact]
+    public void CheckInfrastructureFeatureAutonomy()
+    {
+      var types = Types().That().ResideInNamespace("SFC.Infrastructure.Features").GetObjects(Architecture).ToList();
+      var featureNamespaces = types.Select(f =>
+      {
+        var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[\\.].+[^\\.])[.].*");
+        return m.Groups["ns"].Value;
+      }).Where(f => f != "").Distinct().ToList();
+
+      foreach (var ns in featureNamespaces)
+      {
+        foreach (var ns2 in featureNamespaces)
+        {
+          if (ns != ns2)
+          {
+            Types().That().ResideInNamespace($"{ns}.*", true)
+              .Should()
+              .NotDependOnAny(
+                Types()
+                .That()
+                .ResideInNamespace($"{ns2}.*", true))
+              .Check(Architecture);
+          }
+        }
+      }
+    }
+  
 
     [Fact]
     public void CheckFeatureAutonomy()
@@ -60,7 +114,7 @@ namespace SFC.Tests.Architecture
       {
         var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[\\.].+[^\\.])[.].*");
         return m.Groups["ns"].Value;
-      }).Where(f=>f!="").Distinct();
+      }).Where(f => f != "").Distinct();
 
 
       foreach (var ns in namespaces)

@@ -1,6 +1,8 @@
-﻿namespace SFC.AdminApi.Features.SearchableDashboard
+﻿using SFC.Infrastructure.Interfaces.Communication;
+
+namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  public class SearchableDashboardQueryModel
+  public class SearchableDashboardQueryModel : IRequest<SearchableDashboardResult>
   {
     public int Take { get; set; }
     public int Skip { get; set; }

@@ -28,7 +28,7 @@ using Xunit.Abstractions;
 namespace SFC.Tests.AdminApi
 {
 
-    public class AdminApiTest : TestBase
+  public class AdminApiTest : TestBase
   {
     public AdminApiTest(ITestOutputHelper output) : base(output)
     {

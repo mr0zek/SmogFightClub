@@ -1,31 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System;
 using System.Collections.Generic;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
-  public class CallStack : ICallStack
+  class CallStack : ICallStack
   {
     private readonly string _correlationId = Guid.NewGuid().ToString();
-    private readonly ITraceRepository _traceRepository;
+    private readonly IRequestLifecycle _requestLifecycle;
     private readonly Stack<Call> _callStack = new Stack<Call>();
 
-    public CallStack(ITraceRepository traceRepository)
+    public CallStack(IRequestLifecycle requestLifecycle)
     {
-      _traceRepository = traceRepository;
+      _requestLifecycle = requestLifecycle;
     }      
 
     public void StartCall(string moduleName, string callName, string type)
     {      
       if(_callStack.Count == 0)
       {
-        _traceRepository.BeginRequest(_correlationId);
+        _requestLifecycle.BeginRequest(_correlationId);
       }
 
       var callingModuleName = _callStack.Count == 0 ? "" : _callStack.Peek().ModuleName;
       _callStack.Push(new Call(moduleName, callName, type));
 
-      _traceRepository.AddCall(new Trace(_correlationId, callName, callingModuleName, moduleName, type));
+      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, callingModuleName, moduleName, type));
     }
 
     public void FinishCall(string callName)
@@ -36,11 +37,11 @@ namespace SFC.Infrastructure.Features.Tracing
       {
         calledModuleName = _callStack.Peek().ModuleName;
       }
-      _traceRepository.AddCall(new Trace(_correlationId, callName, callingModuleName, calledModuleName, "Return" ));
+      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, callingModuleName, calledModuleName, "Return" ));
 
       if (_callStack.Count == 0)
       {
-        _traceRepository.EndRequest(_correlationId);
+        _requestLifecycle.EndRequest(_correlationId);
       }
     }
   }

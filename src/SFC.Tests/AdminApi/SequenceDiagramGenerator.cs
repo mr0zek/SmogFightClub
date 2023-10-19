@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure.Features.Tracing;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ namespace SFC.Tests.AdminApi
 {
   internal class SequenceDiagramGenerator
   {
-    internal static void Generate(string filePath, string title, List<Trace> t)
+    internal static void Generate(string filePath, string title, List<ModuleCall> t)
     {
       StringBuilder sb = new StringBuilder();
       sb.AppendLine(@"@startuml");

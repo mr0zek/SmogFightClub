@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SFC.Infrastructure.Interfaces.Communication;
+using System.Collections.Generic;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
-  public class SearchableDashboardResult
+  public class SearchableDashboardResult : IResponse
   {
     public IEnumerable<SearchableDashboardEntry> Results { get; }
 

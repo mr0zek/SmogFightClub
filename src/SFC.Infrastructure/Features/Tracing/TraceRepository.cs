@@ -1,11 +1,12 @@
 ﻿using Serilog;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System.Collections.Generic;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
-  class TraceRepository : ITraceRepository
+  class TraceRepository : IRequestLifecycle
   {
-    public void AddCall(Trace trace)
+    public void AddModuleCall(ModuleCall trace)
     {
       Log.Information("{@CorrelationId}: {@CallingModuleName} --> {@CalledModuleName} : {@MessageName}",
         trace.CorrelationId,

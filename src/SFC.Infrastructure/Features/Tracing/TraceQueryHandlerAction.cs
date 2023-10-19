@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System.Diagnostics;
 using System.Threading;
 

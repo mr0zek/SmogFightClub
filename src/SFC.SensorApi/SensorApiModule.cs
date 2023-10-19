@@ -24,6 +24,7 @@ namespace SFC.SensorApi
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
+
     }
   }
 }

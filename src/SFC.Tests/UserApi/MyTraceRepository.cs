@@ -1,13 +1,22 @@
 ﻿using SFC.Infrastructure.Features.Tracing;
+using SFC.Infrastructure.Interfaces.Tracing;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SFC.Tests.UserApi
 {
-  internal class MyTraceRepository : ITraceRepository
+  internal class MyTraceRepository : IRequestLifecycle
   {
-    public static Dictionary<string, List<Trace>> Traces { get; } = new Dictionary<string, List<Trace>>();
+    private readonly string _outputPath;
 
-    public void AddCall(Trace trace)
+    public static Dictionary<string, List<ModuleCall>> Traces { get; } = new Dictionary<string, List<ModuleCall>>();
+
+    public MyTraceRepository(string outputPath)
+    {
+      _outputPath = outputPath;
+    }
+
+    public void AddModuleCall(ModuleCall trace)
     {
       Traces[trace.CorrelationId].Add(trace);
     }
@@ -15,12 +24,13 @@ namespace SFC.Tests.UserApi
 
     public void BeginRequest(string correlationId)
     {
-      Traces.Add(correlationId, new List<Trace>());
+      Traces.Add(correlationId, new List<ModuleCall>());
     }
 
 
     public void EndRequest(string correlationId)
     {
+      
     }
   }
 }

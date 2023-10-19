@@ -2,7 +2,7 @@
 
 namespace SFC.UserApi.Features.Alerts
 {
-  public class PostAlertModelValidator : AbstractValidator<PostAlertModel>
+  class PostAlertModelValidator : AbstractValidator<PostAlertModel>
   {
     public PostAlertModelValidator()
     {

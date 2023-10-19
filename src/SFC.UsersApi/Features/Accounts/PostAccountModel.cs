@@ -1,6 +1,8 @@
-﻿namespace SFC.UserApi.Features.Accounts
+﻿using SFC.Infrastructure.Interfaces.Communication;
+
+namespace SFC.UserApi.Features.Accounts
 {
-  public class PostAccountModel
+  public class PostAccountModel : ICommand
   {
     public string LoginName { get; set; }
     public string ZipCode { get; set; }

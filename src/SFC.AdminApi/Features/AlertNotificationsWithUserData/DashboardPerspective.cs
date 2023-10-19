@@ -16,7 +16,7 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
       _query = notificationPerspective;
     }
 
-    public DashboardResult Search(AlertNotificationsWithUserDataModel query)
+    public DashboardResponse Search(AlertNotificationsWithUserRequest query)
     {
       var results = _query.Query(new SearchAccountRequest()
       {
@@ -41,7 +41,7 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
         };
       });
 
-      return new DashboardResult(entries);
+      return new DashboardResponse(entries);
 
     }
   }

@@ -9,6 +9,7 @@ using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.GiosGateway;
 using SFC.Infrastructure;
+using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
 using SFC.Processes;
@@ -18,16 +19,14 @@ using SFC.UserApi;
 
 namespace SFC
 {
-  public class Program
+    public class Program
   {
     public static void Main(string[] args)
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
-
-      DbMigrations.Run(connectionString);
+      var connectionString = configuration["ConnectionStrings:DefaultConnection"];      
 
       Bootstrap.Run(args,"http://localhost:5000", new Module[]
       {

@@ -1,8 +1,8 @@
-﻿namespace SFC.Infrastructure.Features.Tracing
+﻿namespace SFC.Infrastructure.Interfaces.Tracing
 {
-  public class Trace
+  public class ModuleCall
   {
-    public Trace(string correlationId, string callName, string callingModuleName, string calledModuleName, string callType)
+    public ModuleCall(string correlationId, string callName, string callingModuleName, string calledModuleName, string callType)
     {
       CorrelationId = correlationId;
       CallName = callName;

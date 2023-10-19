@@ -6,7 +6,7 @@ using SFC.SharedKernel;
 
 namespace SFC.Infrastructure.Features.SmtpIntegration
 {
-    public class FakeSmtpClient : ISmtpClient
+  class FakeSmtpClient : ISmtpClient
   {
     public void Send(Email email, string title, string body)
     {

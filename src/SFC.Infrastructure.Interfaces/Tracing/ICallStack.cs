@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFC.Infrastructure.Features.Tracing
+namespace SFC.Infrastructure.Interfaces.Tracing
 {
   public interface ICallStack
   {

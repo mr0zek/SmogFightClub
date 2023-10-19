@@ -20,7 +20,7 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
 
     [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public ActionResult<DashboardResult> Get([FromQuery] AlertNotificationsWithUserDataModel query)
+    public ActionResult<DashboardResponse> Get([FromQuery] AlertNotificationsWithUserRequest query)
     {
       return _dashboardPerspective.Search(query);
     }

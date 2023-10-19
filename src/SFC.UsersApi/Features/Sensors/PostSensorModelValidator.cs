@@ -2,7 +2,7 @@
 
 namespace SFC.UserApi.Features.Sensors
 {
-  public class PostSensorModelValidator : AbstractValidator<PostSensorModel>
+  class PostSensorModelValidator : AbstractValidator<PostSensorModel>
   {
     public PostSensorModelValidator()
     {

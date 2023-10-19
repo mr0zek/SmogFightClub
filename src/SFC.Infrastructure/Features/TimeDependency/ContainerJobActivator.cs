@@ -3,7 +3,7 @@ using System;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-  public class ContainerJobActivator : JobActivator
+  class ContainerJobActivator : JobActivator
   {
     private IServiceProvider _container;
 
