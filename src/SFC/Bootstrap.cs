@@ -66,7 +66,7 @@ namespace SFC
       var mvc = builder.Services.AddMvc(opt =>
       {
         opt.Filters.Add(typeof(FluentValidationActionFilter));
-        opt.Filters.Add(typeof(TraceActionFilter));
+        opt.Filters.Add(typeof(TraceActionFilter));        
       });
 
       foreach (var m in modules)

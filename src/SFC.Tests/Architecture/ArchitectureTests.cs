@@ -22,9 +22,13 @@ using Microsoft.AspNetCore.Mvc;
 using SFC.UserApi;
 using SFC.AdminApi;
 using SFC.SensorApi;
+using ArchUnitNET.Fluent.Predicates;
+using System.Collections.Generic;
+using ArchUnitNET.Domain.Extensions;
 
 namespace SFC.Tests.Architecture
 {
+
 
   public class ArchitectureTests
   {
@@ -45,9 +49,20 @@ namespace SFC.Tests.Architecture
     [Fact]
     public void CheckPublicTypesInModules()
     {
+      var controllers = Types().That()
+          .ResideInAssembly("SFC.*", true).And()
+          .AreAssignableTo(typeof(Controller)).GetObjects(Architecture);
+
+      IEnumerable<IType> classesUsedByControllers = controllers.SelectMany(f => f.Dependencies.Select(f => f.Target))
+        .Concat(
+          controllers.SelectMany(
+            f => f.Dependencies.SelectMany(
+              x => x.Target.Dependencies).Select(x => x.Target)));
+                  
       IArchRule allowedPublicTypesInModules =
         Types().That()
-          .ResideInAssembly("SFC.*",true).And()          
+          .ResideInAssembly("SFC.*", true).And()
+          .AreNot(classesUsedByControllers).And()
           .DoNotResideInAssembly(typeof(ICommand).Assembly).And()
           .AreNotAssignableTo(typeof(IMigration)).And()
           .AreNotAssignableTo(typeof(Exception)).And()
@@ -61,10 +76,10 @@ namespace SFC.Tests.Architecture
           .Should().NotBePublic();
 
       allowedPublicTypesInModules.Check(Architecture);
-    }
+    }    
 
     [Fact]
-    public void EveryControllerHaveToHaveEntryPointForAttributeDeclared()
+    public void EveryControllerMethodHaveToHaveEntryPointForAttributeDeclared()
     {
       var controllers = Types().That()
         .ResideInAssembly("SFC.*", true)
@@ -73,7 +88,7 @@ namespace SFC.Tests.Architecture
       MethodMembers().That().AreDeclaredIn(controllers)
         .And()
         .AreNoConstructors()
-        .Should()        
+        .Should()
         .HaveAnyAttributes(typeof(EntryPointForAttribute)).Check(Architecture);
     }
 
@@ -104,7 +119,7 @@ namespace SFC.Tests.Architecture
         }
       }
     }
-  
+
 
     [Fact]
     public void CheckFeatureAutonomy()
