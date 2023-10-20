@@ -91,43 +91,16 @@ namespace SFC.Tests.Architecture
         .Should()
         .HaveAnyAttributes(typeof(EntryPointForAttribute)).Check(Architecture);
     }
-
-    [Fact]
-    public void CheckInfrastructureFeatureAutonomy()
-    {
-      var types = Types().That().ResideInNamespace("SFC.Infrastructure.Features").GetObjects(Architecture).ToList();
-      var featureNamespaces = types.Select(f =>
-      {
-        var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[\\.].+[^\\.])[.].*");
-        return m.Groups["ns"].Value;
-      }).Where(f => f != "").Distinct().ToList();
-
-      foreach (var ns in featureNamespaces)
-      {
-        foreach (var ns2 in featureNamespaces)
-        {
-          if (ns != ns2)
-          {
-            Types().That().ResideInNamespace($"{ns}.*", true)
-              .Should()
-              .NotDependOnAny(
-                Types()
-                .That()
-                .ResideInNamespace($"{ns2}.*", true))
-              .Check(Architecture);
-          }
-        }
-      }
-    }
-
-
+    
     [Fact]
     public void CheckFeatureAutonomy()
     {
-      var obj = Types().That().ResideInNamespace(".*Feature.*", true).GetObjects(Architecture);
+      var obj = Types().That()
+        .ResideInAssembly("SFC.*",true).And()
+        .ResideInNamespace(".*Feature.*", true).GetObjects(Architecture);
       var namespaces = obj.Select(f =>
       {
-        var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[\\.].+[^\\.])[.].*");
+        var m = Regex.Match(f.Namespace.ToString(), "(?<ns>.*Features[.][^.]+)");
         return m.Groups["ns"].Value;
       }).Where(f => f != "").Distinct();
 
