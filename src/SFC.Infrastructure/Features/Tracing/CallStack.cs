@@ -16,28 +16,26 @@ namespace SFC.Infrastructure.Features.Tracing
       _requestLifecycle = requestLifecycle;
     }      
 
-    public void StartCall(string moduleName, string callName, string type)
+    public void StartCall(string calledModuleName, string callName, string type, string callingModuleName = null)
     {      
       if(_callStack.Count == 0)
       {
         _requestLifecycle.BeginRequest(_correlationId);
       }
 
-      var callingModuleName = _callStack.Count == 0 ? "" : _callStack.Peek().ModuleName;
-      _callStack.Push(new Call(moduleName, callName, type));
+      if (callingModuleName == null && _callStack.Count > 0)
+      {
+        callingModuleName = _callStack.Peek().CalledModuleName;
+      }
+      _callStack.Push(new Call(calledModuleName, callName, type, callingModuleName));
 
-      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, callingModuleName, moduleName, type));
+      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, callingModuleName, calledModuleName, type));
     }
 
     public void FinishCall(string callName)
     {
-      var callingModuleName = _callStack.Pop().ModuleName;
-      string calledModuleName = null;
-      if (_callStack.Count > 0)
-      {
-        calledModuleName = _callStack.Peek().ModuleName;
-      }
-      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, callingModuleName, calledModuleName, "Return" ));
+      var call = _callStack.Pop();
+      _requestLifecycle.AddModuleCall(new ModuleCall(_correlationId, callName, call.CalledModuleName, call.CallingModuleName, "Return" ));
 
       if (_callStack.Count == 0)
       {

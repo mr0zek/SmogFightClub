@@ -28,7 +28,7 @@ using Xunit.Abstractions;
 namespace SFC.Tests.UserApi
 {
 
-    public class UserApiTests : TestBase
+  public class UserApiTests : TestBase
   {
     public UserApiTests(ITestOutputHelper output) : base(output)
     {

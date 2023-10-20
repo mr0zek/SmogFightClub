@@ -1,20 +1,21 @@
-﻿using Hangfire;
+﻿using Autofac;
+using Hangfire;
 using System;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
   class ContainerJobActivator : JobActivator
   {
-    private IServiceProvider _container;
+    private IComponentContext _container;
 
-    public ContainerJobActivator(IServiceProvider container)
+    public ContainerJobActivator(IComponentContext container)
     {
       _container = container;
     }
 
     public override object ActivateJob(Type type)
     {
-      return _container.GetService(type);
+      return _container.Resolve(type);
     }
   }
 }

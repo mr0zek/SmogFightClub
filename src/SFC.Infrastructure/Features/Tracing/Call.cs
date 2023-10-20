@@ -2,15 +2,17 @@
 {
   internal class Call
   {
-    public Call(string moduleName, string callName, string type)
+    public Call(string calledModuleName, string callName, string type, string callingModuleName)
     {
-      ModuleName = moduleName;
+      CalledModuleName = calledModuleName;
       CallName = callName;
       Type = type;
+      CallingModuleName = callingModuleName;
     }
 
-    public string ModuleName { get; }
+    public string CalledModuleName { get; }
     public string CallName { get; }
     public string Type { get; }
+    public string CallingModuleName { get; }
   }
 }

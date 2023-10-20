@@ -4,7 +4,7 @@ namespace SFC.Infrastructure.Interfaces.Tracing
 {
   public interface ICallStack
   {
-    void StartCall(string moduleName, string callName, string type);
+    void StartCall(string moduleName, string callName, string type, string? callingModuleName = null);
     void FinishCall(string callName);
   }
 }

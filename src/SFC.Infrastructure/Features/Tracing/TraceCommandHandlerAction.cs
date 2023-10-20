@@ -22,7 +22,7 @@ namespace SFC.Infrastructure.Features.Tracing
       }
       else
       {
-        _callStack.FinishCall(null);
+        _callStack.FinishCall("Return");
       }
     }
 

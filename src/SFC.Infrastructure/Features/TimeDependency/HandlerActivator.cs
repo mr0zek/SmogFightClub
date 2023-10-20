@@ -9,56 +9,60 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-  internal class HandlerActivator
+  public class HandlerActivator
   {
-    private readonly IComponentContext _componentContext;
+    private readonly ILifetimeScope _container;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public HandlerActivator(IComponentContext componentContext, IDateTimeProvider dateTimeProvider)
+    public HandlerActivator(ILifetimeScope container, IDateTimeProvider dateTimeProvider)
     {
-      _componentContext = componentContext;
+      _container = container;
       _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task Run(Type type)
     {
-      IEnumerable<IEventHandlerAction<TimeEvent>> actions = (IEnumerable<IEventHandlerAction<TimeEvent>>)_componentContext.Resolve(typeof(IEnumerable<IEventHandlerAction<TimeEvent>>));
-
-      EventExecutionContext<TimeEvent> executionContext = new EventExecutionContext<TimeEvent>();
-      executionContext.Handler = (IEventHandler<TimeEvent>)_componentContext.Resolve(type);
-
-      TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());
-
-      foreach (var action in actions)
+      using (var scope = _container.BeginLifetimeScope())
       {
+        IEnumerable<IEventHandlerAction<TimeEvent>> actions 
+          = (IEnumerable<IEventHandlerAction<TimeEvent>>)scope.Resolve(typeof(IEnumerable<IEventHandlerAction<TimeEvent>>));
+
+        EventExecutionContext<TimeEvent> executionContext = scope.Resolve<EventExecutionContext<TimeEvent>>();
+        executionContext.Handler = (IEventHandler<TimeEvent>)scope.Resolve(type);
+
+        TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());
+
+        foreach (var action in actions)
+        {
+          try
+          {
+            action.BeforeHandle(executionContext);
+          }
+          catch (Exception ex)
+          {
+            Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          }
+        }
+
         try
         {
-          action.BeforeHandle(executionContext);
+          executionContext.Handler.Handle(@event);
         }
         catch (Exception ex)
         {
-          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          executionContext.Exception = ex;
         }
-      }
 
-      try
-      {
-        executionContext.Handler.Handle(@event);
-      }
-      catch(Exception ex)
-      {
-        executionContext.Exception = ex;
-      }
-
-      foreach (var action in actions)
-      {
-        try
+        foreach (var action in actions)
         {
-          action.AfterHandle(executionContext);
-        }
-        catch (Exception ex)
-        {
-          Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          try
+          {
+            action.AfterHandle(executionContext);
+          }
+          catch (Exception ex)
+          {
+            Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
+          }
         }
       }
     }

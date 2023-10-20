@@ -26,10 +26,12 @@ namespace SFC.Infrastructure
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TraceRepository>().AsImplementedInterfaces();
       builder.RegisterType<DatabaseMigrator>().AsImplementedInterfaces();
+      builder.RegisterType<HandlerActivator>().AsSelf();
       builder.RegisterType<ContainerJobActivator>().As<JobActivator>();
       builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
       
       builder.RegisterAssemblyOpenGenericTypes(GetType().Assembly)
+        .AsSelf()
         .AsImplementedInterfaces()
         .InstancePerLifetimeScope();      
     }

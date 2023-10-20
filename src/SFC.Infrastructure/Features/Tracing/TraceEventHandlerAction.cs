@@ -1,4 +1,5 @@
 ﻿using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Infrastructure.Interfaces.Tracing;
 using System.Diagnostics;
 
@@ -16,14 +17,23 @@ namespace SFC.Infrastructure.Features.Tracing
 
     public void AfterHandle(IEventExecutionContext<T> eventExecutionContext)
     {
-      _callStack.FinishCall(null);
+      _callStack.FinishCall("Return");
     }
 
     public void BeforeHandle(IEventExecutionContext<T> eventExecutionContext)
     {
-      _callStack.StartCall(
+      if (typeof(T) == typeof(TimeEvent))
+      {
+        _callStack.StartCall(
+        eventExecutionContext.Handler.GetType().Assembly.GetName().Name,
+        typeof(T).Name, "Event", "Time");
+      }
+      else
+      {
+        _callStack.StartCall(
         eventExecutionContext.Handler.GetType().Assembly.GetName().Name,
         typeof(T).Name, "Event");
+      }
     }
   }
 }
