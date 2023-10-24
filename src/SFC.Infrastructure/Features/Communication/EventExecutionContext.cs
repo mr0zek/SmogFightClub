@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SFC.Infrastructure.Interfaces.Communication;
+using System;
 
-namespace SFC.Infrastructure.Interfaces.Communication
+namespace SFC.Infrastructure.Features.Communication
 {
   class EventExecutionContext<T> : IEventExecutionContext<T>
     where T : IEvent

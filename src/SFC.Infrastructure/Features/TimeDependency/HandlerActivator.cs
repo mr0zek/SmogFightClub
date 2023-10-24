@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
-  public class HandlerActivator
+  class HandlerActivator
   {
     private readonly ILifetimeScope _container;
     private readonly IDateTimeProvider _dateTimeProvider;
@@ -27,7 +27,7 @@ namespace SFC.Infrastructure.Features.TimeDependency
         IEnumerable<IEventHandlerAction<TimeEvent>> actions 
           = (IEnumerable<IEventHandlerAction<TimeEvent>>)scope.Resolve(typeof(IEnumerable<IEventHandlerAction<TimeEvent>>));
 
-        EventExecutionContext<TimeEvent> executionContext = scope.Resolve<EventExecutionContext<TimeEvent>>();
+        TimeEventExecutionContext<TimeEvent> executionContext = scope.Resolve<TimeEventExecutionContext<TimeEvent>>();
         executionContext.Handler = (IEventHandler<TimeEvent>)scope.Resolve(type);
 
         TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());

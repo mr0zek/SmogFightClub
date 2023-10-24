@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace SFC.Infrastructure.Features.Validation
 {
-  public class FluentValidationActionFilter : IActionFilter
+  class FluentValidationActionFilter : IActionFilter
   {
     public void OnActionExecuting(ActionExecutingContext filterContext)
     {

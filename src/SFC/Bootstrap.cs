@@ -23,7 +23,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SFC.Infrastructure;
 using SFC.Infrastructure.Features.TimeDependency;
 using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
@@ -64,11 +63,9 @@ namespace SFC
       builder.Services.AddHangfireServer();      
       builder.Services.AddControllers();
 
-      var mvc = builder.Services.AddMvc(opt =>
-      {
-        opt.Filters.Add(typeof(FluentValidationActionFilter));
-        opt.Filters.Add(typeof(TraceActionFilter));        
-      });
+      var mvc = builder.Services.AddMvc()
+        .AddValidation()
+        .AddTracing();
 
       foreach (var m in modules)
       {
