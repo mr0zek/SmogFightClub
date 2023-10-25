@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -11,8 +13,16 @@ using SFC.UserApi.Features.Sensors;
 namespace SFC.UserApi
 {
   [ModuleDefinition("Api")]
-  public class UserApiModule : Module
-  {   
+  public class UserApiModule : Module, IModule
+  {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
+
     protected override void Load(ContainerBuilder builder)
     {       
       builder.RegisterAssemblyTypes(GetType().Assembly)

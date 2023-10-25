@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
@@ -11,8 +13,16 @@ using SFC.Sensors;
 namespace SFC.AdminApi
 {
   [ModuleDefinition("Api")]
-  public class AdminApiModule : Module
+  public class AdminApiModule : Module, IModule
   {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
+  
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<DashboardPerspective>().AsImplementedInterfaces();

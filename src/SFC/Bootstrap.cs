@@ -35,7 +35,7 @@ namespace SFC
 {
   public class Bootstrap
   {
-    public static WebApplication Run(string[] args, string url, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null)
+    public static WebApplication Run(string[] args, string url, IEnumerable<IModule> modules, Action<ContainerBuilder> overrideDependencies = null)
     {
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
@@ -64,14 +64,14 @@ namespace SFC
       builder.Services.AddControllers();
 
       var mvc = builder.Services.AddMvc()
+        .AddControllersAsServices()
         .AddValidation()
         .AddTracing();
 
       foreach (var m in modules)
       {
-        mvc.AddApplicationPart(m.GetType().Assembly);
+        mvc.AddModule(m);
       }
-      mvc.AddControllersAsServices();
 
       builder.Services.AddHttpContextAccessor();
       builder.Services.AddFluentValidationAutoValidation();
@@ -177,7 +177,12 @@ namespace SFC
 
       app.MapControllers();      
 
-      app.Start(); 
+      app.Start();
+
+      foreach (var m in modules)
+      {
+        app.AddModule(m);
+      }
 
       return app;
     }

@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\tools\ArchitectureDocumentationGenerator\ArchitectureDocumentationGenerator.csproj" />
     <ProjectReference Include="..\SFC.AdminApi\SFC.AdminApi.csproj" />
+    <ProjectReference Include="..\SFC.AdminUI\SFC.AdminUI.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.AuthenticationApi\SFC.AuthenticationApi.csproj" />
     <ProjectReference Include="..\SFC.GiosGateway\SFC.GiosGateway.csproj" />

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using SFC.Accounts;
 using SFC.AdminApi;
+using SFC.AdminUI;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.GiosGateway;
@@ -28,7 +29,7 @@ namespace SFC
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];      
 
-      Bootstrap.Run(args,"http://localhost:5000", new Module[]
+      Bootstrap.Run(args,"http://localhost:5000", new IModule[]
       {
         new AuthenticationApiModule(),
         new AdminApiModule(),
@@ -40,7 +41,8 @@ namespace SFC
         new SensorsModule(),
         new AccountsModule(),
         new InfrastructureModule(),
-        new GiosGatewayModule()
+        new GiosGatewayModule(),
+        new AddminUIModule()
       });
 
       Console.ReadKey();

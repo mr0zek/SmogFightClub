@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using FluentValidation;
 using Hangfire;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.Infrastructure.Features.Communication;
 using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Features.SmtpIntegration;
@@ -13,8 +15,15 @@ using SFC.Infrastructure.Interfaces.Documentation;
 namespace SFC.Infrastructure
 {
   [ModuleDefinition("Infastructure")]
-  public class InfrastructureModule : Module
-  {    
+  public class InfrastructureModule : Module, IModule
+  {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<IdentityProvider>().AsImplementedInterfaces();

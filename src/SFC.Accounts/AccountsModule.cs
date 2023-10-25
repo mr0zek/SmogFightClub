@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -8,8 +10,15 @@ using SFC.Infrastructure.Interfaces.Documentation;
 namespace SFC.Accounts
 {
   [ModuleDefinition("Backend")]
-  public class AccountsModule : Module
+  public class AccountsModule : Module, IModule
   {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<AccountsRepository>()

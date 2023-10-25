@@ -8,6 +8,7 @@ using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Features.Database;
+using SFC.Infrastructure.Interfaces;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -41,7 +42,7 @@ namespace SFC.Tests.UseStories
       ResetDatabase.Reset(connectionString);      
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new IModule[]
         {
           new AdminApiModule(),
           new SensorApiModule(),

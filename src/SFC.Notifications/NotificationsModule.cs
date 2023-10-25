@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -10,8 +12,16 @@ using SFC.Notifications.Infrastructure;
 namespace SFC.Notifications
 {
   [ModuleDefinition("Backend")]
-  public class NotificationsModule : Module
-  {    
+  public class NotificationsModule : Module, IModule
+  {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
+  
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<EmailRepository>()

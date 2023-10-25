@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
@@ -12,8 +14,15 @@ using SFC.Sensors;
 namespace SFC.Processes
 {
   [ModuleDefinition("Task")]
-  public class ProcessesModule : Module
+  public class ProcessesModule : Module, IModule
   {
+    public void ConfigureMvc(IMvcBuilder builder)
+    {
+    }
+
+    public void ConfigureWebApplication(WebApplication app)
+    {
+    }
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<SagaRepository>().AsImplementedInterfaces();
