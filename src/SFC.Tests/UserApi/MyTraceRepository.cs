@@ -21,7 +21,7 @@ namespace SFC.Tests.UserApi
       Traces[trace.CorrelationId].Add(trace);
     }
 
-
+      
     public void BeginRequest(string correlationId)
     {
       Traces.Add(correlationId, new List<ModuleCall>());

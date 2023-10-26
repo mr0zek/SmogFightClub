@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using SFC.Infrastructure.Features.Modules;
 using SFC.Infrastructure.Features.TimeDependency;
 using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
@@ -35,8 +37,12 @@ namespace SFC
 {
   public class Bootstrap
   {
+    static IEnumerable<IModule> _modules;
+
     public static WebApplication Run(string[] args, string url, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null)
     {
+      _modules = modules;
+
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
          .CreateBootstrapLogger();
@@ -67,7 +73,7 @@ namespace SFC
         .AddValidation()
         .AddTracing();
 
-      foreach (var m in modules)
+      foreach (var m in _modules)
       {
         mvc.AddApplicationPart(m.GetType().Assembly);
       }
@@ -145,7 +151,7 @@ namespace SFC
       builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
       {
         builder.RegisterInstance(new ConnectionString(connectionString));
-        foreach (Module m in modules)
+        foreach (Module m in _modules)
         {
           builder.RegisterModule(m);
         }
@@ -179,11 +185,22 @@ namespace SFC
 
       app.Start(); 
 
+      foreach (var module in _modules.Where(f=> f is IHaveWorker).Select(f=>(IHaveWorker)f)) 
+      {
+        module.StartWorker(app.Services.GetService<IComponentContext>());
+      }
+
       return app;
     }
 
     public static void Stop(WebApplication app)
     {
+      _modules.Where(f => f is IHaveWorker).ToList().ForEach(
+       f => ((IHaveWorker)f).StopWorker());
+
+      _modules.Where(f => f is IHaveWorker).ToList().ForEach(
+       f => ((IHaveWorker)f).WaitForShutdown());
+
       app.StopAsync().Wait();
       app.WaitForShutdown();      
     }

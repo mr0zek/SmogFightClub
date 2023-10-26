@@ -8,10 +8,10 @@ namespace SFC.Alerts.Features.CreateAlert
 {
   internal class CreateAlertHandler : ICommandHandler<CreateAlertCommand>
   {
-    private readonly IEventBus _eventBus;
+    private readonly IEventBusWithAsync _eventBus;
     private readonly IAlertWriteRepository _repository;
 
-    public CreateAlertHandler(IEventBus eventBus, IAlertWriteRepository repository)
+    public CreateAlertHandler(IEventBusWithAsync eventBus, IAlertWriteRepository repository)
     {
       _eventBus = eventBus;
       _repository = repository;

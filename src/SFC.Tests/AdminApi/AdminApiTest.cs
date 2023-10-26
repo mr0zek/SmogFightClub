@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -120,7 +121,7 @@ namespace SFC.Tests.AdminApi
       {
         await api.PostAlert(new PostAlertModel() { ZipCode = Random.Shared.NextInt64(10000, 99999).ToString() });
       }
-
+      
       // Act
       var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);
 

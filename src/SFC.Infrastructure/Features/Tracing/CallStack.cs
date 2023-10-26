@@ -7,7 +7,7 @@ namespace SFC.Infrastructure.Features.Tracing
 {
   class CallStack : ICallStack
   {
-    private readonly string _correlationId = Guid.NewGuid().ToString();
+    private string _correlationId;
     private readonly IRequestLifecycle _requestLifecycle;
     private readonly Stack<Call> _callStack = new Stack<Call>();
 
@@ -20,6 +20,7 @@ namespace SFC.Infrastructure.Features.Tracing
     {      
       if(_callStack.Count == 0)
       {
+        _correlationId = Guid.NewGuid().ToString();
         _requestLifecycle.BeginRequest(_correlationId);
       }
 
