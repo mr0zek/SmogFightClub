@@ -24,12 +24,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SFC.Infrastructure.Features.Modules;
 using SFC.Infrastructure.Features.TimeDependency;
 using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Database;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Infrastructure.Interfaces.Tracing;
 

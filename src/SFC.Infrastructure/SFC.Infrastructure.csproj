@@ -22,4 +22,8 @@
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Modules\" />
+  </ItemGroup>
+
 </Project>

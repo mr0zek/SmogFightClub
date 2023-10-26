@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -63,8 +64,9 @@ namespace SFC.Tests.UserApi
         });
 
       // Assert      
-      Assert.Equal(3, TestSmtpClient.SentEmails.Count);
+      EventProcessorStatus.WaitIlde();
 
+      Assert.Equal(3, TestSmtpClient.SentEmails.Count);
     }
 
     [Fact]
@@ -83,7 +85,7 @@ namespace SFC.Tests.UserApi
       var api = RestClient.For<IApi>(_url);
       Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
-
+      
       // Assert
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 

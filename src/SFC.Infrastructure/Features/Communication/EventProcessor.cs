@@ -5,32 +5,34 @@ using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Transactions;
 
 namespace SFC.Infrastructure.Features.Communication
 {
 
-  class AsyncEventProcessor : IEventAsyncProcessor
+  class EventProcessor : IEventAsyncProcessor
   {
     private readonly IOutbox _outbox;
     private readonly ILifetimeScope _container;
     private readonly IInbox _inbox;
+    private readonly IEventProcessorStatusReporter _statusReporter;
     private readonly CancellationTokenSource _cancellationTokenSource;
-    private bool _shutdownCompleate;
+    private readonly EventWaitHandle _shutDownCompleated;
 
-    public AsyncEventProcessor(IOutbox outbox, ILifetimeScope container, IInbox inbox)
+    public EventProcessor(IOutbox outbox, ILifetimeScope container, IInbox inbox, IEventProcessorStatusReporter statusReporter)
     {
       _outbox = outbox;
       _container = container;
       _inbox = inbox;
+      _statusReporter = statusReporter;
       _cancellationTokenSource = new CancellationTokenSource();
-      _shutdownCompleate = false;
+      _shutDownCompleated = new EventWaitHandle(false, EventResetMode.AutoReset);
     }
 
     public void Start(string moduleName)
     {
-      _shutdownCompleate = false;
       ThreadPool.QueueUserWorkItem(f => EventLoop(moduleName, _cancellationTokenSource.Token));
     }
 
@@ -41,18 +43,27 @@ namespace SFC.Infrastructure.Features.Communication
 
     public void WaitForShutdown()
     {
-      while (!_shutdownCompleate)
-        Thread.Sleep(100);
+      _shutDownCompleated.WaitOne();
     }
 
     private void EventLoop(string moduleName, CancellationToken token)
     {
       try
       {
+        _statusReporter.ReportStatus(EventProcesorStatus.Working);
         while (!token.IsCancellationRequested)
         {
           var lastProcessedId = _inbox.GetLastProcessedId(moduleName);
           var events = _outbox.Get(lastProcessedId, 100);
+          if(events.Any())
+          {
+            _statusReporter.ReportStatus(EventProcesorStatus.Working);
+          }
+          else
+          {
+            _statusReporter.ReportStatus(EventProcesorStatus.Idle);
+            token.WaitHandle.WaitOne(100);
+          }
           foreach (EventData e in events)
           {
             if (token.IsCancellationRequested)
@@ -122,12 +133,11 @@ namespace SFC.Infrastructure.Features.Communication
               ts.Complete();
             }
           }
-          Thread.Sleep(100);
         }
       }
       finally
       {
-        _shutdownCompleate = true;
+        _shutDownCompleated.Set();
       }
     }
   }

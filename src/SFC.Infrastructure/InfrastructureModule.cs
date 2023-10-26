@@ -31,7 +31,7 @@ namespace SFC.Infrastructure
       builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<OutboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<InboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
-      builder.RegisterType<AsyncEventProcessor>().AsImplementedInterfaces();
+      builder.RegisterType<EventProcessor>().AsImplementedInterfaces();
       builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();
       builder.RegisterAssemblyOpenGenericTypes(GetType().Assembly)
         .AsSelf()

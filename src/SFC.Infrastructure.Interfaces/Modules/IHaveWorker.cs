@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Modules
+namespace SFC.Infrastructure.Interfaces.Modules
 {
   public interface IHaveWorker
   {
