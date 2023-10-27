@@ -64,7 +64,7 @@ namespace SFC.Tests.UserApi
         });
 
       // Assert      
-      EventProcessorStatus.WaitIlde();
+      _eventProcessorStatus.WaitIlde();
 
       Assert.Equal(3, TestSmtpClient.SentEmails.Count);
     }
@@ -85,8 +85,9 @@ namespace SFC.Tests.UserApi
       var api = RestClient.For<IApi>(_url);
       Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
-      
+
       // Assert
+      _eventProcessorStatus.WaitIlde();
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
       api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new(postAccountModel.LoginName, postAccountModel.Password));
@@ -115,6 +116,7 @@ namespace SFC.Tests.UserApi
       await api.PostAccountConfirmationV2(confirmationId);
 
       // Assert
+      _eventProcessorStatus.WaitIlde();
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
       api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new(postAccountModel.LoginName, postAccountModel.Password));

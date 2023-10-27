@@ -22,6 +22,7 @@ namespace SFC.Tests.Tools
 
     public void WaitIlde() 
     {
+      _waitHandle.Reset();
       _waitHandle.WaitOne();
     }
   }

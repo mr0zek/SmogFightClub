@@ -65,6 +65,7 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetAlertNotificationsWithUserData(1, int.MaxValue);
 
       // Assert
+      _eventProcessorStatus.WaitIlde();
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(postAccountModel.LoginName, entry.LoginName);
@@ -93,6 +94,7 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetSendNotificationsByUser(0, int.MaxValue);
 
       // Assert
+      _eventProcessorStatus.WaitIlde();
       Assert.Single(result.Result);
       Assert.Equal(postAccountModel.LoginName, result.Result.First().LoginName);
       Assert.Equal(2, result.Result.First().Count);
@@ -126,6 +128,8 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);
 
       // Assert
+      _eventProcessorStatus.WaitIlde();
+
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);
