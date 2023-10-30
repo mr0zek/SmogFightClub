@@ -8,9 +8,9 @@ namespace SFC.GiosGateway.Features
   public class SynchronizeReadings : IEventHandler<TimeEvent>
   {
     [ExitPointTo("GIOS", CallType.Query)]
-    public void Handle(TimeEvent @event)
+    public async Task Handle(TimeEvent @event, CancellationToken cancellationToken)
     {
-      throw new NotImplementedException();
+      
     }
   }
 }

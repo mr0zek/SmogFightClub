@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Communication
 {
@@ -18,14 +19,14 @@ namespace SFC.Infrastructure.Features.Communication
       _connection = new SqlConnection(connectionString.ToString());
     }
   
-    public void Add(EventData eventData)
+    public async Task Add(EventData eventData)
     {
-      _connection.Execute("insert into dbo.Outbox(data, type)values(@data, @type)", new { data = eventData.Data, type = eventData.Type });
+      await _connection.ExecuteAsync("insert into dbo.Outbox(data, type)values(@data, @type)", new { data = eventData.Data, type = eventData.Type });
     }
 
-    public IEnumerable<EventData> Get(int lastProcessedId, int count)
+    public async Task<IEnumerable<EventData>> Get(int lastProcessedId, int count)
     {
-      return _connection.Query<EventData>($"select top {count} id, data, type from dbo.Outbox where id > @lastProcessedId", new { lastProcessedId });
+      return await _connection.QueryAsync<EventData>($"select top {count} id, data, type from dbo.Outbox where id > @lastProcessedId", new { lastProcessedId });
     }
   }
 }

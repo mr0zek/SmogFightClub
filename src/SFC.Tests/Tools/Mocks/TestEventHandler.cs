@@ -1,6 +1,8 @@
 ﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Tests.Tools.Mocks
 {
@@ -9,7 +11,7 @@ namespace SFC.Tests.Tools.Mocks
   {
     public static List<T> Events { get; set; } = new List<T>();
 
-    public void Handle(T @event)
+    public async Task Handle(T @event, CancellationToken cancellationToken)
     {
       Events.Add(@event);
     }

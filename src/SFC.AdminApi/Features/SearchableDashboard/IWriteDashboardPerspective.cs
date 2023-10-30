@@ -1,11 +1,12 @@
 ﻿using SFC.SharedKernel;
+using System.Threading.Tasks;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
   internal interface IWriteDashboardPerspective 
   {
-    void Add(SearchableDashboardEntry searchableDashboardEntry);
-    SearchableDashboardEntry Get(LoginName eventLoginName);
-    void Update(SearchableDashboardEntry searchableDashboardEntry);
+    Task Add(SearchableDashboardEntry searchableDashboardEntry);
+    Task<SearchableDashboardEntry> Get(LoginName eventLoginName);
+    Task Update(SearchableDashboardEntry searchableDashboardEntry);
   }
 }

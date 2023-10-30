@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading.Tasks;
 using Dapper;
 using Newtonsoft.Json;
 using SFC.Infrastructure.Interfaces;
@@ -16,21 +17,21 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public void Save(string id, object data)
+    public async Task Save(string id, object data)
     {
       using (var sw = new StringWriter())
       {
         JsonSerializer.CreateDefault().Serialize(sw, data);
         string strData = sw.GetStringBuilder().ToString();
 
-        _connection.Execute("insert into Processes.Sagas(id, data)values(@id,@strData)",
+        await _connection.ExecuteAsync("insert into Processes.Sagas(id, data)values(@id,@strData)",
           new { id, strData });
       }
     }
 
-    public T Get<T>(string id) where T : class
+    public async Task<T> Get<T>(string id) where T : class
     {
-      string data = _connection.QueryFirstOrDefault<string>(
+      string data = await _connection.QueryFirstOrDefaultAsync<string>(
         "select data from Processes.Sagas where id = @id",
         new { id });
 

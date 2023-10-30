@@ -1,7 +1,9 @@
-﻿namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
+﻿using System.Threading.Tasks;
+
+namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
 {
   public interface IDashboardPerspective
   {
-    DashboardResponse Search(AlertNotificationsWithUserRequest query);
+    Task<DashboardResponse> Search(AlertNotificationsWithUserRequest query);
   }
 }

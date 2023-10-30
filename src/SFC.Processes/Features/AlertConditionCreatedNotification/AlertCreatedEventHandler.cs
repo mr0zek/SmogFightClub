@@ -2,6 +2,8 @@
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.AlertConditionCreatedNotification
 {
@@ -14,9 +16,9 @@ namespace SFC.Processes.Features.AlertConditionCreatedNotification
       _commandBus = commandBus;
     }
 
-    public void Handle(AlertCreatedEvent @event)
+    public async Task Handle(AlertCreatedEvent @event, CancellationToken cancellationToken)
     {
-      _commandBus.Send(new SendNotificationCommand()
+      await _commandBus.Send(new SendNotificationCommand()
       {
         Title = "Smog alert created",
         Body = $"Smog alert has been succesfuly created, zip code: {@event.ZipCode}",

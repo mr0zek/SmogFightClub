@@ -3,6 +3,7 @@ using SFC.Infrastructure.Interfaces;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Communication
 {
@@ -14,14 +15,14 @@ namespace SFC.Infrastructure.Features.Communication
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public int GetLastProcessedId(string moduleName)
+    public async Task<int> GetLastProcessedId(string moduleName)
     {
-      return _connection.QueryFirstOrDefault<int>("select top 1 lastProcessedId from inbox where moduleName = @moduleName order by id desc", new { moduleName });
+      return await _connection.QueryFirstOrDefaultAsync<int>("select top 1 lastProcessedId from inbox where moduleName = @moduleName order by id desc", new { moduleName });
     }
 
-    public void SetProcessed(int id, string moduleName)
+    public async Task SetProcessed(int id, string moduleName)
     {
-      _connection.Execute(@"
+      await _connection.ExecuteAsync(@"
         if exists(select 1 from dbo.inbox where moduleName = @moduleName) 
         begin
           update dbo.inbox set LastProcessedId = @id where moduleName = @moduleName

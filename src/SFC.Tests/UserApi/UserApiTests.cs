@@ -117,6 +117,7 @@ namespace SFC.Tests.UserApi
 
       // Assert
       _eventProcessorStatus.WaitIlde();
+      Thread.Sleep(1000);
       Assert.Equal(2, TestSmtpClient.SentEmails.Count);
 
       api.Token = $"Bearer " + await RestClient.For<IApi>(_url).Login(new(postAccountModel.LoginName, postAccountModel.Password));

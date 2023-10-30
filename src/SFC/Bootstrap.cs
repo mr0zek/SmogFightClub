@@ -37,7 +37,7 @@ namespace SFC
 {
   public class Bootstrap
   {
-    static IEnumerable<IModule> _modules;
+    static IEnumerable<Module> _modules;
 
     public static WebApplication Run(string[] args, string url, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null)
     {

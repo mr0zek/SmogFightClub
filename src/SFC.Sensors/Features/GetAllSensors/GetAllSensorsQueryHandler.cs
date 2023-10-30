@@ -4,6 +4,8 @@ using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Sensors.Features.GetAllSensors
 {
@@ -16,9 +18,9 @@ namespace SFC.Sensors.Features.GetAllSensors
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public GetAllSensorsResponse HandleQuery(GetAllSensorsRequest query)
+    public async Task<GetAllSensorsResponse> Handle(GetAllSensorsRequest query, CancellationToken cancellationToken)
     {
-      return new GetAllSensorsResponse(_connection.Query<GetAllSensorsResponse.SensorReadModel>(
+      return new GetAllSensorsResponse(await _connection.QueryAsync<GetAllSensorsResponse.SensorReadModel>(
        "select id, zipCode from Sensors.Sensors where loginName = @loginName", new { loginName = query.LoginName.ToString() }));
 
     }

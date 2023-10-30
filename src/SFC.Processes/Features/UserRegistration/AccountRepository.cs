@@ -3,6 +3,7 @@ using SFC.Infrastructure.Interfaces;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.UserRegistration
 {
@@ -15,9 +16,9 @@ namespace SFC.Processes.Features.UserRegistration
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public void Add(Account account)
+    public async Task Add(Account account)
     {
-      _connection.Execute("insert into Processes.Accounts(id, email, zipCode, loginName, passwordHash)values(@id, @email, @zipCode, @loginName, @passwordHash)",
+      await _connection.ExecuteAsync("insert into Processes.Accounts(id, email, zipCode, loginName, passwordHash)values(@id, @email, @zipCode, @loginName, @passwordHash)",
           new { 
             id = account.Id, 
             email = account.Email.ToString(), 
@@ -26,9 +27,9 @@ namespace SFC.Processes.Features.UserRegistration
             passwordHash = account.PasswordHash });
     }
 
-    public Account Get(Guid id)
+    public async Task<Account> Get(Guid id)
     {
-      return _connection.QueryFirstOrDefault<Account>(
+      return await _connection.QueryFirstOrDefaultAsync<Account>(
         "select id, email, zipCode, loginName, passwordHash from Processes.Accounts where id = @id",
         new { id });
     }

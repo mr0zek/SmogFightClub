@@ -7,6 +7,8 @@ using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Processes.Features.UserRegistration.Contract;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.UserRegistration
 {
@@ -23,21 +25,21 @@ namespace SFC.Processes.Features.UserRegistration
       _accountRepository = accountRepository;
     }
 
-    public void Handle(RegisterUserCommand command)
+    public async Task Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-      if (_query.Query(new GetAccountByLoginNameRequest(command.LoginName)) != null)
+      if (await _query.Send(new GetAccountByLoginNameRequest(command.LoginName)) != null)
       {
         throw new LoginNameAlreadyUsedException(command.LoginName);
       }
       
-      _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, command.PasswordHash.Value));
+      await _accountRepository.Add(new Account(command.Id, command.Email, command.LoginName, command.ZipCode, command.PasswordHash.Value));
 
-      _commandBus.Send(new SetNotificationEmailCommand(
+      await _commandBus.Send(new SetNotificationEmailCommand(
         command.Email,
         command.LoginName
       ));
 
-      _commandBus.Send(new SendNotificationCommand()
+      await _commandBus.Send(new SendNotificationCommand()
       {
         LoginName = command.LoginName,
         Body = $"<a href=\"{command.BaseUrl}/Confirmation/{command.Id}\">Click her to confirm</a>",
@@ -46,17 +48,17 @@ namespace SFC.Processes.Features.UserRegistration
       });
     }
 
-    public void Handle(ConfirmUserCommand command)
+    public async Task Handle(ConfirmUserCommand command, CancellationToken cancellationToken)
     {
-      Account account = _accountRepository.Get(command.ConfirmationId);
+      Account account = await _accountRepository.Get(command.ConfirmationId);
       if(account == null)
       {
         throw new InvalidOperationException();
       }
 
-      _commandBus.Send(new CreateAccountCommand(account.LoginName, new SharedKernel.PasswordHash(account.PasswordHash)));
+      await _commandBus.Send(new CreateAccountCommand(account.LoginName, new SharedKernel.PasswordHash(account.PasswordHash)));
 
-      _commandBus.Send(new CreateAlertCommand()
+      await _commandBus.Send(new CreateAlertCommand()
       {
         Id = Guid.NewGuid(),
         LoginName = account.LoginName,

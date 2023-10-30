@@ -3,6 +3,8 @@ using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
@@ -21,21 +23,21 @@ namespace SFC.Sensors.Features.RegisterMeasurement
       _checkAcceptabelNorms = checkAcceptabelNorms;
     }
 
-    public void Handle(RegisterMeasurementCommand command)
+    public async Task Handle(RegisterMeasurementCommand command, CancellationToken cancellationToken)
     {
-      Sensor sensor = _sensorRepository.Get(command.SensorId);
+      Sensor sensor = await _sensorRepository.Get(command.SensorId);
       if (sensor == null)
       {
         throw new UnknownSensorException(command.SensorId);
       }
       foreach (var element in command.Elements)
       {
-        _measurementRepository.Add(command.SensorId, command.Date, element.Key, element.Value);
+        await _measurementRepository.Add(command.SensorId, command.Date, element.Key, element.Value);
       }
 
       if (!_checkAcceptabelNorms.All(f=>f.Verify(command.Elements)))
       {        
-        _eventBus.Publish(new AcceptableLevelExceededEvent(sensor.ZipCode));
+        await _eventBus.Publish(new AcceptableLevelExceededEvent(sensor.ZipCode));
       }
     }
   }

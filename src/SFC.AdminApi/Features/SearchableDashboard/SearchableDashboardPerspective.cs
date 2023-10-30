@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
 using SFC.SharedKernel;
@@ -15,9 +16,9 @@ namespace SFC.AdminApi.Features.SearchableDashboard
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public void Add(SearchableDashboardEntry searchableDashboardEntry)
+    public async Task Add(SearchableDashboardEntry searchableDashboardEntry)
     {
-      _connection.Execute(
+      await _connection.ExecuteAsync(
         @"insert into SearchableDashboard.SearchableDashboard(loginName, alertsCount)
           values(@loginName, @alertsCount)",
         new
@@ -27,15 +28,15 @@ namespace SFC.AdminApi.Features.SearchableDashboard
         });
     }
 
-    public SearchableDashboardEntry Get(LoginName loginName)
+    public async Task<SearchableDashboardEntry> Get(LoginName loginName)
     {
-      return _connection.QueryFirstOrDefault<SearchableDashboardEntry>(
+      return await _connection.QueryFirstOrDefaultAsync<SearchableDashboardEntry>(
         @"select id, loginName, alertsCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
     }
 
-    public void Update(SearchableDashboardEntry searchableDashboardEntry)
+    public async Task Update(SearchableDashboardEntry searchableDashboardEntry)
     {
-      _connection.Execute(
+      await _connection.ExecuteAsync(
         @"update SearchableDashboard.SearchableDashboard 
           set alertsCount = @alertsCount
           where loginName = @loginName",
@@ -45,9 +46,9 @@ namespace SFC.AdminApi.Features.SearchableDashboard
             alertsCount = searchableDashboardEntry.AlertsCount });
     }
 
-    public SearchableDashboardResult Search(SearchableDashboardQueryModel query)
+    public async Task<SearchableDashboardResult> Search(SearchableDashboardQueryModel query)
     {
-      return new SearchableDashboardResult(_connection.Query<SearchableDashboardEntry>(
+      return new SearchableDashboardResult(await _connection.QueryAsync<SearchableDashboardEntry>(
         @"select id, loginName, alertsCount  
           from SearchableDashboard.SearchableDashboard
           where alertsCount between @alertsMin and @alertsMax

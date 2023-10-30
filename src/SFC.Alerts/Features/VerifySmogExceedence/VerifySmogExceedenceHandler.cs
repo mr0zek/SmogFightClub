@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Alerts.Features.VerifySmogExceedence
@@ -20,12 +21,12 @@ namespace SFC.Alerts.Features.VerifySmogExceedence
       _eventBus = eventBus;
     }
 
-    public void Handle(AcceptableLevelExceededEvent @event)
+    public async Task Handle(AcceptableLevelExceededEvent @event, CancellationToken cancellationToken)
     {
-      IEnumerable<Alert> alert = _alertRepository.GetByZipCode(@event.ZipCode);
+      IEnumerable<Alert> alert = await _alertRepository.GetByZipCode(@event.ZipCode);
       foreach (var item in alert)
       {
-        _eventBus.Publish(new SmogAlertEvent(item.LoginName, @event.ZipCode));
+        await _eventBus.Publish(new SmogAlertEvent(item.LoginName, @event.ZipCode));
       }
     }
   }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
@@ -28,9 +29,9 @@ namespace SFC.UserApi.Features.User
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
-    public IActionResult Post([FromBody] PostUserModel model)
+    public async Task<IActionResult> Post([FromBody] PostUserModel model)
     {
-      _commandBus.Send(new SetNotificationEmailCommand(model.Email, _identityProvider.GetLoginName()));
+      await _commandBus.Send(new SetNotificationEmailCommand(model.Email, _identityProvider.GetLoginName()));
 
       return Ok();
     }

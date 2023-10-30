@@ -4,6 +4,8 @@ using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using SFC.Sensors.Features.RegisterSensor.Contract;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Sensors.Features.RegisterSensor
 {
@@ -16,13 +18,13 @@ namespace SFC.Sensors.Features.RegisterSensor
       _sensorRepository = sensorRepository;
     }
 
-    public void Handle(RegisterSensorCommand command)
+    public async Task Handle(RegisterSensorCommand command, CancellationToken cancellationToken)
     {
-      if(_sensorRepository.Exits(command.SensorId))
+      if(await _sensorRepository.Exits(command.SensorId))
       {
         throw new SensorAlreadyExistsException(command.SensorId);
       }
-      _sensorRepository.Add(command.SensorId, command.ZipCode, command.LoginName);
+      await _sensorRepository.Add(command.SensorId, command.ZipCode, command.LoginName);
     }
   }
 }

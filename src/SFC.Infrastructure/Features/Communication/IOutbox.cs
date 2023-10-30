@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Communication
 {
   interface IOutbox
   {
-    void Add(EventData eventData);
-    IEnumerable<EventData> Get(int lastProcessedId, int count);
+    Task Add(EventData eventData);
+    Task<IEnumerable<EventData>> Get(int lastProcessedId, int count);
   }
 }

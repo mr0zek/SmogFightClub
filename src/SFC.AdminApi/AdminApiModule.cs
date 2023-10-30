@@ -11,7 +11,7 @@ using SFC.Sensors;
 
 namespace SFC.AdminApi
 {
-  [ModuleDefinition("Api")]
+    [ModuleDefinition("Api")]
   public class AdminApiModule : Module, IHaveWorker, IModule
   {
     IEventAsyncProcessor _eventAsyncProcessor;

@@ -1,9 +1,10 @@
 ﻿using SFC.SharedKernel;
+using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.SetNotificationEmail
 {
   internal interface IEmailWriteRepository
   {
-    void Set(LoginName loginName, Email email);
+    Task Set(LoginName loginName, Email email);
   }
 }

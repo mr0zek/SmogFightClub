@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
+using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Communication
 {
@@ -14,14 +15,14 @@ namespace SFC.Infrastructure.Features.Communication
       _outbox = outbox;
     }
 
-    public void Publish<T>(T @event) where T : IEvent
+    public async Task Publish<T>(T @event) where T : IEvent
     {
       var data = JsonConvert.SerializeObject(
         @event, 
         new ZipCodeJsonConverter(), 
         new LoginNameJsonConverter());
       var type = typeof(T).AssemblyQualifiedName;
-      _outbox.Add(new EventData() { Data = data, Type = type });
+      await _outbox.Add(new EventData() { Data = data, Type = type });
     }
   }
 }

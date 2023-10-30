@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure;
@@ -28,11 +29,11 @@ namespace SFC.SensorApi.Features.RegisterMeasurement
     [EntryPointFor("Sensor", CallerType.ExternalSystem, CallType.Command)]
     [AllowAnonymous]
     [HttpPost("sensors/{sensorId}/measurements")]
-    public IActionResult Post([FromRoute] Guid sensorId, [FromBody] PostMeasurementModel model)
+    public async Task<IActionResult> Post([FromRoute] Guid sensorId, [FromBody] PostMeasurementModel model)
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new RegisterMeasurementCommand()
+      await _commandBus.Send(new RegisterMeasurementCommand()
       {
         SensorId = sensorId,
         Date = _dateTimeProvider.Now(),

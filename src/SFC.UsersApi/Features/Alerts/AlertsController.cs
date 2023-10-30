@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Alerts.Features.CreateAlert.Contract;
@@ -29,11 +30,11 @@ namespace SFC.UserApi.Features.Alerts
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
-    public IActionResult Post(PostAlertModel model)
+    public async Task<IActionResult> Post(PostAlertModel model)
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new CreateAlertCommand()
+      await _commandBus.Send(new CreateAlertCommand()
       {
         Id = id,
         LoginName = _identityProvider.GetLoginName(),
@@ -45,16 +46,16 @@ namespace SFC.UserApi.Features.Alerts
 
     [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-      return Json(_query.Query(new GetAllAlertsRequest(_identityProvider.GetLoginName())));
+      return Json(await _query.Send(new GetAllAlertsRequest(_identityProvider.GetLoginName())));
     }
 
     [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet("{id}")]
-    public IActionResult Get([FromRoute]Guid id)
+    public async Task<IActionResult> Get([FromRoute]Guid id)
     {
-      return Json(_query.Query(new GetAlertRequest(id, _identityProvider.GetLoginName())));
+      return Json(await _query.Send(new GetAlertRequest(id, _identityProvider.GetLoginName())));
     }
   }
 }

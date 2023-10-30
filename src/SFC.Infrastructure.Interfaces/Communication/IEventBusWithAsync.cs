@@ -2,6 +2,6 @@
 {
   public interface IEventBusWithAsync 
   {
-    void Publish<T>(T @event) where T : IEvent;
+    Task Publish<T>(T @event) where T : IEvent;
   }
 }

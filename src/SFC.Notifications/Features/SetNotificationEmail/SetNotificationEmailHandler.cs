@@ -1,6 +1,8 @@
 ﻿using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.SetNotificationEmail
 {
@@ -13,9 +15,9 @@ namespace SFC.Notifications.Features.SetNotificationEmail
       _emailRepository = emailRepository;
     }
 
-    public void Handle(SetNotificationEmailCommand command)
+    public async Task Handle(SetNotificationEmailCommand command, CancellationToken cancellationToken)
     {
-      _emailRepository.Set(command.LoginName, command.Email);
+      await _emailRepository.Set(command.LoginName, command.Email);
     }
 
     

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Alerts.Features.CreateAlert.Contract;
 using SFC.Infrastructure;
@@ -18,19 +20,19 @@ namespace SFC.AdminApi.Features.SearchableDashboard
       _searchableDashboardPerspective = searchableDashboardPerspective;
     }
 
-    public void Handle(AccountCreatedEvent @event)
+    public async Task Handle(AccountCreatedEvent @event, CancellationToken cancellationToken)
     {
-      _searchableDashboardPerspective.Add(new SearchableDashboardEntry
+      await _searchableDashboardPerspective.Add(new SearchableDashboardEntry
       {
         LoginName = @event.LoginName
       });
     }
 
-    public void Handle(AlertCreatedEvent @event)
+    public async Task Handle(AlertCreatedEvent @event, CancellationToken cancellationToken)
     {
-      var result = _searchableDashboardPerspective.Get(@event.LoginName);
+      var result = await _searchableDashboardPerspective.Get(@event.LoginName);
       result.AlertsCount++;
-      _searchableDashboardPerspective.Update(result);
+      await _searchableDashboardPerspective.Update(result);
     }
   }
 }

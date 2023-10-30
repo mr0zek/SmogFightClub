@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
@@ -21,9 +22,9 @@ namespace SFC.AdminApi.Features.SearchableDashboard
 
     [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public ActionResult<SearchableDashboardResult> Get([FromQuery]SearchableDashboardQueryModel query)
+    public async Task<ActionResult<SearchableDashboardResult>> Get([FromQuery]SearchableDashboardQueryModel query)
     {
-      return _searchableDashboardPerspective.Search(query);
+      return await _searchableDashboardPerspective.Search(query);
     }
   }
 }

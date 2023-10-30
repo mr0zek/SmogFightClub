@@ -1,11 +1,12 @@
 ﻿using SFC.SharedKernel;
 using System;
+using System.Threading.Tasks;
 
 namespace SFC.Sensors.Features.RegisterSensor
 {
   internal interface ISensorRepository
   {
-    void Add(Guid sensorId, ZipCode zipCode, LoginName loginName);
-    bool Exits(Guid sensorId);
+    Task Add(Guid sensorId, ZipCode zipCode, LoginName loginName);
+    Task<bool> Exits(Guid sensorId);
   }
 }

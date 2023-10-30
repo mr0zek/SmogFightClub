@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.GetSendNotificationsCount
@@ -24,11 +25,12 @@ namespace SFC.Notifications.Features.GetSendNotificationsCount
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public GetSendNotificationsCountResponse HandleQuery(GetSendNotificationsCountRequest request)
+    public async Task<GetSendNotificationsCountResponse> Handle(
+      GetSendNotificationsCountRequest request, CancellationToken cancellationToken)
     {
-      return new GetSendNotificationsCountResponse(_connection.Query<dynamic>(
+      return new GetSendNotificationsCountResponse((await _connection.QueryAsync<dynamic>(
         @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType group by loginName",
-        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType }).Select(f => new GetSendNotificationsCountResponse.SendNotificaton()
+        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType })).Select(f => new GetSendNotificationsCountResponse.SendNotificaton()
         {
           LoginName = f.loginName,
           Count = f.count

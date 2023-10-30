@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 using SFC.Accounts.Features.SearchAccount;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.GetSendNotificationsCount.Contract;
@@ -16,15 +17,15 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
       _query = notificationPerspective;
     }
 
-    public DashboardResponse Search(AlertNotificationsWithUserRequest query)
+    public async Task<DashboardResponse> Search(AlertNotificationsWithUserRequest query)
     {
-      var results = _query.Query(new SearchAccountRequest()
+      var results = await _query.Send(new SearchAccountRequest()
       {
         Skip = query.Skip,
         Take = query.Take
       });
 
-      var counts = _query.Query(new GetSendNotificationsCountRequest()
+      var counts = await _query.Send(new GetSendNotificationsCountRequest()
       {
         NotificationType = "SmogAlert",
         LoginNames = results.Accounts.Select(f => f.LoginName).ToArray()

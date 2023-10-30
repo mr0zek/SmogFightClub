@@ -1,8 +1,10 @@
-﻿namespace SFC.Infrastructure.Features.Communication
+﻿using System.Threading.Tasks;
+
+namespace SFC.Infrastructure.Features.Communication
 {
   interface IInbox
   {
-    int GetLastProcessedId(string module);
-    void SetProcessed(int id, string module);
+    Task<int> GetLastProcessedId(string module);
+    Task SetProcessed(int id, string module);
   }
 }

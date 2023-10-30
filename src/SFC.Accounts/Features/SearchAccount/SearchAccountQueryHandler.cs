@@ -5,6 +5,8 @@ using SFC.Infrastructure.Interfaces.Communication;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Accounts.Features.SearchAccount
 {
@@ -17,9 +19,9 @@ namespace SFC.Accounts.Features.SearchAccount
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public SearchAccountResponse HandleQuery(SearchAccountRequest query)
+    public async Task<SearchAccountResponse> Handle(SearchAccountRequest query, CancellationToken cancellationToken)
     {
-      return new SearchAccountResponse(_connection.Query<SearchAccountResponse.Account>(
+      return new SearchAccountResponse(await _connection.QueryAsync<SearchAccountResponse.Account>(
         @"select id, loginName 
           from Accounts.Accounts 
           order by id 

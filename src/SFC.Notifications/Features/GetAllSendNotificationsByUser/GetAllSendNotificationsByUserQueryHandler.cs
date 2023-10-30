@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.GetAllSendNotificationsByUser
 {
@@ -19,11 +21,13 @@ namespace SFC.Notifications.Features.GetAllSendNotificationsByUser
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public GetAllSendNotificationsByUserResponse HandleQuery(GetAllSendNotificationsByUserRequest query)
+    public async Task<GetAllSendNotificationsByUserResponse> Handle(
+      GetAllSendNotificationsByUserRequest query,
+      CancellationToken cancellationToken)
     {
-      return new GetAllSendNotificationsByUserResponse(_connection.Query<dynamic>(
+      return new GetAllSendNotificationsByUserResponse((await _connection.QueryAsync<dynamic>(
         @"select loginName, count(*) as count from Notifications.Notifications group by loginName order by loginName offset @top rows fetch next @take rows only",
-        new { top = query.Skip, take = query.Take }).Select(f => new GetAllSendNotificationsByUserResponse.SendNotification()
+        new { top = query.Skip, take = query.Take })).Select(f => new GetAllSendNotificationsByUserResponse.SendNotification()
         {
           LoginName = f.loginName,
           Count = f.count

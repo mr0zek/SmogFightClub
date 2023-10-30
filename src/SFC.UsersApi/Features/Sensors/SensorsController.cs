@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
@@ -29,11 +30,11 @@ namespace SFC.UserApi.Features.Sensors
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
-    public IActionResult Post([FromBody]PostSensorModel model)
+    public async Task<IActionResult> Post([FromBody]PostSensorModel model)
     {
       Guid id = Guid.NewGuid();
 
-      _commandBus.Send(new RegisterSensorCommand()
+      await _commandBus.Send(new RegisterSensorCommand()
       {
         SensorId = id,
         LoginName = _identityProvider.GetLoginName(),
@@ -45,16 +46,16 @@ namespace SFC.UserApi.Features.Sensors
 
     [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-      return Json(_query.Query(new GetAllSensorsRequest(_identityProvider.GetLoginName())));
+      return Json(await _query.Send(new GetAllSensorsRequest(_identityProvider.GetLoginName())));
     }
 
     [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet("{id}")]
-    public IActionResult Get(string id)
+    public async Task<IActionResult> Get(string id)
     {
-      return Json(_query.Query(new GetSensorRequest(new Guid(id), _identityProvider.GetLoginName())));
+      return Json(await _query.Send(new GetSensorRequest(new Guid(id), _identityProvider.GetLoginName())));
     }
   }
 }
