@@ -3,6 +3,7 @@ using FluentValidation;
 using Hangfire;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.AspNetCore.Builder;
 using SFC.Infrastructure.Features.Communication;
 using SFC.Infrastructure.Features.Communication.AsyncEventProcessing;
 using SFC.Infrastructure.Features.Database;
@@ -20,8 +21,17 @@ using System.Reflection;
 namespace SFC.Infrastructure
 {
   [ModuleDefinition("Infastructure")]
-  public class InfrastructureModule : IHaveAutofacRegistrations, IModule
-    {    
+  public class InfrastructureModule : IHaveAutofacRegistrations, IModule, IHaveAspConfiguration
+  {
+    public void Configure(WebApplicationBuilder builder)
+    {
+    }
+
+    public void Configure(WebApplication app)
+    {
+      app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
+    }
+
     public void RegisterTypes(ContainerBuilder builder)
     {
       RegisterMediator(builder);
@@ -41,11 +51,11 @@ namespace SFC.Infrastructure
       builder.RegisterType<OutboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<InboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<EventProcessor>().AsImplementedInterfaces();
-      builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();            
+      builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(TraceHandlerBehavior<,>)).AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(ValidationBehavior<,>)).AsImplementedInterfaces();
-      builder.RegisterType<ExceptionHandlingMiddleware>().AsImplementedInterfaces();
-      builder.RegisterType<ExceptionHandlingMiddleware>().AsImplementedInterfaces();
+      builder.RegisterType<ValidationExceptionHandlingMiddleware>().AsImplementedInterfaces();
+      builder.RegisterType<ValidationExceptionHandlingMiddleware>().AsImplementedInterfaces();
       builder.RegisterGenericDecorator(typeof(NotificationPipelineDecorator<>), typeof(INotificationHandler<>));
       builder.RegisterGeneric(typeof(TraceEventHandlerBehavior<>)).AsImplementedInterfaces();
     }

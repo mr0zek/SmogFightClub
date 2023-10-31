@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace SFC.Infrastructure.Features.TimeDependency
 {
@@ -21,16 +23,19 @@ namespace SFC.Infrastructure.Features.TimeDependency
       _dateTimeProvider = dateTimeProvider;
     }
 
-    public async Task Run(Type type)
+    public void Run(Type type)
     {
       CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+      using(var ts = new TransactionScope())
       using (var scope = _container.BeginLifetimeScope())
       {
-        var handler = (IEventHandler<TimeEvent>)scope.Resolve(type);
+        var handler = (INotificationHandler<TimeEvent>)scope.Resolve(type);
 
         TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());
 
-        await handler.Handle(@event, cancellationTokenSource.Token);               
+        handler.Handle(@event, cancellationTokenSource.Token).Wait(cancellationTokenSource.Token);               
+
+        ts.Complete();
       }
     }
   }

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Validation
 {
-  internal sealed class ExceptionHandlingMiddleware : IMiddleware
+  internal sealed class ValidationExceptionHandlingMiddleware : IMiddleware
   {
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
+    private readonly ILogger<ValidationExceptionHandlingMiddleware> _logger;
+    public ValidationExceptionHandlingMiddleware(ILogger<ValidationExceptionHandlingMiddleware> logger) => _logger = logger;
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
       try

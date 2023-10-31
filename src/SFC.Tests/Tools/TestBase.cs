@@ -5,6 +5,7 @@ using SFC.Accounts;
 using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.AuthenticationApi;
+using SFC.GiosGateway;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Interfaces.Modules;
@@ -58,7 +59,8 @@ namespace SFC.Tests.Tools
           new AlertsModule(),
           new ProcessesModule(),
           new NotificationsModule(),
-          new InfrastructureModule()
+          new InfrastructureModule(),
+          new GiosGatewayModule()
         },
         builder =>
         {

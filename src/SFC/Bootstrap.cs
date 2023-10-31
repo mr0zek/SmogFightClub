@@ -66,6 +66,9 @@ namespace SFC
         .UseRecommendedSerializerSettings()
         .UseSqlServerStorage(connectionString)
         );
+
+      
+
       builder.Services.AddHangfireServer();      
       builder.Services.AddControllers();
 
@@ -75,6 +78,11 @@ namespace SFC
       foreach (var m in _modules)
       {
         mvc.AddApplicationPart(m.GetType().Assembly);
+      }
+
+      foreach (var m in _modules.Where(f => f is IHaveAspConfiguration).Select(f => (IHaveAspConfiguration)f))
+      {
+        m.Configure(builder);        
       }
       mvc.AddControllersAsServices();
 
@@ -182,7 +190,12 @@ namespace SFC
 
       app.MapControllers();      
 
-      app.Start(); 
+      app.Start();
+
+      foreach (var m in _modules.Where(f => f is IHaveAspConfiguration).Select(f => (IHaveAspConfiguration)f))
+      {
+        m.Configure(app);        
+      }
 
       foreach (var module in _modules.Where(f=> f is IHaveWorker).Select(f=>(IHaveWorker)f)) 
       {

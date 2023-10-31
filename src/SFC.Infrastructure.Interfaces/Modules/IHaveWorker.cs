@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Interfaces.Modules
 {
+
   public interface IHaveWorker
   {
     void StartWorker(IComponentContext container);
