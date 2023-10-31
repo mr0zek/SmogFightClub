@@ -2,6 +2,7 @@
 using SFC.Infrastructure.Interfaces.Tracing;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SFC.Tests.UserApi
 {
@@ -16,19 +17,19 @@ namespace SFC.Tests.UserApi
       _outputPath = outputPath;
     }
 
-    public void AddModuleCall(ModuleCall trace)
+    public async Task AddModuleCall(ModuleCall trace)
     {
       Traces[trace.CorrelationId].Add(trace);
     }
 
-
-    public void BeginRequest(string correlationId)
+      
+    public async Task BeginRequest(string correlationId)
     {
       Traces.Add(correlationId, new List<ModuleCall>());
     }
 
 
-    public void EndRequest(string correlationId)
+    public async Task EndRequest(string correlationId)
     {
       
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using SFC.Accounts.Features.CreateAccount.Contract;
 using SFC.Accounts.Features.GetAccountByLoginName;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -18,11 +20,11 @@ namespace SFC.Accounts.Features.CreateAccount
       _eventBus = eventBus;
     }
 
-    public void Handle(CreateAccountCommand command)
+    public async Task Handle(CreateAccountCommand command, CancellationToken cancellationToken)
     {
-      _accountRepository.Add(command.LoginName, command.PasswordHash);
+      await _accountRepository.Add(command.LoginName, command.PasswordHash);
 
-      _eventBus.Publish(new AccountCreatedEvent(command.LoginName));
+      await _eventBus.Publish(new AccountCreatedEvent(command.LoginName), cancellationToken);
     }
   }
 }

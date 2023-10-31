@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Automatonymous;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
@@ -17,16 +19,16 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       _sagaRepository = sagaRepository;
     }
 
-    public void Handle(ConfirmUserCommandSaga command)
+    public async Task Handle(ConfirmUserCommandSaga command, CancellationToken cancellationToken)
     {
       UserRegistrationSaga saga = new(_commandBus);
-      UserRegistrationSagaData data = _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
+      UserRegistrationSagaData data = await _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
       if (data == null)
       {
         throw new InvalidOperationException();
       }
-      saga.RaiseEvent(data, saga.ConfirmUserCommand, command);
-      _sagaRepository.Save(command.ConfirmationId, data);
+      await saga.RaiseEvent(data, saga.ConfirmUserCommand, command);
+      await _sagaRepository.Save(command.ConfirmationId, data);
     }
   }
 }

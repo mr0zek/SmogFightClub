@@ -1,7 +1,9 @@
-﻿namespace SFC.AdminApi.Features.SearchableDashboard
+﻿using System.Threading.Tasks;
+
+namespace SFC.AdminApi.Features.SearchableDashboard
 {
   public interface ISearchabelDashboardPerspective
   {
-    SearchableDashboardResult Search(SearchableDashboardQueryModel query);
+    Task<SearchableDashboardResult> Search(SearchableDashboardQueryModel query);
   }
 }

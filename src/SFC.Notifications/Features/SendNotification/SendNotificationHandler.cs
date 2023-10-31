@@ -4,6 +4,8 @@ using SFC.Infrastructure.Interfaces.Smtp;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using SFC.Notifications.Features.SendNotification.Contract;
 using SFC.SharedKernel;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Notifications.Features.SendNotification
 {
@@ -16,10 +18,10 @@ namespace SFC.Notifications.Features.SendNotification
     private readonly IEventBus _eventBus;
 
     public SendNotificationHandler(
-      IEmailReadRepository emailRepository, 
-      INotificationRepository notificationRepository, 
-      ISmtpClient smtpClient, 
-      IDateTimeProvider dateTimeProvider, 
+      IEmailReadRepository emailRepository,
+      INotificationRepository notificationRepository,
+      ISmtpClient smtpClient,
+      IDateTimeProvider dateTimeProvider,
       IEventBus eventBus)
     {
       _emailRepository = emailRepository;
@@ -29,19 +31,19 @@ namespace SFC.Notifications.Features.SendNotification
       _eventBus = eventBus;
     }
 
-    public void Handle(SendNotificationCommand command)
+    public async Task Handle(SendNotificationCommand command, CancellationToken cancellationToken)
     {
-      Email email = _emailRepository.GetEmail(command.LoginName);
-	  if(email == null)
+      Email email = await _emailRepository.GetEmail(command.LoginName);
+      if (email == null)
       {
-		throw new UserNotFoundException(command.LoginName);
-	  }
-	  
-      _smtpClient.Send(email, command.Title, command.Body);
+        throw new UserNotFoundException(command.LoginName);
+      }
 
-      _notificationRepository.Add(email, command.Title, command.Body, _dateTimeProvider.Now(), command.LoginName, command.NotificationType);
+      await _smtpClient.Send(email, command.Title, command.Body);
 
-      _eventBus.Publish(new NotificationSentEvent()
+      await _notificationRepository.Add(email, command.Title, command.Body, _dateTimeProvider.Now(), command.LoginName, command.NotificationType);
+
+      await _eventBus.Publish(new NotificationSentEvent()
       {
         LoginName = command.LoginName,
         Email = email,

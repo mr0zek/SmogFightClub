@@ -8,6 +8,7 @@ using SFC.AdminApi;
 using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Features.Database;
+using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -21,43 +22,21 @@ using SFC.UserApi;
 using TestStack.BDDfy;
 using TestStack.BDDfy.Configuration;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SFC.Tests.UseStories
 {
-    public class UserStories : IClassFixture<UserStoriesFixture>, IDisposable
+    public class UserStories : TestBase, IClassFixture<UserStoriesFixture>, IDisposable
   {
-    private readonly string _url = TestHelper.GenerateUrl();
     private PostAccountModel _postAccountModel;
-    private WebApplication _app;
+
+    public UserStories(ITestOutputHelper output) : base(output)
+    {
+    }
 
     [Given]
     void GivenSystemWithNotRegisteredAccount()
     {            
-      var confBuilder = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json");
-      var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
-
-      ResetDatabase.Reset(connectionString);      
-
-      TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Module[]
-        {
-          new AdminApiModule(),
-          new SensorApiModule(),
-          new UserApiModule(),
-          new AlertsModule(),
-          new ProcessesModule(),
-          new NotificationsModule(),
-          new SensorsModule(),
-          new AccountsModule(),
-          new InfrastructureModule()
-        },
-        builder =>
-      {
-        builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-      });
-
       _postAccountModel = new PostAccountModel()
       {
         LoginName = Guid.NewGuid().ToString(),
@@ -67,11 +46,6 @@ namespace SFC.Tests.UseStories
       };
     }
 
-    public void Dispose()
-    {
-      Bootstrap.Stop(_app);
-    }
-
     async void WhenUserPostRegistrationForm()
     {
       await RestClient.For<IApi>(_url).PostAccount(_postAccountModel);
@@ -79,6 +53,7 @@ namespace SFC.Tests.UseStories
 
     void ThenSystemSendsConfirmationEmail()
     {
+      _eventProcessorStatus.WaitIlde();
       Assert.Single(TestSmtpClient.SentEmails);
     }
 

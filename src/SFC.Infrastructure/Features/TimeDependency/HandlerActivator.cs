@@ -5,6 +5,7 @@ using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.TimeDependency
@@ -22,48 +23,14 @@ namespace SFC.Infrastructure.Features.TimeDependency
 
     public async Task Run(Type type)
     {
+      CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
       using (var scope = _container.BeginLifetimeScope())
       {
-        IEnumerable<IEventHandlerAction<TimeEvent>> actions 
-          = (IEnumerable<IEventHandlerAction<TimeEvent>>)scope.Resolve(typeof(IEnumerable<IEventHandlerAction<TimeEvent>>));
-
-        TimeEventExecutionContext<TimeEvent> executionContext = scope.Resolve<TimeEventExecutionContext<TimeEvent>>();
-        executionContext.Handler = (IEventHandler<TimeEvent>)scope.Resolve(type);
+        var handler = (IEventHandler<TimeEvent>)scope.Resolve(type);
 
         TimeEvent @event = new TimeEvent(_dateTimeProvider.Now());
 
-        foreach (var action in actions)
-        {
-          try
-          {
-            action.BeforeHandle(executionContext);
-          }
-          catch (Exception ex)
-          {
-            Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
-          }
-        }
-
-        try
-        {
-          executionContext.Handler.Handle(@event);
-        }
-        catch (Exception ex)
-        {
-          executionContext.Exception = ex;
-        }
-
-        foreach (var action in actions)
-        {
-          try
-          {
-            action.AfterHandle(executionContext);
-          }
-          catch (Exception ex)
-          {
-            Log.Error(ex, "Exception while processing AfterHandle of action : {action}", action.GetType().Name);
-          }
-        }
+        await handler.Handle(@event, cancellationTokenSource.Token);               
       }
     }
   }

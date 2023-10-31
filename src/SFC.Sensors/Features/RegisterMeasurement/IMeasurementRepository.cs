@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using SFC.Sensors.Features.RegisterMeasurement.Contract;
 using SFC.SharedKernel;
 using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasurementCommand;
@@ -6,8 +7,8 @@ using static SFC.Sensors.Features.RegisterMeasurement.Contract.RegisterMeasureme
 namespace SFC.Sensors.Features.RegisterMeasurement
 {
 
-    internal interface IMeasurementRepository
+  internal interface IMeasurementRepository
   {
-    void Add(Guid sensorId, DateTime date, PolutionType polutionType, decimal value);
-  }  
+    Task Add(Guid sensorId, DateTime date, PolutionType polutionType, decimal value);
+  }
 }

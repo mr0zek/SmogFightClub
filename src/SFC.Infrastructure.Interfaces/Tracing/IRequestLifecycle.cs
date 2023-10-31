@@ -2,9 +2,9 @@
 {
   public interface IRequestLifecycle
   {
-    void BeginRequest(string correlationId);
-    void EndRequest(string correlationId);
+    Task BeginRequest(string correlationId);
+    Task EndRequest(string correlationId);
 
-    void AddModuleCall(ModuleCall trace);
+    Task AddModuleCall(ModuleCall trace);
   }
 }

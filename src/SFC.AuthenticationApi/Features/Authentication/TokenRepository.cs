@@ -24,9 +24,9 @@ namespace SFC.AuthenticationApi.Features.Authentication
     }
 
 
-    public string? Authenticate(CredentialsModel credentials)
+    public async Task<string?> Authenticate(CredentialsModel credentials)
     {
-      if (!_accountQuery.Query(new AuthenticateRequest(credentials.LoginName,PasswordHash.FromPassword(credentials.Password))).Success)      
+      if (!(await _accountQuery.Send(new AuthenticateRequest(credentials.LoginName,PasswordHash.FromPassword(credentials.Password)))).Success)      
       {
         return null;
       }

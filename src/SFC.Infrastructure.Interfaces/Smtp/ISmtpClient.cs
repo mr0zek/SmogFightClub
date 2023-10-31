@@ -6,6 +6,6 @@ namespace SFC.Infrastructure.Interfaces.Smtp
   public interface ISmtpClient
   {
     [ExitPointTo("SmtpProvider", CallType.Command)]
-    void Send(Email email, string title, string body);
+    Task Send(Email email, string title, string body);
   }
 }

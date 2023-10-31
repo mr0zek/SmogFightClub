@@ -12,7 +12,7 @@ using SFC.SharedKernel;
 
 namespace SFC.Processes.Features.UserRegistrationSaga
 {
-    public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
+  public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
     public Event<ConfirmUserCommandSaga> ConfirmUserCommand { get; set; }
@@ -49,7 +49,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
 
     private void CreateUserAccount(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new CreateAccountCommand(context.Instance.LoginName,new PasswordHash(context.Instance.PasswordHash)));
+      _commandBus.Send(new CreateAccountCommand(context.Instance.LoginName, new PasswordHash(context.Instance.PasswordHash))).Wait();
     }
 
     private void RegisterAlert(BehaviorContext<UserRegistrationSagaData> context)
@@ -59,7 +59,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
         Id = Guid.NewGuid(),
         LoginName = context.Instance.LoginName,
         ZipCode = context.Instance.ZipCode
-      }); 
+      }).Wait();
     }
 
     private void SaveNotificationEmail(BehaviorContext<UserRegistrationSagaData> context)
@@ -67,7 +67,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       _commandBus.Send(new SetNotificationEmailCommand(
         context.Instance.Email,
         context.Instance.LoginName
-      ));
+      )).Wait();
     }
 
     private void SendRegistrationNotification(BehaviorContext<UserRegistrationSagaData> context)
@@ -78,7 +78,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
         Body = $"<a href=\"{context.Instance.BaseUrl}/Confirmation/{context.Instance.Id}\">Click her to confirm</a>",
         Title = "Registration confirmation",
         NotificationType = "RegistrationConfirmation"
-      });
+      }).Wait();
     }
   }
 }

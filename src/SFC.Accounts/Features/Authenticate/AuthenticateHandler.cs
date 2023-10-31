@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Accounts.Features.Authenticate
@@ -16,9 +17,9 @@ namespace SFC.Accounts.Features.Authenticate
       _authenticationRepository = authenticationRepository;
     }
 
-    public AuthenticateResponse HandleQuery(AuthenticateRequest query)
+    public async Task<AuthenticateResponse> Handle(AuthenticateRequest query, CancellationToken cancellationToken)
     {
-      return new AuthenticateResponse(_authenticationRepository.Authenticate(query.LoginName, query.PasswordHash));
-    }
+      return new AuthenticateResponse(await _authenticationRepository.Authenticate(query.LoginName, query.PasswordHash));
+    }    
   }
 }

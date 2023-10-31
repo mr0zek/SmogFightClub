@@ -28,9 +28,9 @@ namespace SFC.AdminApi.Features.SendNotificationsByUser
 
     [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public ActionResult<GetAllSendNotificationsByUserResponse> Get([FromQuery] SendNotificationsByUserModel query)
+    public async Task<ActionResult<GetAllSendNotificationsByUserResponse>> Get([FromQuery] SendNotificationsByUserModel query)
     {
-      return _query.Query(new GetAllSendNotificationsByUserRequest(query.Skip, query.Take));
+      return await _query.Send(new GetAllSendNotificationsByUserRequest(query.Skip, query.Take));
     }
   }
 }

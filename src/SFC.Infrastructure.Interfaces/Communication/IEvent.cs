@@ -1,6 +1,8 @@
-﻿namespace SFC.Infrastructure.Interfaces.Communication
+﻿using MediatR;
+
+namespace SFC.Infrastructure.Interfaces.Communication
 {
-    public interface IEvent
+    public interface IEvent : INotification
     {
     }
 }

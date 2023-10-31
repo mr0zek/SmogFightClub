@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces.Documentation;
@@ -20,9 +21,9 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
 
     [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
-    public ActionResult<DashboardResponse> Get([FromQuery] AlertNotificationsWithUserRequest query)
+    public async Task<ActionResult<DashboardResponse>> Get([FromQuery] AlertNotificationsWithUserRequest query)
     {
-      return _dashboardPerspective.Search(query);
+      return await _dashboardPerspective.Search(query);
     }
   }
 }

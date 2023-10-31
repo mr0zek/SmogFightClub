@@ -1,8 +1,9 @@
-﻿namespace SFC.Infrastructure.Interfaces.Communication
+﻿using MediatR;
+
+namespace SFC.Infrastructure.Interfaces.Communication
 {
-  public interface ICommandHandler<T>
+  public interface ICommandHandler<T> : IRequestHandler<T>
     where T : ICommand
-  {
-    void Handle(T command);
+  {    
   }
 }

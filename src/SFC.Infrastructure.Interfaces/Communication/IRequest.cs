@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace SFC.Infrastructure.Interfaces.Communication
 {
 
-    public interface IRequest<TResponse> where TResponse : IResponse
+    public interface IRequest<TResponse> : MediatR.IRequest<TResponse> 
+      where TResponse : IResponse
     {
     }
 }

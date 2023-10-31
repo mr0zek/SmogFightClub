@@ -5,6 +5,8 @@ using SFC.SharedKernel;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Accounts.Features.GetAccountByLoginName
 {
@@ -17,9 +19,9 @@ namespace SFC.Accounts.Features.GetAccountByLoginName
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public GetAccountByLoginNameResponse HandleQuery(GetAccountByLoginNameRequest query)
+    public async Task<GetAccountByLoginNameResponse> Handle(GetAccountByLoginNameRequest query, CancellationToken cancellationToken)
     {
-      return _connection.QueryFirstOrDefault<GetAccountByLoginNameResponse>("select id, loginName from Accounts.Accounts where loginName = @loginName", new { loginName = query.LoginName.ToString() });
+      return await _connection.QueryFirstOrDefaultAsync<GetAccountByLoginNameResponse>("select id, loginName from Accounts.Accounts where loginName = @loginName", new { loginName = query.LoginName.ToString() });
     }
   }
 }

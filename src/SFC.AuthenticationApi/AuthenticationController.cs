@@ -21,9 +21,9 @@ namespace SFC.AuthenticationApi
     [EntryPointFor("Admin", CallerType.Human, CallType.Command)]
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult Login(CredentialsModel usersdata)
+    public async Task<IActionResult> Login(CredentialsModel usersdata)
     {
-      var token = _tokenRepository.Authenticate(usersdata);
+      var token = await _tokenRepository.Authenticate(usersdata);
 
       if (token == null)
       {

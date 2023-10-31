@@ -1,11 +1,12 @@
 ﻿using SFC.SharedKernel;
 using System;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.UserRegistration
 {
   internal interface IAccountRepository
   {
-    void Add(Account account);
-    Account Get(Guid id);
+    Task Add(Account account);
+    Task<Account> Get(Guid id);
   }
 }

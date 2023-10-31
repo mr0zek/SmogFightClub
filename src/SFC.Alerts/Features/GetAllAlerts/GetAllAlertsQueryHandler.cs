@@ -4,6 +4,8 @@ using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Alerts.Features.GetAllAlerts
 {
@@ -16,9 +18,9 @@ namespace SFC.Alerts.Features.GetAllAlerts
             _connection = new SqlConnection(connectionString.ToString());
         }
 
-        public GetAllAlertsResponse HandleQuery(GetAllAlertsRequest query)
+        public async Task<GetAllAlertsResponse> Handle(GetAllAlertsRequest query, CancellationToken cancellationToken)
         {
-            return new GetAllAlertsResponse(_connection.Query<AlertResponse>(
+            return new GetAllAlertsResponse(await _connection.QueryAsync<AlertResponse>(
               "select id, ZipCode from Alerts.Alerts where loginName = @loginName", new { loginName = query.LoginName.ToString() }));
 
         }

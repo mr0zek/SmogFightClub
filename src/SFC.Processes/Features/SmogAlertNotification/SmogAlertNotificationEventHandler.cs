@@ -2,6 +2,8 @@
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Notifications.Features.SendNotification.Contract;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.SmogAlertNotification
 {
@@ -14,9 +16,9 @@ namespace SFC.Processes.Features.SmogAlertNotification
       _commandBus = commandBus;
     }
 
-    public void Handle(SmogAlertEvent @event)
+    public async Task Handle(SmogAlertEvent @event, CancellationToken token)
     {
-      _commandBus.Send(new SendNotificationCommand()
+      await _commandBus.Send(new SendNotificationCommand()
       {
         Title = "Smog alert",
         Body = $"Smog appears in your area, zip code: {@event.ZipCode}",

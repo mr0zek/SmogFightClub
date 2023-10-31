@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -24,13 +25,13 @@ namespace SFC.UserApi.Features.Accounts
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
-    public IActionResult PostAccount([FromBody]PostAccountModel model)
+    public async Task<IActionResult> PostAccount([FromBody]PostAccountModel model)
     {
       Guid id = Guid.NewGuid();
 
       try
       {
-        _commandBus.Send(new RegisterUserCommand()
+        await _commandBus.Send(new RegisterUserCommand()
         {
           Id = id,
           BaseUrl = Request.BaseUrl(),
@@ -52,11 +53,11 @@ namespace SFC.UserApi.Features.Accounts
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost("{id}/confirmation")]
-    public IActionResult PostConfirmation([FromRoute]Guid id)
+    public async Task<IActionResult> PostConfirmation([FromRoute]Guid id)
     {
       try
       {
-        _commandBus.Send(new ConfirmUserCommand()
+        await _commandBus.Send(new ConfirmUserCommand()
         {
           ConfirmationId = id
         });

@@ -6,13 +6,31 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
 
 namespace SFC.AdminApi
 {
-  [ModuleDefinition("Api")]
-  public class AdminApiModule : Module
+    [ModuleDefinition("Api")]
+  public class AdminApiModule : Module, IHaveWorker, IModule
   {
+    IEventAsyncProcessor _eventAsyncProcessor;
+    public void StartWorker(IComponentContext container)
+    {
+      _eventAsyncProcessor = container.Resolve<IEventAsyncProcessor>();
+      _eventAsyncProcessor.Start("AdminApi");
+    }
+
+    public void StopWorker()
+    {
+      _eventAsyncProcessor?.Stop();
+    }
+
+    public void WaitForShutdown()
+    {
+      _eventAsyncProcessor.WaitForShutdown();
+    }
+
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<DashboardPerspective>().AsImplementedInterfaces();
@@ -30,6 +48,7 @@ namespace SFC.AdminApi
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(IValidator<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();
+
     }
   }
 }

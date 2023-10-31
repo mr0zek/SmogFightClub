@@ -7,7 +7,7 @@ namespace SFC.SharedKernel
   {
     private readonly string _value;
 
-    private ZipCode(string value)
+    public ZipCode(string value)
     {
       _value = value ?? throw new ArgumentNullException(nameof(value));
     }

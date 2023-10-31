@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
 using SFC.Sensors.Features.RegisterMeasurement;
@@ -17,20 +18,20 @@ namespace SFC.Sensors.Infrastructure
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public void Add(Guid sensorId, ZipCode zipCode, LoginName loginName)
+    public async Task Add(Guid sensorId, ZipCode zipCode, LoginName loginName)
     {
-      _connection.Execute("insert into Sensors.Sensors(id, ZipCode, LoginName)values(@id, @zipCode, @loginName)",
+      await _connection.ExecuteAsync("insert into Sensors.Sensors(id, ZipCode, LoginName)values(@id, @zipCode, @loginName)",
         new { Id = sensorId, zipCode = zipCode.ToString(), loginName = loginName.ToString() });
     }
 
-    public bool Exits(Guid sensorId)
+    public async Task<bool> Exits(Guid sensorId)
     {
-      return _connection.QueryFirst<int>("select count(*) from Sensors.Sensors where id = @sensorId", new { sensorId }) != 0;
+      return (await _connection.QueryFirstAsync<int>("select count(*) from Sensors.Sensors where id = @sensorId", new { sensorId })) != 0;
     }
 
-    public Sensor Get(Guid sensorId)
+    public async Task<Sensor> Get(Guid sensorId)
     {
-      return _connection.QueryFirst<Sensor>("select id, zipCode from Sensors.Sensors where id = @sensorId", new { sensorId });
+      return await _connection.QueryFirstAsync<Sensor>("select id, zipCode from Sensors.Sensors where id = @sensorId", new { sensorId });
     }
   }
 }

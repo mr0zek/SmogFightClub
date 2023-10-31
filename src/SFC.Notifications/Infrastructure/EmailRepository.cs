@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
 using SFC.Infrastructure.Interfaces;
 using SFC.Notifications.Features.SendNotification;
@@ -16,26 +17,26 @@ namespace SFC.Notifications.Infrastructure
     {
       _connection = new SqlConnection(connectionString.ToString());
     }
-    public void Set(LoginName loginName, Email email)
+    public async Task Set(LoginName loginName, Email email)
     {
-      if (GetEmail(loginName) != null)
+      if (await GetEmail(loginName) != null)
       {
-        _connection.Execute(
+        await _connection.ExecuteAsync(
           @"update Notifications.Emails set email = @email where loginName = loginName",
           new { loginName = loginName.ToString(), email = email.ToString() });
       }
       else
       {
-        _connection.Execute(
+        await _connection.ExecuteAsync(
           @"insert into Notifications.Emails(loginName, email)
           values(@loginName, @email)",
           new {loginName = loginName.ToString(), email = email.ToString()});
       }
     }
 
-    public Email GetEmail(LoginName loginName)
+    public async Task<Email> GetEmail(LoginName loginName)
     {
-      return _connection.QueryFirstOrDefault<string>(
+      return await _connection.QueryFirstOrDefaultAsync<string>(
         "select email from Notifications.Emails where loginName = @loginName",
         new {loginName = loginName.ToString()});
     }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
   interface ICallStack
   {
-    void StartCall(string moduleName, string callName, string type, string callingModuleName = null);
-    void FinishCall(string callName);
+    Task StartCall(string moduleName, string callName, string type, string callingModuleName = null);
+    Task FinishCall(string callName);
   }
 }

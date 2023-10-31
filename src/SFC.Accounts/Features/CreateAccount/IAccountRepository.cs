@@ -1,9 +1,10 @@
 ﻿using SFC.SharedKernel;
+using System.Threading.Tasks;
 
 namespace SFC.Accounts.Features.CreateAccount
 {
   internal interface IAccountRepository
   {
-    void Add(LoginName commandLoginName, PasswordHash passwordHash);
+    Task Add(LoginName commandLoginName, PasswordHash passwordHash);
   }
 }

@@ -2,6 +2,8 @@
 using SFC.Accounts.Features.GetAccountByLoginName;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Processes.Features.UserRegistrationSaga
 {
@@ -18,22 +20,22 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       _query = query;
     }
 
-    public void Handle(RegisterUserCommandSaga command)
+    public async Task Handle(RegisterUserCommandSaga command, CancellationToken cancellationToken)
     {
-      if (_query.Query(new GetAccountByLoginNameRequest(command.LoginName)) != null)
+      if ((await _query.Send(new GetAccountByLoginNameRequest(command.LoginName))) != null)
       {
         throw new LoginNameAlreadyUsedSagaException(command.LoginName);
       }
 
-      if (_sagaRepository.Get<UserRegistrationSagaData>(command.LoginName) != null)
+      if ((await _sagaRepository.Get<UserRegistrationSagaData>(command.LoginName)) != null)
       {
         throw new LoginNameAlreadyUsedSagaException(command.LoginName);
       }
 
       UserRegistrationSaga saga = new(_commandBus);
       UserRegistrationSagaData data = new() { Id = command.Id };
-      saga.RaiseEvent(data, saga.RegisterUserCommand, command);
-      _sagaRepository.Save(data.Id, data);
+      await saga.RaiseEvent(data, saga.RegisterUserCommand, command);
+      await _sagaRepository.Save(data.Id, data);
     }
   }
 }

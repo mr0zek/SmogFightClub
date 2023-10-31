@@ -1,9 +1,10 @@
 ﻿using SFC.SharedKernel;
+using System.Threading.Tasks;
 
 namespace SFC.Accounts.Features.Authenticate
 {
   internal interface IAuthenticationRepository
   {
-    bool Authenticate(LoginName loginName, PasswordHash hash);
+    Task<bool> Authenticate(LoginName loginName, PasswordHash hash);
   }
 }

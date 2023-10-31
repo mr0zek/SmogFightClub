@@ -3,6 +3,8 @@ using SFC.Alerts.Features.VerifySmogExceedence;
 using SFC.Alerts.Features.VerifySmogExceedence.Contract;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SFC.Alerts.Features.CreateAlert
 {
@@ -17,16 +19,16 @@ namespace SFC.Alerts.Features.CreateAlert
       _repository = repository;
     }
 
-    public void Handle(CreateAlertCommand command)
+    public async Task Handle(CreateAlertCommand command, CancellationToken cancellationToken)
     {
-      if (_repository.Exists(command.ZipCode, command.LoginName))
+      if (await _repository.Exists(command.ZipCode, command.LoginName))
       {
         throw new AlertExistsException(command.ZipCode);
       }
 
-      _repository.Add(command.Id, command.ZipCode, command.LoginName);
+      await _repository.Add(command.Id, command.ZipCode, command.LoginName);
 
-      _eventBus.Publish(new AlertCreatedEvent()
+      await _eventBus.Publish(new AlertCreatedEvent()
       {
         ZipCode = command.ZipCode,
         LoginName = command.LoginName

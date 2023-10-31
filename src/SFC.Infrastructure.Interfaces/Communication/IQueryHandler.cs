@@ -1,10 +1,11 @@
-﻿namespace SFC.Infrastructure.Interfaces.Communication
+﻿using MediatR;
+
+namespace SFC.Infrastructure.Interfaces.Communication
 {
-  public interface IQueryHandler<TRequest, TResponse>
+  public interface IQueryHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>  
   where TRequest : IRequest<TResponse>
   where TResponse : IResponse
-  {
-    TResponse HandleQuery(TRequest query);
+  {    
   }
 
 }

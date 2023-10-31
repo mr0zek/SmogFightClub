@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Alerts.Features.GetAlert
@@ -22,9 +23,9 @@ namespace SFC.Alerts.Features.GetAlert
       _connection = new SqlConnection(connectionString.ToString());
     }
 
-    public GetAlertResponse HandleQuery(GetAlertRequest query)
+    public async Task<GetAlertResponse> Handle(GetAlertRequest query, CancellationToken cancellationToken)
     {
-      return _connection.QueryFirst<GetAlertResponse>("select id,ZipCode from Alerts.Alerts where loginName = @loginName and id = @id", new { id = query.Id, loginName = query.LoginName.ToString() });
+      return await _connection.QueryFirstAsync<GetAlertResponse>("select id,ZipCode from Alerts.Alerts where loginName = @loginName and id = @id", new { id = query.Id, loginName = query.LoginName.ToString() });
     }
   }
 }
