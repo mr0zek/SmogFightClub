@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
   internal class EventProcessorStatusReporter : IEventProcessorStatusReporter
   {
     public void ReportStatus(EventProcesorStatus status)
-    {      
+    {
     }
   }
 }

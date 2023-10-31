@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
   interface IOutbox
   {

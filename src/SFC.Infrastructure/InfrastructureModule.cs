@@ -4,6 +4,7 @@ using Hangfire;
 using MediatR;
 using MediatR.Pipeline;
 using SFC.Infrastructure.Features.Communication;
+using SFC.Infrastructure.Features.Communication.AsyncEventProcessing;
 using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Features.SmtpIntegration;
 using SFC.Infrastructure.Features.TimeDependency;

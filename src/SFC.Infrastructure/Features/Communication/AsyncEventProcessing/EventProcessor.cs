@@ -3,6 +3,7 @@ using MediatR;
 using Newtonsoft.Json;
 using Serilog;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Communication.AsyncEventProcessing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
 
   class EventProcessor : IEventAsyncProcessor
@@ -58,7 +59,7 @@ namespace SFC.Infrastructure.Features.Communication
         {
           var lastProcessedId = await _inbox.GetLastProcessedId(moduleName);
           var events = await _outbox.Get(lastProcessedId, 100);
-          if(events.Any())
+          if (events.Any())
           {
             _statusReporter.ReportStatus(EventProcesorStatus.Working);
           }
@@ -69,20 +70,16 @@ namespace SFC.Infrastructure.Features.Communication
           }
           foreach (EventData e in events)
           {
-            if (token.IsCancellationRequested)
-            {
-              break;
-            }
             using (var scope = _container.BeginLifetimeScope())
-            using (TransactionScope ts = new TransactionScope())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
               await _inbox.SetProcessed(e.Id, moduleName);
 
               Type eventType = Type.GetType(e.Type);
               var @event = JsonConvert.DeserializeObject(e.Data, eventType);
 
-              await publisher.Publish(@event);              
-              
+              await publisher.Publish(@event);
+
               ts.Complete();
             }
           }

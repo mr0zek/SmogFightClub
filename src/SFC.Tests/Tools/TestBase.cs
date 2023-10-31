@@ -32,6 +32,7 @@ namespace SFC.Tests.Tools
     private ITest _testDescription;
     protected EventProcessorStatus _eventProcessorStatus;
 
+
     protected TestBase(ITestOutputHelper output)
     {
       var type = output.GetType();
@@ -72,7 +73,6 @@ namespace SFC.Tests.Tools
       Bootstrap.Stop(_app);
       foreach (var test in MyTraceRepository.Traces)
       {
-
         SequenceDiagramGenerator.Generate(test.Value.First().CallName.Replace("/", "_") + ".puml", test.Value.First().CallName, test.Value);
       }
     }

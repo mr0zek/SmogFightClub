@@ -5,13 +5,14 @@ using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
+using SFC.Infrastructure.Interfaces.Communication.AsyncEventProcessing;
 using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
 
 namespace SFC.AdminApi
 {
-  [ModuleDefinition("Api")]
+    [ModuleDefinition("Api")]
   public class AdminApiModule : IHaveAutofacRegistrations, IModule, IHaveWorker
   {
     IEventAsyncProcessor _eventAsyncProcessor;

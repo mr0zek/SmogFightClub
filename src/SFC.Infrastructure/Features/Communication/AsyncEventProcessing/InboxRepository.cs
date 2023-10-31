@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
   class InboxRepository : IInbox
   {

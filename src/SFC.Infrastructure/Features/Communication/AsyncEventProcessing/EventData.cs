@@ -1,4 +1,4 @@
-﻿namespace SFC.Infrastructure.Features.Communication
+﻿namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
   class EventData
   {

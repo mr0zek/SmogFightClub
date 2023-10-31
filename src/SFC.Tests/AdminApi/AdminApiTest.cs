@@ -59,13 +59,12 @@ namespace SFC.Tests.AdminApi
       {
         Values = { { PolutionType.PM2_5, 25 } }
       });
-
+      _eventProcessorStatus.WaitIlde();
 
       // Act
       var result = await api.GetAlertNotificationsWithUserData(1, int.MaxValue);
 
-      // Assert
-      _eventProcessorStatus.WaitIlde();
+      // Assert      
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(postAccountModel.LoginName, entry.LoginName);
@@ -89,12 +88,12 @@ namespace SFC.Tests.AdminApi
       await api.PostAccountConfirmation(confirmationId);
 
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
+      _eventProcessorStatus.WaitIlde();
 
       // Act
       var result = await api.GetSendNotificationsByUser(0, int.MaxValue);
 
-      // Assert
-      _eventProcessorStatus.WaitIlde();
+      // Assert      
       Assert.Single(result.Result);
       Assert.Equal(postAccountModel.LoginName, result.Result.First().LoginName);
       Assert.Equal(2, result.Result.First().Count);
@@ -123,13 +122,12 @@ namespace SFC.Tests.AdminApi
       {
         await api.PostAlert(new PostAlertModel() { ZipCode = Random.Shared.NextInt64(10000, 99999).ToString() });
       }
-      
+      _eventProcessorStatus.WaitIlde();
+
       // Act
       var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);
 
-      // Assert
-      _eventProcessorStatus.WaitIlde();
-
+      // Assert      
       var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);

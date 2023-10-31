@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace SFC.Alerts.DbMigrations
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing.DbMigrations
 {
   [Migration(20230331041)]
   public class M01_InboxOutboxTable : ForwardOnlyMigration
@@ -18,6 +18,6 @@ namespace SFC.Alerts.DbMigrations
         .WithColumn("Id").AsInt32().PrimaryKey().Identity()
         .WithColumn("Data").AsString().NotNullable()
         .WithColumn("Type").AsString().NotNullable();
-    }    
+    }
   }
 }

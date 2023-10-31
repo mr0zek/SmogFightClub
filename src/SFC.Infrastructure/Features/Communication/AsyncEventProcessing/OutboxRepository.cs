@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
 {
   class OutboxRepository : IOutbox
   {
@@ -18,7 +18,7 @@ namespace SFC.Infrastructure.Features.Communication
     {
       _connection = new SqlConnection(connectionString.ToString());
     }
-  
+
     public async Task Add(EventData eventData)
     {
       await _connection.ExecuteAsync("insert into dbo.Outbox(data, type)values(@data, @type)", new { data = eventData.Data, type = eventData.Type });
