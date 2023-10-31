@@ -37,7 +37,7 @@ namespace SFC.Infrastructure.Features.Communication
         .Reverse()
         .Aggregate(
           (EventHandlerDelegate) Handler, 
-          (next, pipeline) => () => pipeline.Handle(notification, next, cancellationToken))();      
+          (next, pipeline) => () => pipeline.Handle(notification, next, _notificationHandler, cancellationToken))();      
     }
   }
 }

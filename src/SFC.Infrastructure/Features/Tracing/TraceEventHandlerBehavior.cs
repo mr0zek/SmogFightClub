@@ -16,9 +16,13 @@ namespace SFC.Infrastructure.Features.Tracing
       _callStack = callStack;
     }
 
-    public async Task Handle(TEvent notification, EventHandlerDelegate next, CancellationToken cancellationToken) 
+    public async Task Handle(
+      TEvent notification, 
+      EventHandlerDelegate next, 
+      INotificationHandler<TEvent> handler, 
+      CancellationToken cancellationToken) 
     {
-      var moduleName = next.Target.GetType().Assembly.GetName().Name;
+      var moduleName = handler.GetType().Assembly.GetName().Name;
       await _callStack.StartCall(moduleName, typeof(TEvent).Name, "Event");
 
       try
@@ -27,7 +31,7 @@ namespace SFC.Infrastructure.Features.Tracing
       }
       finally
       {
-        await _callStack.FinishCall("");        
+        await _callStack.FinishCall("return");        
       }
     }    
   }

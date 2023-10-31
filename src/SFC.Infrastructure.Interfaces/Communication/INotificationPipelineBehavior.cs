@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Interfaces.Communication
@@ -7,6 +8,10 @@ namespace SFC.Infrastructure.Interfaces.Communication
 
   public interface INotificationPipelineBehavior<TEvent> where TEvent : IEvent
   {
-    Task Handle(TEvent notification, EventHandlerDelegate next, CancellationToken cancellationToken);
+    Task Handle(
+      TEvent notification,
+      EventHandlerDelegate next,
+      INotificationHandler<TEvent> handler,
+      CancellationToken cancellationToken);
   }
 }
