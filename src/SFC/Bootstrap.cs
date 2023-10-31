@@ -69,8 +69,7 @@ namespace SFC
       builder.Services.AddHangfireServer();      
       builder.Services.AddControllers();
 
-      var mvc = builder.Services.AddMvc()
-        .AddValidation()
+      var mvc = builder.Services.AddMvc()        
         .AddTracing();
 
       foreach (var m in _modules)

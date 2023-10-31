@@ -12,6 +12,7 @@ using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 using System;
 using System.Reflection;
 
@@ -39,12 +40,13 @@ namespace SFC.Infrastructure
       builder.RegisterType<OutboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<InboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<EventProcessor>().AsImplementedInterfaces();
-      builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();
-      
-      builder.RegisterAssemblyOpenGenericTypes(this.GetType().Assembly)
-        .AsSelf()
-        .AsImplementedInterfaces()
-        .InstancePerLifetimeScope();      
+      builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();            
+      builder.RegisterGeneric(typeof(TraceHandlerBehavior<,>)).AsImplementedInterfaces();
+      builder.RegisterGeneric(typeof(ValidationBehavior<,>)).AsImplementedInterfaces();
+      builder.RegisterType<ExceptionHandlingMiddleware>().AsImplementedInterfaces();
+      builder.RegisterType<ExceptionHandlingMiddleware>().AsImplementedInterfaces();
+      builder.RegisterGenericDecorator(typeof(NotificationPipelineDecorator<>), typeof(INotificationHandler<>));
+      builder.RegisterGeneric(typeof(TraceEventHandlerBehavior<>)).AsImplementedInterfaces();
     }
 
     private void RegisterMediator(ContainerBuilder builder)

@@ -1,42 +1,41 @@
 ﻿using MediatR;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Tracing
 {
-  internal class TraceHandlerBehaviorBase<TRequest, TResponse>
+
+  class TraceHandlerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+  where TRequest : class  
   {
-    private readonly ICallStack _callStack;
-    
-    public TraceHandlerBehaviorBase(ICallStack callStack)
+    ICallStack _callStack;
+
+    public TraceHandlerBehavior(ICallStack callStack) 
     {
       _callStack = callStack;
     }
 
-    public async Task<T> Run<T>(TRequest request, RequestHandlerDelegate<T> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
       var moduleName = request.GetType().Assembly.GetName().Name;
       string callType = "Query";
       if (request.GetType().IsAssignableTo(typeof(Interfaces.Communication.ICommand)))
       {
         callType = "Command";
-      }
-      if (request.GetType().IsAssignableTo(typeof(Interfaces.Communication.IEvent)))
-      {
-        callType = "Event";
-      }
+      }      
       await _callStack.StartCall(moduleName, typeof(TRequest).Name, callType);
 
       try
       {
         var response = await next();
-        if (response != null)
+        if (response != null && response.GetType() != typeof(Unit))
         {
           await _callStack.FinishCall(response.GetType().Name);
         }
         else
         {
-          await _callStack.FinishCall("null");
+          await _callStack.FinishCall("retrun");
         }
         return response;
       }
@@ -46,5 +45,5 @@ namespace SFC.Infrastructure.Features.Tracing
         throw;
       }
     }
-  }
+  }      
 }

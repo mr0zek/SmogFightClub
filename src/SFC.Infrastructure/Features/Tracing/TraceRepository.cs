@@ -9,9 +9,10 @@ namespace SFC.Infrastructure.Features.Tracing
   {
     public async Task AddModuleCall(ModuleCall trace)
     {
-      Log.Information("{@CorrelationId}: {@CallingModuleName} --> {@CalledModuleName} : {@MessageName}",
+      Log.Information("{@CorrelationId}: {@CallingModuleName} -[{@CallName}]-> {@CalledModuleName} : {@MessageName}",
         trace.CorrelationId,
         trace.CallingModuleName,
+        trace.CallType[0].ToString(),        
         trace.CalledModuleName,
         trace.CallName);
     }
