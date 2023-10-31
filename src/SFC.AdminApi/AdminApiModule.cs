@@ -11,8 +11,8 @@ using SFC.Sensors;
 
 namespace SFC.AdminApi
 {
-    [ModuleDefinition("Api")]
-  public class AdminApiModule : Module, IHaveWorker, IModule
+  [ModuleDefinition("Api")]
+  public class AdminApiModule : IHaveAutofacRegistrations, IModule, IHaveWorker
   {
     IEventAsyncProcessor _eventAsyncProcessor;
     public void StartWorker(IComponentContext container)
@@ -31,12 +31,12 @@ namespace SFC.AdminApi
       _eventAsyncProcessor.WaitForShutdown();
     }
 
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterType<DashboardPerspective>().AsImplementedInterfaces();
       builder.RegisterType<SearchableDashboardPerspective>()
         .AsImplementedInterfaces();
-      
+
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()
         .InstancePerLifetimeScope();

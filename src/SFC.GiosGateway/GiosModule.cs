@@ -7,13 +7,14 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 
 namespace SFC.GiosGateway
 {
   [ModuleDefinition("Backend")]
-  public class GiosGatewayModule : Module
+  public class GiosGatewayModule : IHaveAutofacRegistrations, IModule
   {
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterAssemblyTypes(GetType().Assembly)
         .AsClosedTypesOf(typeof(ICommandHandler<>)).AsImplementedInterfaces()

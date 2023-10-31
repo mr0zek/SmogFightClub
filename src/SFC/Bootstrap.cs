@@ -37,9 +37,9 @@ namespace SFC
 {
   public class Bootstrap
   {
-    static IEnumerable<Module> _modules;
+    static IEnumerable<Infrastructure.Interfaces.Modules.IModule> _modules;
 
-    public static WebApplication Run(string[] args, string url, IEnumerable<Module> modules, Action<ContainerBuilder> overrideDependencies = null)
+    public static WebApplication Run(string[] args, string url, IEnumerable<Infrastructure.Interfaces.Modules.IModule> modules, Action<ContainerBuilder> overrideDependencies = null)
     {
       _modules = modules;
 
@@ -150,9 +150,9 @@ namespace SFC
       builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
       {
         builder.RegisterInstance(new ConnectionString(connectionString));
-        foreach (Module m in _modules)
+        foreach (var m in _modules.Where(f => f is IHaveAutofacRegistrations).Select(f => (IHaveAutofacRegistrations)f))
         {
-          builder.RegisterModule(m);
+          m.RegisterTypes(builder);
         }
         overrideDependencies?.Invoke(builder);
       });

@@ -11,6 +11,7 @@ using SFC.GiosGateway;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Interfaces;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -28,7 +29,7 @@ namespace SFC
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"];      
 
-      Bootstrap.Run(args,"http://localhost:5000", new Module[]
+      Bootstrap.Run(args,"http://localhost:5000", new IModule[]
       {
         new AuthenticationApiModule(),
         new AdminApiModule(),

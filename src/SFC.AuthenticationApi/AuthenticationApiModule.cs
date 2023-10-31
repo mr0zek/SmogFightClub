@@ -3,13 +3,14 @@ using FluentValidation;
 using SFC.AuthenticationApi.Features.Authentication;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 
 namespace SFC.AuthenticationApi
 {
   [ModuleDefinition("Api")]
-  public class AuthenticationApiModule : Module
+  public class AuthenticationApiModule : IHaveAutofacRegistrations, IModule 
   {
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterType<TokenRepository>().AsImplementedInterfaces();
 

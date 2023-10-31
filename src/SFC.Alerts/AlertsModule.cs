@@ -8,14 +8,15 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
 
 namespace SFC.Alerts
 {
   [ModuleDefinition("Backend")]
-  public class AlertsModule : Module
+  public class AlertsModule : IHaveAutofacRegistrations, IModule
   {
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterType<AlertRepository>()
         .AsImplementedInterfaces();

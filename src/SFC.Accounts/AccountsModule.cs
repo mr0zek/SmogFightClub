@@ -4,13 +4,14 @@ using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 
 namespace SFC.Accounts
 {
   [ModuleDefinition("Backend")]
-  public class AccountsModule : Module
+  public class AccountsModule : IHaveAutofacRegistrations, IModule
   {
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterType<AccountsRepository>()
         .AsImplementedInterfaces();

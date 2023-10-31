@@ -7,6 +7,7 @@ using SFC.Alerts;
 using SFC.AuthenticationApi;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Features.Database;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Notifications;
 using SFC.Processes;
 using SFC.SensorApi;
@@ -45,7 +46,7 @@ namespace SFC.Tests.Tools
       ResetDatabase.Reset(connectionString);
 
       TestSmtpClient.Clear();
-      _app = Bootstrap.Run(Array.Empty<string>(), _url, new Autofac.Module[]
+      _app = Bootstrap.Run(Array.Empty<string>(), _url, new IModule[]
         {
           new AuthenticationApiModule(),
           new AdminApiModule(),

@@ -5,6 +5,7 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
+using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistrationSaga;
 using SFC.Sensors;
@@ -12,9 +13,9 @@ using SFC.Sensors;
 namespace SFC.Processes
 {
   [ModuleDefinition("Task")]
-  public class ProcessesModule : Module
+  public class ProcessesModule : IHaveAutofacRegistrations, IModule
   {
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       builder.RegisterType<SagaRepository>().AsImplementedInterfaces();
       builder.RegisterType<AccountRepository>().AsImplementedInterfaces();

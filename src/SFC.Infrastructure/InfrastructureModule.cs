@@ -19,9 +19,9 @@ using System.Reflection;
 namespace SFC.Infrastructure
 {
   [ModuleDefinition("Infastructure")]
-  public class InfrastructureModule : Autofac.Module
+  public class InfrastructureModule : IHaveAutofacRegistrations, IModule
     {    
-    protected override void Load(ContainerBuilder builder)
+    public void RegisterTypes(ContainerBuilder builder)
     {
       RegisterMediator(builder);
       builder.RegisterType<IdentityProvider>().AsImplementedInterfaces();
