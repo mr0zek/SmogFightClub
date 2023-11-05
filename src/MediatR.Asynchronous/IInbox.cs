@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
+namespace MediatR.Asynchronous
 {
-  interface IInbox
+  public interface IInbox
   {
     Task<int> GetLastProcessedId(string module);
     Task SetProcessed(int id, string module);

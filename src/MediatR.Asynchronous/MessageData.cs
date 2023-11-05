@@ -1,10 +1,11 @@
-﻿namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing
+﻿namespace MediatR.Asynchronous
 {
-  class EventData
+  public class MessageData
   {
     public string Data { get; set; }
     public string Type { get; set; }
 
     public int Id { get; set; }
+    public MethodType MethodType { get; set; }
   }
 }

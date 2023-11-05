@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using FluentValidation;
+using MediatR.Asynchronous;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Communication.AsyncEventProcessing;
 using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
@@ -15,10 +15,10 @@ namespace SFC.AdminApi
     [ModuleDefinition("Api")]
   public class AdminApiModule : IHaveAutofacRegistrations, IModule, IHaveWorker
   {
-    IEventAsyncProcessor _eventAsyncProcessor;
+    IMessagesAsyncProcessor _eventAsyncProcessor;
     public void StartWorker(IComponentContext container)
     {
-      _eventAsyncProcessor = container.Resolve<IEventAsyncProcessor>();
+      _eventAsyncProcessor = container.Resolve<IMessagesAsyncProcessor>();
       _eventAsyncProcessor.Start("AdminApi");
     }
 

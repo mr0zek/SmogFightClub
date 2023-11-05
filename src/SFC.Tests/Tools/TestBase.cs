@@ -31,7 +31,7 @@ namespace SFC.Tests.Tools
     protected readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
     private ITest _testDescription;
-    protected EventProcessorStatus _eventProcessorStatus;
+    protected MessagesProcessorStatus _eventProcessorStatus;
 
 
     protected TestBase(ITestOutputHelper output)
@@ -66,7 +66,7 @@ namespace SFC.Tests.Tools
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
           builder.RegisterInstance(new MyTraceRepository("")).AsImplementedInterfaces();
-          builder.RegisterInstance(_eventProcessorStatus = new EventProcessorStatus()).AsImplementedInterfaces();
+          builder.RegisterInstance(_eventProcessorStatus = new MessagesProcessorStatus()).AsImplementedInterfaces();
         });
     }
 

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
+  [JsonConverter(typeof(ZipCodeJsonConverter))]
   public class ZipCode : ValueObject
   {
     private readonly string _value;
+
+    protected ZipCode() { } 
 
     public ZipCode(string value)
     {

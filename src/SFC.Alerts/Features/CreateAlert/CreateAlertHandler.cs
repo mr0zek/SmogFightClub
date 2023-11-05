@@ -5,15 +5,16 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR.Asynchronous;
 
 namespace SFC.Alerts.Features.CreateAlert
 {
   internal class CreateAlertHandler : ICommandHandler<CreateAlertCommand>
   {
-    private readonly IEventBusWithAsync _eventBus;
+    private readonly IAsyncPublisher _eventBus;
     private readonly IAlertWriteRepository _repository;
 
-    public CreateAlertHandler(IEventBusWithAsync eventBus, IAlertWriteRepository repository)
+    public CreateAlertHandler(IAsyncPublisher eventBus, IAlertWriteRepository repository)
     {
       _eventBus = eventBus;
       _repository = repository;
@@ -28,11 +29,7 @@ namespace SFC.Alerts.Features.CreateAlert
 
       await _repository.Add(command.Id, command.ZipCode, command.LoginName);
 
-      await _eventBus.Publish(new AlertCreatedEvent()
-      {
-        ZipCode = command.ZipCode,
-        LoginName = command.LoginName
-      });
+      await _eventBus.Publish(new AlertCreatedEvent(command.LoginName, command.ZipCode));
     }
   }
 }

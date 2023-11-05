@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Modules\**" />
+    <EmbeddedResource Remove="Features\Modules\**" />
+    <None Remove="Features\Modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="7.1.0" />
     <PackageReference Include="FluentMigrator" Version="3.3.2" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
@@ -19,12 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MediatR.Asynchronous.MsSql\MediatR.Asynchronous.MsSql.csproj" />
+    <ProjectReference Include="..\MediatR.Asynchronous\MediatR.Asynchronous.csproj" />
     <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Modules\" />
   </ItemGroup>
 
   

@@ -1,20 +1,21 @@
-﻿using SFC.Infrastructure.Interfaces.Communication;
+﻿using MediatR.Asynchronous;
+using SFC.Infrastructure.Interfaces.Communication;
 using System.Threading;
 
 namespace SFC.Tests.Tools
 {
-  public class EventProcessorStatus : IEventProcessorStatusReporter
+  public class MessagesProcessorStatus : IMessagesProcessorStatusReporter
   {
     EventWaitHandle _waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-    public EventProcessorStatus()
+    public MessagesProcessorStatus()
     {
     }
 
 
-    public void ReportStatus(EventProcesorStatus status)
+    public void ReportStatus(MessagesProcesorStatus status)
     {
-      if (status == EventProcesorStatus.Idle)
+      if (status == MessagesProcesorStatus.Idle)
       {
         _waitHandle.Set();
       }

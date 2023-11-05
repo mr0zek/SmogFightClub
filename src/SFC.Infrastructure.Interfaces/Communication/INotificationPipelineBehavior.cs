@@ -6,12 +6,12 @@ namespace SFC.Infrastructure.Interfaces.Communication
 {
   public delegate Task EventHandlerDelegate();
 
-  public interface INotificationPipelineBehavior<TEvent> where TEvent : IEvent
+  public interface INotificationPipelineBehavior<TNotification> where TNotification : INotification
   {
     Task Handle(
-      TEvent notification,
+      TNotification notification,
       EventHandlerDelegate next,
-      INotificationHandler<TEvent> handler,
+      INotificationHandler<TNotification> handler,
       CancellationToken cancellationToken);
   }
 }

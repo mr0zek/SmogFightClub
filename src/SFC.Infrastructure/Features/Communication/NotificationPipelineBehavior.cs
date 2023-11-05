@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace SFC.Infrastructure.Features.Communication
 {
-  internal class NotificationPipelineDecorator<TEvent> : INotificationHandler<TEvent>
-    where TEvent : IEvent
+  class NotificationPipelineDecorator<TNotification> : INotificationHandler<TNotification>
+  where TNotification : INotification
   {
-    private readonly INotificationHandler<TEvent> _notificationHandler;
-    private readonly IEnumerable<INotificationPipelineBehavior<TEvent>> _pipelineBehaviors;
+    private readonly INotificationHandler<TNotification> _notificationHandler;
+    private readonly IEnumerable<INotificationPipelineBehavior<TNotification>> _pipelineBehaviors;
 
     public NotificationPipelineDecorator(
-      INotificationHandler<TEvent> notificationHandler, 
-      IEnumerable<INotificationPipelineBehavior<TEvent>> pipelineBehaviors) 
+      INotificationHandler<TNotification> notificationHandler,
+      IEnumerable<INotificationPipelineBehavior<TNotification>> pipelineBehaviors)
     {
       _notificationHandler = notificationHandler;
       _pipelineBehaviors = pipelineBehaviors;
     }
 
-    public Task Handle(TEvent notification, CancellationToken cancellationToken)
+    public Task Handle(TNotification notification, CancellationToken cancellationToken)
     {
       async Task<Unit> Handler()
       {
@@ -36,8 +36,8 @@ namespace SFC.Infrastructure.Features.Communication
       return _pipelineBehaviors
         .Reverse()
         .Aggregate(
-          (EventHandlerDelegate) Handler, 
-          (next, pipeline) => () => pipeline.Handle(notification, next, _notificationHandler, cancellationToken))();      
+          (EventHandlerDelegate)Handler,
+          (next, pipeline) => () => pipeline.Handle(notification, next, _notificationHandler, cancellationToken))();
     }
   }
 }

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Formats.Asn1;
 using System.Net;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
   public class ZipCodeJsonConverter : JsonConverter<ZipCode>
   {
-    public override ZipCode? ReadJson(JsonReader reader, Type objectType, ZipCode? existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override ZipCode Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-      return reader.Value?.ToString();
+      return reader.GetString();
     }
 
-    public override void WriteJson(JsonWriter writer, ZipCode? value, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, ZipCode value, JsonSerializerOptions options)
     {
-      writer.WriteValue(value.ToString());
+      writer.WriteStringValue(value.ToString());
     }
   }
 }

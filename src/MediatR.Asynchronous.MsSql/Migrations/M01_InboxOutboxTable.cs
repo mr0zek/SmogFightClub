@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace SFC.Infrastructure.Features.Communication.AsyncEventProcessing.DbMigrations
+namespace MediatR.Asynchronous.MsSql.Migrations
 {
   [Migration(20230331041)]
   public class M01_InboxOutboxTable : ForwardOnlyMigration

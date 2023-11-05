@@ -1,21 +1,19 @@
 ﻿using Autofac;
-using FluentValidation;
 using Hangfire;
 using MediatR;
+using MediatR.Asynchronous;
+using MediatR.Asynchronous.MsSql;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using SFC.Infrastructure.Features.Communication;
-using SFC.Infrastructure.Features.Communication.AsyncEventProcessing;
 using SFC.Infrastructure.Features.Database;
 using SFC.Infrastructure.Features.SmtpIntegration;
 using SFC.Infrastructure.Features.TimeDependency;
 using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
-using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
-using System;
 using System.Reflection;
 
 namespace SFC.Infrastructure
@@ -41,7 +39,7 @@ namespace SFC.Infrastructure
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TraceRepository>().AsImplementedInterfaces();
       builder.RegisterType<DatabaseMigrator>().AsImplementedInterfaces();
-      builder.RegisterType<EventProcessorStatusReporter>().AsImplementedInterfaces();
+      builder.RegisterType<MessagesProcesorStatusReporter>().AsImplementedInterfaces();
       builder.RegisterType<CommandBus>().AsImplementedInterfaces();
       builder.RegisterType<EventBus>().AsImplementedInterfaces();
       builder.RegisterType<QueryBus>().AsImplementedInterfaces();
@@ -50,8 +48,9 @@ namespace SFC.Infrastructure
       builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<OutboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<InboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
-      builder.RegisterType<EventProcessor>().AsImplementedInterfaces();
-      builder.RegisterType<EventBusWithAsync>().AsImplementedInterfaces();
+      builder.RegisterType<MessagesProcesor>().AsImplementedInterfaces().SingleInstance();
+      builder.Register(f => new Configuration() { ConnectionString = f.Resolve<ConnectionString>().ToString() }).AsSelf();
+      builder.RegisterType<AsyncMediator>().AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(TraceHandlerBehavior<,>)).AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(ValidationBehavior<,>)).AsImplementedInterfaces();
       builder.RegisterType<ValidationExceptionHandlingMiddleware>().AsImplementedInterfaces();

@@ -1,18 +1,19 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
   public class LoginNameJsonConverter : JsonConverter<LoginName>
   {
-    public override LoginName? ReadJson(JsonReader reader, Type objectType, LoginName? existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override LoginName Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-      return reader.Value?.ToString();
+      return reader.GetString();
     }
-
-    public override void WriteJson(JsonWriter writer, LoginName? value, JsonSerializer serializer)
+    
+    public override void Write(Utf8JsonWriter writer, LoginName value, JsonSerializerOptions options)
     {
-      writer.WriteValue(value.ToString());
+      writer.WriteStringValue(value.ToString());
     }
   }
 }
