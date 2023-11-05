@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
-  public class ZipCodeJsonConverter : JsonConverter<ZipCode>
+  class ZipCodeJsonConverter : JsonConverter<ZipCode>
   {
     public override ZipCode Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

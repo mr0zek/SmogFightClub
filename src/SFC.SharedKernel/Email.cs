@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
+
+  [JsonConverter(typeof(EmailJsonConverter))]
   public class Email : ValueObject
   {
     private readonly string _value;

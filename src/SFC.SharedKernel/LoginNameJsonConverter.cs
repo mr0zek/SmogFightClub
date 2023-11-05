@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SFC.SharedKernel
 {
-  public class LoginNameJsonConverter : JsonConverter<LoginName>
+  class LoginNameJsonConverter : JsonConverter<LoginName>
   {
     public override LoginName Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
