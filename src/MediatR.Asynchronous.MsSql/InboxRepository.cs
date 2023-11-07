@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 
 namespace MediatR.Asynchronous.MsSql
 {
-  public class InboxRepository : IInbox
+  public class InboxRepository : IInboxRepository
   {
     readonly IDbConnection _connection;
-    public InboxRepository(Configuration configuration)
+    public InboxRepository(string connectionString)
     {
-      _connection = new SqlConnection(configuration.ConnectionString.ToString());
+      _connection = new SqlConnection(connectionString);
     }
 
     public async Task<int> GetLastProcessedId(string moduleName)

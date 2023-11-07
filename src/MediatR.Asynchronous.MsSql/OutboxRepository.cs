@@ -8,9 +8,9 @@ namespace MediatR.Asynchronous.MsSql
   public class OutboxRepository : IOutboxRepository
   {
     readonly IDbConnection _connection;
-    public OutboxRepository(Configuration configuration)
+    public OutboxRepository(string connectionString)
     {
-      _connection = new SqlConnection(configuration.ConnectionString.ToString());
+      _connection = new SqlConnection(connectionString);
     }
 
     public async Task Add(MessageData messageData)

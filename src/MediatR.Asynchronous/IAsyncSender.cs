@@ -2,8 +2,8 @@
 {
   public interface IAsyncSender 
   {
-    Task Send<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequest;
+    Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequest;
 
-    Task Send(object request, CancellationToken cancellationToken);
+    Task Send(object request, CancellationToken cancellationToken = default);
   }
 }

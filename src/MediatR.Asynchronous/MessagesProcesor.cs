@@ -11,6 +11,8 @@ namespace MediatR.Asynchronous
     private readonly IMessagesProcessorStatusReporter _statusReporter;
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly EventWaitHandle _shutDownCompleated;
+    private readonly EventWaitHandle _idle;
+
     public EventWaitHandle NewMessageArrived { get; } = new EventWaitHandle(false, EventResetMode.ManualReset);
 
     public MessagesProcesor(
@@ -21,6 +23,7 @@ namespace MediatR.Asynchronous
       _statusReporter = statusReporter;
       _cancellationTokenSource = new CancellationTokenSource();
       _shutDownCompleated = new EventWaitHandle(false, EventResetMode.AutoReset);
+      _idle = new EventWaitHandle(false, EventResetMode.ManualReset);
     }
 
     public void Start(string moduleName)
@@ -44,7 +47,7 @@ namespace MediatR.Asynchronous
       {
         var outbox = _serviceProvider.GetService<IOutboxRepository>();
         _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
-        var inbox = _serviceProvider.GetService<IInbox>();
+        var inbox = _serviceProvider.GetService<IInboxRepository>();
         while (!token.IsCancellationRequested)
         {
           var lastProcessedId = await inbox.GetLastProcessedId(moduleName);
@@ -56,17 +59,19 @@ namespace MediatR.Asynchronous
               return;
             }
             _statusReporter.ReportStatus(MessagesProcesorStatus.Idle);
+            _idle.Set();
             NewMessageArrived.Reset();
             NewMessageArrived.WaitOne(1000);
             messages = await outbox.Get(lastProcessedId, 100);
           }
+          _idle.Reset();
           _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
           foreach (MessageData e in messages)
           {
             using(var scope = _serviceProvider.GetService<IServiceScopeFactory>().CreateScope())
             using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-              await scope.ServiceProvider.GetService<IInbox>().SetProcessed(e.Id, moduleName);
+              await scope.ServiceProvider.GetService<IInboxRepository>().SetProcessed(e.Id, moduleName);
 
               Type eventType = Type.GetType(e.Type);
               var @event = JsonSerializer.Deserialize(e.Data, eventType);
@@ -91,6 +96,11 @@ namespace MediatR.Asynchronous
       {
         _shutDownCompleated.Set();
       }
+    }
+
+    public void WaitForIdle()
+    {
+      _idle.WaitOne();
     }
   }
 }

@@ -2,7 +2,7 @@
 
 namespace MediatR.Asynchronous
 {
-  public interface IInbox
+  public interface IInboxRepository
   {
     Task<int> GetLastProcessedId(string module);
     Task SetProcessed(int id, string module);

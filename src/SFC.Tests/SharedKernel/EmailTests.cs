@@ -22,6 +22,11 @@ namespace SFC.Tests.SharedKernel
       Assert.Equal(z, z2);
     }
 
-
+    [Fact]
+    public void NullIsAllowed() 
+    {      
+      Email e = (string)null; // implicit conversion kicks in
+      Assert.Equal(null, e);
+    }
   }
 }

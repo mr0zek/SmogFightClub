@@ -17,6 +17,11 @@ namespace SFC.Tests.SharedKernel
       Assert.Equal(z, z2);
     }
 
-
+    [Fact]
+    public void NullIsAllowed()
+    {
+      ZipCode e = (string)null; // implicit conversion kicks in
+      Assert.Equal(null, e);
+    }
   }
 }
