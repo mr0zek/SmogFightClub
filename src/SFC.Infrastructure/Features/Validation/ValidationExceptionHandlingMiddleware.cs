@@ -48,16 +48,15 @@ namespace SFC.Infrastructure.Features.Validation
         return StatusCodes.Status500InternalServerError;
     }
 
-    private static IReadOnlyDictionary<string, IEnumerable<string>> GetErrors(Exception exception)
-    {
-      IReadOnlyDictionary<string, IEnumerable<string>> errors = null;
+    private static IReadOnlyDictionary<string, IEnumerable<string>>? GetErrors(Exception exception)
+    {      
       if (exception is ValidationException validationException)
       {
-        errors = validationException.Errors
+        return validationException.Errors
           .GroupBy(f=>f.PropertyName)
           .ToDictionary(f=>f.Key, f=>f.Select(x=>x.ErrorMessage));
       }
-      return errors;
+      return null;
     }
   }
 }

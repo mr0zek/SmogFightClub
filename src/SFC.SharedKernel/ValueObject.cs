@@ -8,8 +8,10 @@ namespace SFC.SharedKernel
 {
   public abstract class ValueObject : IEqualityComparer, IEquatable<ValueObject>
   {
-    public bool Equals(ValueObject other)
+    public bool Equals(ValueObject? other)
     {
+      if(ReferenceEquals(null, other)) return false;
+
       var a = GetEqualityComponents().ToList();
       var b = other.GetEqualityComponents().ToList();
       if (a.Count != b.Count)
@@ -28,7 +30,7 @@ namespace SFC.SharedKernel
       return true;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
       if (ReferenceEquals(null, obj)) return false;
       if (ReferenceEquals(this, obj)) return true;
@@ -51,7 +53,7 @@ namespace SFC.SharedKernel
         });
     }
 
-    public static bool operator ==(ValueObject a, ValueObject b)
+    public static bool operator ==(ValueObject? a, ValueObject? b)
     {
       if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
         return true;
@@ -62,12 +64,12 @@ namespace SFC.SharedKernel
       return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject a, ValueObject b)
+    public static bool operator !=(ValueObject? a, ValueObject? b)
     {
       return !(a == b);
     }
 
-    public new bool Equals(object x, object y)
+    public new bool Equals(object? x, object? y)
     {
       if (ReferenceEquals(x, null) && ReferenceEquals(y, null))
       {

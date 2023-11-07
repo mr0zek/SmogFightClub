@@ -33,7 +33,7 @@ namespace SFC.Notifications.Features.SendNotification
 
     public async Task Handle(SendNotificationCommand command, CancellationToken cancellationToken)
     {
-      Email email = await _emailRepository.GetEmail(command.LoginName);
+      Email? email = await _emailRepository.GetEmail(command.LoginName);
       if (email == null)
       {
         throw new UserNotFoundException(command.LoginName);
@@ -43,14 +43,7 @@ namespace SFC.Notifications.Features.SendNotification
 
       await _notificationRepository.Add(email, command.Title, command.Body, _dateTimeProvider.Now(), command.LoginName, command.NotificationType);
 
-      await _eventBus.Publish(new NotificationSentEvent()
-      {
-        LoginName = command.LoginName,
-        Email = email,
-        NotificationType = command.NotificationType
-      });
+      await _eventBus.Publish(new NotificationSentEvent(command.LoginName, email, command.NotificationType));      
     }
-
-
   }
 }

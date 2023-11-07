@@ -14,7 +14,15 @@ namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
     public class SendNotification : IResponse
     {
       public string LoginName { get; set; }
+      
       public int Count { get; set; }
+
+      public SendNotification(string loginName, int count)
+      {
+        LoginName = loginName;
+        Count = count;
+      }
+
     }
 
     public IEnumerable<SendNotification> Result { get; set; }

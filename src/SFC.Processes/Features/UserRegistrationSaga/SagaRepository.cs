@@ -29,9 +29,9 @@ namespace SFC.Processes.Features.UserRegistrationSaga
       }
     }
 
-    public async Task<T> Get<T>(string id) where T : class
+    public async Task<T?> Get<T>(string id) where T : class
     {
-      string data = await _connection.QueryFirstOrDefaultAsync<string>(
+      string? data = await _connection.QueryFirstOrDefaultAsync<string>(
         "select data from Processes.Sagas where id = @id",
         new { id });
 

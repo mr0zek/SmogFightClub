@@ -10,7 +10,6 @@
       Description = description;
     }
 
-    public string UsedBy { get; }
     public string CalledName { get; }
     public CallType CallType { get; }
     public string? Description { get; }

@@ -15,13 +15,6 @@ namespace SFC.Tests.SharedKernel
       var z2 = JsonSerializer.Deserialize(data, typeof(ZipCode));
 
       Assert.Equal(z, z2);
-    }
-
-    [Fact]
-    public void NullIsAllowed()
-    {
-      ZipCode e = (string)null; // implicit conversion kicks in
-      Assert.Equal(null, e);
-    }
+    }    
   }
 }

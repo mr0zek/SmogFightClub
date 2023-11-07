@@ -10,19 +10,19 @@ namespace MediatR.Asynchronous.Tests
   /// 1. Performace test
   /// 2. Muliple instances of processor
   /// </summary>
-  public class UnitTest1
+  public class ConcurrencyTests
   {
     private IAsyncMediator _mediator;
     private IMessagesAsyncProcessor _processor;
-    private readonly Ping _request = new Ping { Message = "Hello World" };
+    private readonly Ping _request = new Ping("Hello World");
     private readonly Pinged _notification = new Pinged();
 
-    public UnitTest1()
+    public ConcurrencyTests()
     {
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
+      var connectionString = configuration["ConnectionStrings:DefaultConnection"] ?? throw new NullReferenceException("ConnectionString");
       
       var services = new ServiceCollection();
 
@@ -46,7 +46,7 @@ namespace MediatR.Asynchronous.Tests
       _processor.Start("testModuleName");
     }
     
-    ~UnitTest1()
+    ~ConcurrencyTests()
     {
       _processor.Stop();
       _processor.WaitForShutdown();
@@ -57,6 +57,7 @@ namespace MediatR.Asynchronous.Tests
     {
       await _mediator.Send(_request);
       _processor.WaitForIdle();
+      Assert.Equal(1, PingHandler.RequestsCount);
     }
 
     [Fact]
@@ -64,6 +65,7 @@ namespace MediatR.Asynchronous.Tests
     {
       await _mediator.Publish(_notification);
       _processor.WaitForIdle();
+      Assert.Equal(1, PingedHandler.RequestsCount);
     }
   }
 }

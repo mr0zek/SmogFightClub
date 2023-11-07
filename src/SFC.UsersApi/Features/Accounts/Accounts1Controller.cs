@@ -31,15 +31,13 @@ namespace SFC.UserApi.Features.Accounts
 
       try
       {
-        await _commandBus.Send(new RegisterUserCommand()
-        {
-          Id = id,
-          BaseUrl = Request.BaseUrl(),
-          LoginName = model.LoginName,
-          ZipCode = model.ZipCode,
-          Email = model.Email,
-          PasswordHash = PasswordHash.FromPassword(model.Password)
-        });
+        await _commandBus.Send(new RegisterUserCommand(
+          (model.LoginName).ThrowIfNull(), 
+          (model.Email).ThrowIfNull(), 
+          PasswordHash.FromPassword((model.Password).ThrowIfNull()),
+          (model.ZipCode).ThrowIfNull(), 
+          Request.BaseUrl(), 
+          id));
       }
       catch (LoginNameAlreadyUsedException)
       {

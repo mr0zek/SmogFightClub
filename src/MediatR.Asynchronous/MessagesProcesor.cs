@@ -45,13 +45,13 @@ namespace MediatR.Asynchronous
     {
       try
       {
-        var outbox = _serviceProvider.GetService<IOutboxRepository>();
+        IOutboxRepository outbox = _serviceProvider.GetRequiredService<IOutboxRepository>();
         _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
-        var inbox = _serviceProvider.GetService<IInboxRepository>();
+        var inbox = _serviceProvider.GetRequiredService<IInboxRepository>();
         while (!token.IsCancellationRequested)
         {
           var lastProcessedId = await inbox.GetLastProcessedId(moduleName);
-          var messages = await outbox.Get(lastProcessedId, 100);
+          IEnumerable<MessageData> messages = await outbox.Get(lastProcessedId, 100);
           while(!messages.Any())
           {
             if(token.IsCancellationRequested)
@@ -68,22 +68,24 @@ namespace MediatR.Asynchronous
           _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
           foreach (MessageData e in messages)
           {
-            using(var scope = _serviceProvider.GetService<IServiceScopeFactory>().CreateScope())
+            var scopeFactory = _serviceProvider.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
             using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-              await scope.ServiceProvider.GetService<IInboxRepository>().SetProcessed(e.Id, moduleName);
+              await (scope.ServiceProvider.GetRequiredService<IInboxRepository>())
+                .SetProcessed(e.Id, moduleName);
 
-              Type eventType = Type.GetType(e.Type);
-              var @event = JsonSerializer.Deserialize(e.Data, eventType);
+              Type eventType = Type.GetType(e.Type) ?? throw new NullReferenceException();
+              object @event = JsonSerializer.Deserialize(e.Data, eventType) ?? throw new NullReferenceException();
 
               if (e.MethodType == MethodType.Publish)
               {
-                var publisher = scope.ServiceProvider.GetService<IPublisher>();
+                var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
                 await publisher.Publish(@event);
               }
               else
               {
-                var sender = scope.ServiceProvider.GetService<ISender>();
+                var sender = scope.ServiceProvider.GetRequiredService<ISender>();
                 await sender.Send(@event);
               }
 

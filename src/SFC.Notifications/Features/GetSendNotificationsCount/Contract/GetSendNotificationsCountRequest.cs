@@ -9,9 +9,15 @@ using System.Threading.Tasks;
 namespace SFC.Notifications.Features.GetSendNotificationsCount.Contract
 {
 
-    public class GetSendNotificationsCountRequest : IRequest<GetSendNotificationsCountResponse>
+  public class GetSendNotificationsCountRequest : IRequest<GetSendNotificationsCountResponse>
   {
     public string NotificationType { get; set; }
     public LoginName[] LoginNames { get; set; }
+
+    public GetSendNotificationsCountRequest(string notificationType, LoginName[] loginNames)
+    {
+      NotificationType = notificationType;
+      LoginNames = loginNames;
+    }
   }
 }

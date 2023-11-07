@@ -15,9 +15,9 @@ namespace SFC.Processes.Features.UserRegistrationSaga
   public class UserRegistrationSaga : AutomatonymousStateMachine<UserRegistrationSagaData>
   {
     private readonly ICommandBus _commandBus;
-    public Event<ConfirmUserCommandSaga> ConfirmUserCommand { get; set; }
-    public Event<RegisterUserCommandSaga> RegisterUserCommand { get; set; }
-    public State WaitingForConfirmation { get; set; }
+    public Event<ConfirmUserCommandSaga>? ConfirmUserCommand { get; set; }
+    public Event<RegisterUserCommandSaga>? RegisterUserCommand { get; set; }
+    public State? WaitingForConfirmation { get; set; }
 
     public UserRegistrationSaga(ICommandBus commandBus)
     {
@@ -41,44 +41,40 @@ namespace SFC.Processes.Features.UserRegistrationSaga
     private void CopyDataToSaga(BehaviorContext<UserRegistrationSagaData, RegisterUserCommandSaga> context)
     {
       context.Instance.BaseUrl = context.Data.BaseUrl;
-      context.Instance.LoginName = context.Data.LoginName;
-      context.Instance.PasswordHash = context.Data.PasswordHash.Value;
-      context.Instance.Email = context.Data.Email;
-      context.Instance.ZipCode = context.Data.ZipCode;
+      context.Instance.LoginName = (context.Data.LoginName).ThrowIfNull();
+      context.Instance.PasswordHash = (context.Data.PasswordHash).ThrowIfNull().Value;
+      context.Instance.Email = (context.Data.Email).ThrowIfNull();
+      context.Instance.ZipCode = (context.Data.ZipCode).ThrowIfNull();
     }
 
     private void CreateUserAccount(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new CreateAccountCommand(context.Instance.LoginName, new PasswordHash(context.Instance.PasswordHash))).Wait();
+      _commandBus.Send(new CreateAccountCommand((context.Instance?.LoginName).ThrowIfNull(), new PasswordHash((context.Instance?.PasswordHash).ThrowIfNull()))).Wait();
     }
 
     private void RegisterAlert(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new CreateAlertCommand()
-      {
-        Id = Guid.NewGuid(),
-        LoginName = context.Instance.LoginName,
-        ZipCode = context.Instance.ZipCode
-      }).Wait();
+      _commandBus.Send(new CreateAlertCommand(
+        (context.Instance?.LoginName).ThrowIfNull(),
+        (context.Instance?.ZipCode).ThrowIfNull(),
+        Guid.NewGuid())).Wait();      
     }
 
     private void SaveNotificationEmail(BehaviorContext<UserRegistrationSagaData> context)
     {
       _commandBus.Send(new SetNotificationEmailCommand(
-        context.Instance.Email,
-        context.Instance.LoginName
+        (context.Instance.Email).ThrowIfNull(),
+        (context.Instance.LoginName).ThrowIfNull()
       )).Wait();
     }
 
     private void SendRegistrationNotification(BehaviorContext<UserRegistrationSagaData> context)
     {
-      _commandBus.Send(new SendNotificationCommand()
-      {
-        LoginName = context.Instance.LoginName,
-        Body = $"<a href=\"{context.Instance.BaseUrl}/Confirmation/{context.Instance.Id}\">Click her to confirm</a>",
-        Title = "Registration confirmation",
-        NotificationType = "RegistrationConfirmation"
-      }).Wait();
+      _commandBus.Send(new SendNotificationCommand(
+        (context.Instance.LoginName).ThrowIfNull(),
+        $"<a href=\"{context.Instance.BaseUrl}/Confirmation/{context.Instance.Id}\">Click her to confirm</a>",
+        "Registration confirmation",
+        "RegistrationConfirmation")).Wait();
     }
   }
 }

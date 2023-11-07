@@ -34,7 +34,7 @@ namespace SFC.Notifications.Infrastructure
       }
     }
 
-    public async Task<Email> GetEmail(LoginName loginName)
+    public async Task<Email?> GetEmail(LoginName loginName)
     {
       return await _connection.QueryFirstOrDefaultAsync<string>(
         "select email from Notifications.Emails where loginName = @loginName",

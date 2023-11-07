@@ -24,7 +24,7 @@ namespace SFC.SharedKernel
     {
       if (email == null)
       {
-        return null;
+        throw new ArgumentNullException(nameof(email));
       }
       return new Email(email);
     }

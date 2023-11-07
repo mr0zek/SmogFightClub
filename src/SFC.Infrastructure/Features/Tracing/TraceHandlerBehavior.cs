@@ -24,7 +24,7 @@ namespace SFC.Infrastructure.Features.Tracing
       {
         callType = "Command";
       }      
-      await _callStack.StartCall(moduleName, typeof(TRequest).Name, callType);
+      await _callStack.StartCall(moduleName.ThrowIfNull(), typeof(TRequest).Name, callType, "");
 
       try
       {

@@ -10,9 +10,8 @@ namespace SFC.UserApi
     {
       return BaseUrl(req, null);
     }
-    public static string BaseUrl(this HttpRequest req, string path)
-    {
-      if (req == null) return null;
+    public static string BaseUrl(this HttpRequest req, string? path)
+    {      
       var uriBuilder = new UriBuilder(req.Scheme, req.Host.Host, req.Host.Port ?? -1);
       if (uriBuilder.Uri.IsDefaultPort)
       {

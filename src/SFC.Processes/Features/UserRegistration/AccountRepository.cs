@@ -27,7 +27,7 @@ namespace SFC.Processes.Features.UserRegistration
             passwordHash = account.PasswordHash });
     }
 
-    public async Task<Account> Get(Guid id)
+    public async Task<Account?> Get(Guid id)
     {
       return await _connection.QueryFirstOrDefaultAsync<Account>(
         "select id, email, zipCode, loginName, passwordHash from Processes.Accounts where id = @id",

@@ -24,7 +24,7 @@ namespace SFC.SharedKernel
     {
       if (zipCode == null)
       {
-        return null;
+        throw new ArgumentNullException(nameof(zipCode));
       }
       return new ZipCode(zipCode);
     }

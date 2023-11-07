@@ -4,6 +4,6 @@ namespace SFC.UserApi.Features.Sensors
 {
   public class PostSensorModel : ICommand
   {
-    public string ZipCode { get; set; }
+    public string? ZipCode { get; set; }
   }
 }

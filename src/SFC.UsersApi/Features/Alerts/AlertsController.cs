@@ -34,13 +34,8 @@ namespace SFC.UserApi.Features.Alerts
     {
       Guid id = Guid.NewGuid();
 
-      await _commandBus.Send(new CreateAlertCommand()
-      {
-        Id = id,
-        LoginName = _identityProvider.GetLoginName(),
-        ZipCode = model.ZipCode
-      });
-
+      await _commandBus.Send(new CreateAlertCommand(_identityProvider.GetLoginName(), (model.ZipCode).ThrowIfNull(), id));
+      
       return Created($"/api/alerts/{id}",id);
     }
 

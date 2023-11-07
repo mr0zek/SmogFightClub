@@ -37,9 +37,9 @@ namespace SFC
 {
   public class Bootstrap
   {
-    static IEnumerable<Infrastructure.Interfaces.Modules.IModule> _modules;
+    static IEnumerable<Infrastructure.Interfaces.Modules.IModule> _modules = new Infrastructure.Interfaces.Modules.IModule[0];
 
-    public static WebApplication Run(string[] args, string url, IEnumerable<Infrastructure.Interfaces.Modules.IModule> modules, Action<ContainerBuilder> overrideDependencies = null)
+    public static WebApplication Run(string[] args, string url, IEnumerable<Infrastructure.Interfaces.Modules.IModule> modules, Action<ContainerBuilder>? overrideDependencies = null)
     {
       _modules = modules;
 
@@ -165,13 +165,13 @@ namespace SFC
         overrideDependencies?.Invoke(builder);
       });
 
-      var app = builder.Build();
+      WebApplication app = builder.Build();
 
       GlobalConfiguration.Configuration.UseActivator(app.Services.GetService<JobActivator>());
       GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
 
-      app.Services.GetService<IDatabaseMigrator>().Run();
-      app.Services.GetService<IScheduler>().RegisterRecurrentTasks();
+      app.Services.GetRequiredService<IDatabaseMigrator>().Run();
+      app.Services.GetRequiredService<IScheduler>().RegisterRecurrentTasks();
 
       // Configure the HTTP request pipeline.
       if (app.Environment.IsDevelopment())
@@ -199,7 +199,7 @@ namespace SFC
 
       foreach (var module in _modules.Where(f=> f is IHaveWorker).Select(f=>(IHaveWorker)f)) 
       {
-        module.StartWorker(app.Services.GetService<IComponentContext>());
+        module.StartWorker(app.Services.GetRequiredService<IComponentContext>());
       }
 
       return app;

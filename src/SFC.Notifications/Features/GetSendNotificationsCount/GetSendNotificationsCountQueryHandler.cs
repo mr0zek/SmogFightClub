@@ -30,11 +30,8 @@ namespace SFC.Notifications.Features.GetSendNotificationsCount
     {
       return new GetSendNotificationsCountResponse((await _connection.QueryAsync<dynamic>(
         @"select loginName, count(*) as count from Notifications.Notifications where loginName in @loginNames and notificationType = @notificationType group by loginName",
-        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType })).Select(f => new GetSendNotificationsCountResponse.SendNotificaton()
-        {
-          LoginName = f.loginName,
-          Count = f.count
-        }));
+        new { loginNames = request.LoginNames.Select(f => f.ToString()).ToArray(), request.NotificationType }))
+        .Select(f => new GetSendNotificationsCountResponse.SendNotificaton(f.loginName, f.count)));
     }
   }
 }

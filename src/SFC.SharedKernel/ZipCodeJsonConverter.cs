@@ -10,7 +10,7 @@ namespace SFC.SharedKernel
   {
     public override ZipCode Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-      return reader.GetString();
+      return reader.GetString() ?? throw new NullReferenceException();
     }
 
     public override void Write(Utf8JsonWriter writer, ZipCode value, JsonSerializerOptions options)

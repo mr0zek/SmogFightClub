@@ -39,18 +39,16 @@ namespace SFC.Processes.Features.UserRegistration
         command.LoginName
       ));
 
-      await _commandBus.Send(new SendNotificationCommand()
-      {
-        LoginName = command.LoginName,
-        Body = $"<a href=\"{command.BaseUrl}/Confirmation/{command.Id}\">Click her to confirm</a>",
-        Title = "Registration confirmation",
-        NotificationType = "RegistrationConfirmation"
-      });
+      await _commandBus.Send(new SendNotificationCommand(
+        command.LoginName,
+        $"<a href=\"{command.BaseUrl}/Confirmation/{command.Id}\">Click her to confirm</a>",
+        "Registration confirmation",
+        "RegistrationConfirmation"));      
     }
 
     public async Task Handle(ConfirmUserCommand command, CancellationToken cancellationToken)
     {
-      Account account = await _accountRepository.Get(command.ConfirmationId);
+      Account? account = await _accountRepository.Get(command.ConfirmationId);
       if(account == null)
       {
         throw new InvalidOperationException();
@@ -58,12 +56,7 @@ namespace SFC.Processes.Features.UserRegistration
 
       await _commandBus.Send(new CreateAccountCommand(account.LoginName, new SharedKernel.PasswordHash(account.PasswordHash)));
 
-      await _commandBus.Send(new CreateAlertCommand()
-      {
-        Id = Guid.NewGuid(),
-        LoginName = account.LoginName,
-        ZipCode = account.ZipCode
-      }) ;
+      await _commandBus.Send(new CreateAlertCommand(account.LoginName, account.ZipCode, Guid.NewGuid()));
     }
   }
 }

@@ -25,11 +25,7 @@ namespace SFC.AdminApi.Features.AlertNotificationsWithUserData
         Take = query.Take
       });
 
-      var counts = await _query.Send(new GetSendNotificationsCountRequest()
-      {
-        NotificationType = "SmogAlert",
-        LoginNames = results.Accounts.Select(f => f.LoginName).ToArray()
-      });
+      var counts = await _query.Send(new GetSendNotificationsCountRequest("SmogAlert",results.Accounts.Select(f => f.LoginName).ToArray()));
 
       var entries = results.Accounts.Select(f =>
       {

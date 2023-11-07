@@ -3,8 +3,13 @@ using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.GetAccountByLoginName
 {
-    public class GetAccountByLoginNameResponse : IResponse
+  public class GetAccountByLoginNameResponse : IResponse
+  {
+    public LoginName LoginName { get; }
+
+    public GetAccountByLoginNameResponse(LoginName loginName)
     {
-        public LoginName LoginName { get; set; }
+      LoginName = loginName;
     }
+  }
 }

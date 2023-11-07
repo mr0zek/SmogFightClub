@@ -24,17 +24,17 @@ namespace SFC.Infrastructure.Features.Tracing
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-      var callingModuleName = (context.ActionDescriptor as ControllerActionDescriptor)
-        .MethodInfo
-        .CustomAttributes
-        .FirstOrDefault(f => f.AttributeType == typeof(EntryPointForAttribute))
-        .ConstructorArguments[0].Value.ToString();
+      var callingModuleName = (context.ActionDescriptor as ControllerActionDescriptor).ThrowIfNull()
+        .MethodInfo?
+        .CustomAttributes?
+        .First(f => f.AttributeType == typeof(EntryPointForAttribute))?
+        .ConstructorArguments[0].Value?.ToString();
       string methodname = context.HttpContext.Request.Path;
       foreach (var arg in context.ActionArguments)
       {
-        methodname = methodname.Replace(arg.Value.ToString(), $"{{{arg.Key}}}");
+        methodname = methodname.Replace((arg.Value?.ToString()).ThrowIfNull(), $"{{{arg.Key}}}");
       }
-      _context.StartCall(context.Controller.GetType().Assembly.GetName().Name, methodname, context.HttpContext.Request.Method, callingModuleName);
+      _context.StartCall(context.Controller.GetType().Assembly.GetName().Name.ThrowIfNull(), methodname, context.HttpContext.Request.Method, callingModuleName.ThrowIfNull());
     }
   }
 }

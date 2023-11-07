@@ -30,20 +30,17 @@ namespace SFC.Tests.Tools
   {
     protected readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
-    private ITest _testDescription;
     protected MessagesProcessorStatus _eventProcessorStatus;
 
 
-    protected TestBase(ITestOutputHelper output)
+    protected TestBase()
     {
-      var type = output.GetType();
-      var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic);
-      _testDescription = (ITest)testMember.GetValue(output);
-
       var confBuilder = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
+      var connectionString = configuration["ConnectionStrings:DefaultConnection"].ThrowIfNull();
+
+      _eventProcessorStatus = new MessagesProcessorStatus();
 
       ResetDatabase.Reset(connectionString);
 
@@ -66,7 +63,7 @@ namespace SFC.Tests.Tools
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
           builder.RegisterInstance(new MyTraceRepository("")).AsImplementedInterfaces();
-          builder.RegisterInstance(_eventProcessorStatus = new MessagesProcessorStatus()).AsImplementedInterfaces();
+          builder.RegisterInstance(_eventProcessorStatus).AsImplementedInterfaces();
         });
     }
 

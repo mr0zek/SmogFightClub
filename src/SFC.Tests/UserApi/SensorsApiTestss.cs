@@ -24,10 +24,7 @@ namespace SFC.Tests.UserApi
 {
     public class SensorsApiTests : TestBase
   {
-    public SensorsApiTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
+    
     [Fact]
     public async void AddGetGetAllTest()
     {
@@ -62,8 +59,8 @@ namespace SFC.Tests.UserApi
       Assert.Equal(sensor.ZipCode, sensor2.ZipCode);
 
       var allSensors = await api.GetAllSensors();
-      Assert.Single(allSensors.Sensors);
-      Assert.Contains(allSensors.Sensors, f =>f.ZipCode == sensor.ZipCode);
+      Assert.Single(allSensors.Sensors!);
+      Assert.Contains(allSensors.Sensors!, f =>f.ZipCode == sensor.ZipCode);
     }
 
     [Fact]

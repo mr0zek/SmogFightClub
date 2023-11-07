@@ -28,12 +28,8 @@ namespace SFC.Tests.UseStories
 {
     public class UserStories : TestBase, IClassFixture<UserStoriesFixture>, IDisposable
   {
-    private PostAccountModel _postAccountModel;
-
-    public UserStories(ITestOutputHelper output) : base(output)
-    {
-    }
-
+    private PostAccountModel? _postAccountModel;
+        
     [Given]
     void GivenSystemWithNotRegisteredAccount()
     {            
@@ -48,7 +44,7 @@ namespace SFC.Tests.UseStories
 
     async void WhenUserPostRegistrationForm()
     {
-      await RestClient.For<IApi>(_url).PostAccount(_postAccountModel);
+      await RestClient.For<IApi>(_url).PostAccount(_postAccountModel!);
     }
 
     void ThenSystemSendsConfirmationEmail()

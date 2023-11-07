@@ -4,6 +4,6 @@ namespace SFC.UserApi.Features.Alerts
 {
   public class PostAlertModel : ICommand
   {
-    public string ZipCode { get; set; }
+    public string? ZipCode { get; set; }
   }
 }

@@ -4,6 +4,6 @@ namespace SFC.Tests.Tools.Api
 {
     public class GetAlertsModel
     {
-        public IEnumerable<GetAlertResult> Alerts { get; set; }
+        public IEnumerable<GetAlertResult>? Alerts { get; set; }
     }
 }

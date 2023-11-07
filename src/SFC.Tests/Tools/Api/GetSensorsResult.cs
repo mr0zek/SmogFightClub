@@ -4,6 +4,6 @@ namespace SFC.Tests.Tools.Api
 {
     public class GetSensorsResult
     {
-        public IEnumerable<GetSensorResult> Sensors { get; set; }
+        public IEnumerable<GetSensorResult>? Sensors { get; set; }
     }
 }

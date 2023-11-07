@@ -8,7 +8,7 @@ namespace SFC.SharedKernel
   {
     public override Email Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-      return reader.GetString();
+      return reader.GetString() ?? throw new NullReferenceException();
     }
 
     public override void Write(Utf8JsonWriter writer, Email value, JsonSerializerOptions options)

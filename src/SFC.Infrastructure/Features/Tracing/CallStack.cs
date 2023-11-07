@@ -8,7 +8,7 @@ namespace SFC.Infrastructure.Features.Tracing
 {
   class CallStack : ICallStack
   {
-    private string _correlationId;
+    private string _correlationId = Guid.NewGuid().ToString();
     private readonly IRequestLifecycle _requestLifecycle;
     private readonly Stack<Call> _callStack = new Stack<Call>();
 
@@ -17,7 +17,7 @@ namespace SFC.Infrastructure.Features.Tracing
       _requestLifecycle = requestLifecycle;
     }      
 
-    public async Task StartCall(string calledModuleName, string callName, string type, string callingModuleName = null)
+    public async Task StartCall(string calledModuleName, string callName, string type, string callingModuleName)
     {      
       if(_callStack.Count == 0)
       {
@@ -25,7 +25,7 @@ namespace SFC.Infrastructure.Features.Tracing
         await _requestLifecycle.BeginRequest(_correlationId);
       }
 
-      if (callingModuleName == null && _callStack.Count > 0)
+      if (_callStack.Count > 0)
       {
         callingModuleName = _callStack.Peek().CalledModuleName;
       }

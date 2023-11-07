@@ -7,7 +7,10 @@ namespace SFC.SensorApi.Features.RegisterMeasurement
 {
   public class PostMeasurementModel : ICommand
   {
-    
+    public PostMeasurementModel(Dictionary<PolutionType, decimal> values)
+    {
+      Values = values;
+    }
 
     public Dictionary<PolutionType, decimal> Values { get; set; }
   }

@@ -27,14 +27,8 @@ using Xunit.Abstractions;
 namespace SFC.Tests.AuthenticationApi
 {
 
-    public class AuthentiacationApiTest : TestBase
+  public class AuthentiacationApiTest : TestBase
   {
-    public AuthentiacationApiTest(ITestOutputHelper output) : base(output)
-    {
-    }
-
-
-
     [Fact]
     public void LoginFailedTest()
     {
@@ -61,9 +55,9 @@ namespace SFC.Tests.AuthenticationApi
       Guid confirmationId = await api.PostAccount(postAccountModel);
       await api.PostAccountConfirmation(confirmationId);
 
-      var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));     
+      var token = await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
 
       Assert.NotNull(token);
-    }    
+    }
   }
 }

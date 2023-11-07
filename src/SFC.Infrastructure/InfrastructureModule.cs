@@ -15,6 +15,7 @@ using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SFC.Infrastructure
 {
@@ -23,6 +24,11 @@ namespace SFC.Infrastructure
   {
     public void Configure(WebApplicationBuilder builder)
     {
+      builder.Services.AddMediatRAsynchronous(cfg =>
+      {
+        cfg.OutboxRepository = sp => new OutboxRepository(sp.GetRequiredService<ConnectionString>().ToString());
+        cfg.InboxRepository = sp => new InboxRepository(sp.GetRequiredService<ConnectionString>().ToString());
+      });
     }
 
     public void Configure(WebApplication app)
@@ -46,10 +52,7 @@ namespace SFC.Infrastructure
       builder.RegisterType<HandlerActivator>().AsSelf();
       builder.RegisterType<ContainerJobActivator>().As<JobActivator>();
       builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
-      builder.RegisterType<OutboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
-      builder.RegisterType<InboxRepository>().InstancePerLifetimeScope().AsImplementedInterfaces();
       builder.RegisterType<MessagesProcesor>().AsImplementedInterfaces().SingleInstance();
-      builder.Register(f => new Configuration() { ConnectionString = f.Resolve<ConnectionString>().ToString() }).AsSelf();
       builder.RegisterType<AsyncMediator>().AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(TraceHandlerBehavior<,>)).AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(ValidationBehavior<,>)).AsImplementedInterfaces();

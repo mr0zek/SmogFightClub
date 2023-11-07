@@ -18,13 +18,10 @@ namespace SFC.Processes.Features.AlertConditionCreatedNotification
 
     public async Task Handle(AlertCreatedEvent @event, CancellationToken cancellationToken)
     {
-      await _commandBus.Send(new SendNotificationCommand()
-      {
-        Title = "Smog alert created",
-        Body = $"Smog alert has been succesfuly created, zip code: {@event.ZipCode}",
-        LoginName = @event.LoginName,
-        NotificationType = "AlertRegistered"
-      });
+      await _commandBus.Send(new SendNotificationCommand(
+        @event.LoginName,
+        $"Smog alert has been succesfuly created, zip code: {@event.ZipCode}", "Smog alert created",
+        "AlertRegistered"));      
     }
   }
 }

@@ -21,8 +21,8 @@ namespace MediatR.Asynchronous
     public async Task Publish(object notification, CancellationToken cancellationToken = default)
     {
       var data = JsonSerializer.Serialize(notification);
-      var type = notification.GetType().AssemblyQualifiedName;
-      await _outbox.Add(new MessageData() { Data = data, Type = type, MethodType = MethodType.Publish });
+      string type = notification.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
+      await _outbox.Add(new MessageData(0, data, type, MethodType.Publish));
       _eventAsyncProcessor.NewMessageArrived.Set();
     }
 
@@ -38,9 +38,9 @@ namespace MediatR.Asynchronous
 
     public async Task Send(object request, CancellationToken cancellationToken = default)
     {
-      var data = JsonSerializer.Serialize(request);
-      var type = request.GetType().AssemblyQualifiedName;
-      await _outbox.Add(new MessageData() { Data = data, Type = type, MethodType = MethodType.Send });
+      string data = JsonSerializer.Serialize(request);
+      string type = request.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
+      await _outbox.Add(new MessageData(0, data, type, MethodType.Send));
       _eventAsyncProcessor.NewMessageArrived.Set();
     }
   }

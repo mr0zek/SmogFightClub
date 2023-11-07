@@ -65,10 +65,10 @@ namespace SFC.Tests.Tools.Api
     {
         public class SendNotification
         {
-            public string LoginName { get; set; }
+            public string? LoginName { get; set; }
             public int Count { get; set; }
         }
 
-        public IEnumerable<SendNotification> Result { get; set; }
+        public IEnumerable<SendNotification>? Result { get; set; }
     }
 }

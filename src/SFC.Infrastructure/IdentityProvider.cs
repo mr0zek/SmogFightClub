@@ -19,7 +19,8 @@ namespace SFC.Infrastructure
     }
     public LoginName GetLoginName()
     {
-      return _httpContextAccessor.HttpContext.User.Identity.Name;
+      var user = _httpContextAccessor?.HttpContext?.User.Identity?.Name;
+      return user.ThrowIfNull();
     }
   }
 }

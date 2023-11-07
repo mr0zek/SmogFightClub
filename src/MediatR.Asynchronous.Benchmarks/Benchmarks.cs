@@ -12,8 +12,8 @@ namespace MediatR.Asynchronous.Benchmarks
 {
   public class Benchmarks
   {
-    private IAsyncMediator _mediator;
-    private IMessagesAsyncProcessor _processor;
+    private IAsyncMediator? _mediator;
+    private IMessagesAsyncProcessor? _processor;
     private readonly Ping _request = new Ping { Message = "Hello World" };
     private readonly Pinged _notification = new Pinged();
 
@@ -23,7 +23,7 @@ namespace MediatR.Asynchronous.Benchmarks
       var confBuilder = new ConfigurationBuilder()
        .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
-      var connectionString = configuration["ConnectionStrings:DefaultConnection"];
+      string connectionString = configuration["ConnectionStrings:DefaultConnection"] ?? throw new NullReferenceException("connectionString is null");
 
       var services = new ServiceCollection();
 
@@ -50,22 +50,22 @@ namespace MediatR.Asynchronous.Benchmarks
     [GlobalCleanup]
     public void GlobalCleanup() 
     {
-      _processor.Stop();
-      _processor.WaitForShutdown();
+      _processor?.Stop();
+      _processor?.WaitForShutdown();
     }
 
     [Benchmark]
     public async Task SendingRequests()
     {
-      await _mediator.Send(_request);
-      _processor.WaitForIdle();
+      await (_mediator ?? throw new NullReferenceException()).Send(_request);
+      _processor?.WaitForIdle();
     }
 
     [Benchmark]
     public async Task PublishingNotifications()
     {
-      await _mediator.Publish(_notification);
-      _processor.WaitForIdle();
+      await (_mediator ?? throw new NullReferenceException()).Publish(_notification);
+      _processor?.WaitForIdle();
     }
   }
 }

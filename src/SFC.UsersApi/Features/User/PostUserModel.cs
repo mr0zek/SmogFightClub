@@ -4,6 +4,6 @@ namespace SFC.UserApi.Features.User
 {
   public class PostUserModel : ICommand
   {
-    public string Email { get; set; }
+    public string? Email { get; set; }
   }
 }

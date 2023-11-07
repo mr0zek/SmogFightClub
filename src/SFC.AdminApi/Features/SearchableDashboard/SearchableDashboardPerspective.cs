@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
@@ -23,14 +24,14 @@ namespace SFC.AdminApi.Features.SearchableDashboard
           values(@loginName, @alertsCount)",
         new
         {
-          loginName = searchableDashboardEntry.LoginName.ToString(),
-          alertsCount = searchableDashboardEntry.AlertsCount
+          loginName = searchableDashboardEntry?.LoginName?.ToString(),
+          alertsCount = searchableDashboardEntry?.AlertsCount
         });
     }
 
     public async Task<SearchableDashboardEntry> Get(LoginName loginName)
     {
-      return await _connection.QueryFirstOrDefaultAsync<SearchableDashboardEntry>(
+      return await _connection.QueryFirstAsync<SearchableDashboardEntry>(
         @"select id, loginName, alertsCount from SearchableDashboard.SearchableDashboard where loginName = @loginName", new {loginName = loginName.ToString()});
     }
 
@@ -42,8 +43,8 @@ namespace SFC.AdminApi.Features.SearchableDashboard
           where loginName = @loginName",
           new 
           {             
-            loginName = searchableDashboardEntry.LoginName.ToString(), 
-            alertsCount = searchableDashboardEntry.AlertsCount });
+            loginName = searchableDashboardEntry?.LoginName?.ToString(), 
+            alertsCount = searchableDashboardEntry?.AlertsCount });
     }
 
     public async Task<SearchableDashboardResult> Search(SearchableDashboardQueryModel query)

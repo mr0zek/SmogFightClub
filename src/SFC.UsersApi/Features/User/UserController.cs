@@ -31,7 +31,7 @@ namespace SFC.UserApi.Features.User
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PostUserModel model)
     {
-      await _commandBus.Send(new SetNotificationEmailCommand(model.Email, _identityProvider.GetLoginName()));
+      await _commandBus.Send(new SetNotificationEmailCommand((model.Email).ThrowIfNull(), _identityProvider.GetLoginName()));
 
       return Ok();
     }

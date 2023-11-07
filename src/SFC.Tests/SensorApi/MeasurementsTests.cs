@@ -26,10 +26,7 @@ namespace SFC.Tests.SensorApi
 
     public class MeasurementsTests : TestBase
   {
-    public MeasurementsTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
+    
     [Fact]
     public async void PostMeasurements_should_return_ok()
     {

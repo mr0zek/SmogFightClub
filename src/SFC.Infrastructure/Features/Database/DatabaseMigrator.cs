@@ -37,7 +37,7 @@ namespace SFC.Infrastructure.Features.Database
         .AddLogging(lb => lb.AddFluentMigratorConsole())
         .BuildServiceProvider(false);
 
-      sp.GetService<IMigrationRunner>().MigrateUp();
+      sp.GetRequiredService<IMigrationRunner>().MigrateUp();
     }
   }
 }

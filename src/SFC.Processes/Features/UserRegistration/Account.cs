@@ -4,8 +4,7 @@ using System;
 namespace SFC.Processes.Features.UserRegistration
 {
   internal class Account
-  {
-    public Account() { }
+  {    
     public Account(Guid id, Email email, LoginName loginName, ZipCode zipCode, string passwordHash)
     {
       Email = email;

@@ -120,7 +120,7 @@ endlegend
       if (t != null)
       {
         var attr = t.CustomAttributes.First(f => f.AttributeType.FullName == result.ModuleDefinitionAttribute);
-        var type = attr.ConstructorArguments[0].Value.ToString();
+        var type = attr.ConstructorArguments[0].Value.ToString() ?? throw new NullReferenceException("Constructor arguments");
         var module = new ArchModule(assembly.Name.Name, type);
 
         foreach (var f in assembly.MainModule.GetTypes())
@@ -148,7 +148,7 @@ endlegend
               var mod = result.Modules.FirstOrDefault(a => a.Name == item[0].Value.ToString());
               if (mod == null)
               {
-                result.AddModule(mod = new ArchModule(item[0].Value.ToString(), ((CallerType)item[1].Value).ToString()));
+                result.AddModule(mod = new ArchModule(item[0].Value.ToString() ?? throw new NullReferenceException("module name"), ((CallerType)item[1].Value).ToString()));
               }
               mod.AddReference(module.Name, (ReferenceType)Enum.Parse(typeof(ReferenceType), ((CallType)item[2].Value).ToString()));
             }
@@ -164,7 +164,7 @@ endlegend
             var exitPoints = m.CustomAttributes.Where(x => x.AttributeType.FullName == result.ExitPointToAttribute);
             foreach (var exitPoint in exitPoints)
             {
-              string externalSystem = exitPoint.ConstructorArguments[0].Value.ToString();
+              string externalSystem = exitPoint.ConstructorArguments[0].Value.ToString() ?? throw new NullReferenceException("externalSystem");
               ReferenceType calltype = (ReferenceType)Enum.Parse(typeof(ReferenceType), ((CallType)exitPoint.ConstructorArguments[1].Value).ToString());
               var mod = result.Modules.FirstOrDefault(a => a.Name == externalSystem);
               if (mod == null)
@@ -181,18 +181,19 @@ endlegend
               {
                 if (i.Operand is GenericInstanceMethod)
                 {
-                  if (!(i.Operand as GenericInstanceMethod).DeclaringType.Scope.Name.Contains("SFC"))
+                  var gmi = (GenericInstanceMethod)i.Operand;
+                  if (!gmi.DeclaringType.Scope.Name.Contains("SFC"))
                   {
                     continue;
                   }
-                  if ((i.Operand as GenericInstanceMethod).DeclaringType.FullName == result.CommandBusMarkerInterface)
+                  if (gmi.DeclaringType.FullName == result.CommandBusMarkerInterface)
                   {
-                    string name = (i.Operand as GenericInstanceMethod).GenericArguments[0].Scope.Name;
+                    string name = gmi.GenericArguments[0].Scope.Name;
                     module.AddReference(name, ReferenceType.Command);
                   }                  
-                  if ((i.Operand as GenericInstanceMethod).DeclaringType.FullName == result.QueryBusMarkerInterface)
+                  if (gmi.DeclaringType.FullName == result.QueryBusMarkerInterface)
                   {
-                    string name = (i.Operand as GenericInstanceMethod).GenericArguments[0].Scope.Name;
+                    string name = gmi.GenericArguments[0].Scope.Name;
                     module.AddReference(name, ReferenceType.Query);
                   }
                 }

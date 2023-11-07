@@ -13,7 +13,7 @@ namespace ArchitectureDocumentationGenerator
       _assemblyNamesChecker = assemblyNamesChecker;
     }
 
-    public override AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+    public override AssemblyDefinition? Resolve(AssemblyNameReference name, ReaderParameters parameters)
     {
       try
       {
@@ -32,7 +32,7 @@ namespace ArchitectureDocumentationGenerator
       }
     }
 
-    protected override AssemblyDefinition SearchDirectory(AssemblyNameReference name, IEnumerable<string> directories, ReaderParameters parameters)
+    protected override AssemblyDefinition? SearchDirectory(AssemblyNameReference name, IEnumerable<string> directories, ReaderParameters parameters)
     {
       string[] strArray1;
       if (!name.IsWindowsRuntime)
@@ -40,7 +40,7 @@ namespace ArchitectureDocumentationGenerator
       else
         strArray1 = new string[2] { ".winmd", ".dll" };
       string[] strArray2 = strArray1;
-      AssemblyDefinition assemblyDefinition = null;
+      AssemblyDefinition? assemblyDefinition = null;
 
       foreach (string directory in directories)
       {
@@ -82,11 +82,11 @@ namespace ArchitectureDocumentationGenerator
       }
       catch (Exception)
       {
-        return null;
+        throw;
       }
     }
 
-    public override AssemblyDefinition Resolve(AssemblyNameReference name)
+    public override AssemblyDefinition? Resolve(AssemblyNameReference name)
     {
       try
       {
@@ -101,7 +101,7 @@ namespace ArchitectureDocumentationGenerator
           return assemblyDefinition1;
         }
 
-        AssemblyDefinition assemblyDefinition2 = base.Resolve(name, new ReaderParameters() { AssemblyResolver = this });
+        AssemblyDefinition? assemblyDefinition2 = base.Resolve(name, new ReaderParameters() { AssemblyResolver = this });
 
         if (assemblyDefinition2 != null)
         {

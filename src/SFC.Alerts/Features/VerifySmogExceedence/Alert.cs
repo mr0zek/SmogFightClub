@@ -2,8 +2,13 @@
 
 namespace SFC.Alerts.Features.VerifySmogExceedence
 {
-    class Alert
+  class Alert
+  {
+    public Alert(LoginName loginName)
     {
-        public LoginName LoginName { get; set; }
+      LoginName = loginName;
     }
+
+    public LoginName LoginName { get; set; }
+  }
 }

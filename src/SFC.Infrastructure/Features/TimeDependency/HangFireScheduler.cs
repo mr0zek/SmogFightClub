@@ -2,6 +2,7 @@
 using Hangfire;
 using SFC.Infrastructure.Interfaces.Communication;
 using SFC.Infrastructure.Interfaces.TimeDependency;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SFC.Infrastructure.Features.TimeDependency
           throw new TimeConfigurationException();
         }
 
-        string crontab = crontabAttribute.ConstructorArguments[0].Value.ToString();
+        string crontab = (crontabAttribute?.ConstructorArguments[0].Value?.ToString()).ThrowIfNull();
 
         var jobId = eventHandler.GetType().Name;
         RecurringJob.AddOrUpdate<HandlerActivator>(jobId, x => x.Run(eventHandler.GetType()), () => crontab);

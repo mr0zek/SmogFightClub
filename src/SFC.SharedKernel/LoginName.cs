@@ -23,7 +23,7 @@ namespace SFC.SharedKernel
     {
       if (loginName == null)
       {
-        return null;
+        throw new ArgumentNullException(nameof(loginName));
       }
       return new LoginName(loginName);
     }

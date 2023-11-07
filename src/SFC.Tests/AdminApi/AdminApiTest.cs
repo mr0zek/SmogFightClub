@@ -31,10 +31,7 @@ namespace SFC.Tests.AdminApi
 
   public class AdminApiTest : TestBase
   {
-    public AdminApiTest(ITestOutputHelper output) : base(output)
-    {
-    }
-
+    
     [Fact]
     public async void AlertNotificationsWithUserTest()
     {
@@ -65,9 +62,9 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetAlertNotificationsWithUserData(1, int.MaxValue);
 
       // Assert      
-      var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
+      var entry = result!.Results!.FirstOrDefault(f => f.LoginName! == postAccountModel.LoginName);
       Assert.NotNull(entry);
-      Assert.Equal(postAccountModel.LoginName, entry.LoginName);
+      Assert.Equal(postAccountModel.LoginName, entry.LoginName!);
       Assert.Equal(1, entry.AlertsSentCount);
     }
 
@@ -94,9 +91,9 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetSendNotificationsByUser(0, int.MaxValue);
 
       // Assert      
-      Assert.Single(result.Result);
-      Assert.Equal(postAccountModel.LoginName, result.Result.First().LoginName);
-      Assert.Equal(2, result.Result.First().Count);
+      Assert.Single(result.Result!);
+      Assert.Equal(postAccountModel.LoginName, result.Result!.First().LoginName);
+      Assert.Equal(2, result.Result!.First().Count);
     }
 
     [Fact]
@@ -128,7 +125,7 @@ namespace SFC.Tests.AdminApi
       var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);
 
       // Assert      
-      var entry = result.Results.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
+      var entry = result.Results!.FirstOrDefault(f => f.LoginName == postAccountModel.LoginName);
       Assert.NotNull(entry);
       Assert.Equal(expectedAlertsCount + 1, entry.AlertsCount);
     }

@@ -18,13 +18,11 @@ namespace SFC.Processes.Features.SmogAlertNotification
 
     public async Task Handle(SmogAlertEvent @event, CancellationToken token)
     {
-      await _commandBus.Send(new SendNotificationCommand()
-      {
-        Title = "Smog alert",
-        Body = $"Smog appears in your area, zip code: {@event.ZipCode}",
-        LoginName = @event.LoginName,
-        NotificationType = "SmogAlert"
-      });
+      await _commandBus.Send(new SendNotificationCommand(
+        @event.LoginName,
+        $"Smog appears in your area, zip code: {@event.ZipCode}",
+        "Smog alert",
+        "SmogAlert"));
     }
   }
 }

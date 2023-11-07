@@ -22,8 +22,8 @@ namespace SFC.Infrastructure.Features.Tracing
       INotificationHandler<TEvent> handler, 
       CancellationToken cancellationToken) 
     {
-      var moduleName = handler.GetType().Assembly.GetName().Name;
-      await _callStack.StartCall(moduleName, typeof(TEvent).Name, "Event");
+      string moduleName = (handler.GetType().Assembly.GetName().Name).ThrowIfNull();
+      await _callStack.StartCall(moduleName, typeof(TEvent).Name, "Event", "");
 
       try
       {

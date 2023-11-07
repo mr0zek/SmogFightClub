@@ -22,7 +22,7 @@ namespace SFC.Processes.Features.UserRegistrationSaga
     public async Task Handle(ConfirmUserCommandSaga command, CancellationToken cancellationToken)
     {
       UserRegistrationSaga saga = new(_commandBus);
-      UserRegistrationSagaData data = await _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
+      UserRegistrationSagaData? data = await _sagaRepository.Get<UserRegistrationSagaData>(command.ConfirmationId);
       if (data == null)
       {
         throw new InvalidOperationException();

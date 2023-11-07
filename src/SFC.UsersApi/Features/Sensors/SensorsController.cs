@@ -34,12 +34,10 @@ namespace SFC.UserApi.Features.Sensors
     {
       Guid id = Guid.NewGuid();
 
-      await _commandBus.Send(new RegisterSensorCommand()
-      {
-        SensorId = id,
-        LoginName = _identityProvider.GetLoginName(),
-        ZipCode = model.ZipCode
-      });
+      await _commandBus.Send(new RegisterSensorCommand(
+        _identityProvider.GetLoginName(), 
+        (model.ZipCode).ThrowIfNull(),
+        id));      
 
       return Accepted($"api/v1/sensors/{id}",id);
     }

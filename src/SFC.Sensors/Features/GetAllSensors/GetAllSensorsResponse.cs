@@ -11,6 +11,11 @@ namespace SFC.Sensors.Features.GetAllSensors
     }
     public class SensorReadModel : IResponse
     {
+      public SensorReadModel(string zipCode)
+      {
+        ZipCode = zipCode;
+      }
+
       public string ZipCode { get; set; }
     }
 

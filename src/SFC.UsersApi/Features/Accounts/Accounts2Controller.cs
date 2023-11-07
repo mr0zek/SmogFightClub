@@ -30,15 +30,13 @@ namespace SFC.UserApi.Features.Accounts
 
       try
       {
-        await _commandBus.Send(new RegisterUserCommandSaga()
-        {
-          Id = id,
-          BaseUrl = Request.BaseUrl(""),
-          LoginName = model.LoginName,
-          ZipCode = model.ZipCode,
-          Email = model.Email,
-          PasswordHash = PasswordHash.FromPassword(model.Password)
-        });
+        await _commandBus.Send(new RegisterUserCommandSaga(
+          (model?.LoginName).ThrowIfNull(), 
+          (model?.Email).ThrowIfNull(), 
+          PasswordHash.FromPassword((model?.Password).ThrowIfNull()), 
+          (model?.ZipCode).ThrowIfNull(), 
+          (Request?.BaseUrl("")).ThrowIfNull(), 
+          id));        
       }
       catch (LoginNameAlreadyUsedSagaException)
       {
@@ -47,7 +45,7 @@ namespace SFC.UserApi.Features.Accounts
         return BadRequest(mds);
       }
 
-      return Created(new Uri(Request.BaseUrl($"api/v2.0/accounts/{id}")), id);
+      return Created(new Uri((Request?.BaseUrl($"api/v2.0/accounts/{id}")).ThrowIfNull()), id);
     }
 
     [EntryPointFor("User", CallerType.Human, CallType.Command)]
@@ -56,10 +54,7 @@ namespace SFC.UserApi.Features.Accounts
     {
       try
       {
-        await _commandBus.Send(new ConfirmUserCommandSaga()
-        {
-          ConfirmationId = id
-        });
+        await _commandBus.Send(new ConfirmUserCommandSaga(id));
       }
       catch (InvalidOperationException)
       {

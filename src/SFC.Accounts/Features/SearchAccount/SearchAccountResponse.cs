@@ -5,7 +5,7 @@ using SFC.SharedKernel;
 
 namespace SFC.Accounts.Features.SearchAccount
 {
-    public class SearchAccountResponse : IResponse
+  public class SearchAccountResponse : IResponse
   {
     public SearchAccountResponse(IEnumerable<Account> accounts)
     {
@@ -17,6 +17,11 @@ namespace SFC.Accounts.Features.SearchAccount
     public class Account : IResponse
     {
       public LoginName LoginName { get; set; }
+
+      public Account(LoginName loginName)
+      {
+        LoginName = loginName;
+      }
     }
   }
 }

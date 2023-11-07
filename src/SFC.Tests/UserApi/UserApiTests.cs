@@ -31,10 +31,7 @@ namespace SFC.Tests.UserApi
 
   public class UserApiTests : TestBase
   {
-    public UserApiTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
+    
     [Fact]
     public async void NotificationShoudBeSentAfterAlertCreation()
     {
@@ -94,8 +91,8 @@ namespace SFC.Tests.UserApi
 
       var alerts = await api.GetAlerts();
 
-      Assert.Single(alerts.Alerts);
-      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);
+      Assert.Single(alerts.Alerts!);
+      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts!.First().ZipCode);
     }
 
     [Fact]
@@ -124,8 +121,8 @@ namespace SFC.Tests.UserApi
 
       var alerts = await api.GetAlerts();
 
-      Assert.Single(alerts.Alerts);
-      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts.First().ZipCode);
+      Assert.Single(alerts.Alerts!);
+      Assert.Equal(postAccountModel.ZipCode, alerts.Alerts!.First().ZipCode);
     }
   }
 }

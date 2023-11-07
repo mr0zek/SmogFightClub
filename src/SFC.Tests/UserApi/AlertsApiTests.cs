@@ -24,11 +24,7 @@ using Xunit.Abstractions;
 namespace SFC.Tests.UserApi
 {
   public class AlertsApiTests : TestBase
-  {
-    public AlertsApiTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
+  {    
     [Fact]
     public async void AddGetGetAllTest()
     {
