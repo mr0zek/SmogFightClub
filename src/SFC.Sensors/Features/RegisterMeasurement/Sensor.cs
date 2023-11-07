@@ -1,14 +1,21 @@
-﻿namespace SFC.Sensors.Features.RegisterMeasurement
+﻿using SFC.SharedKernel;
+using System;
+
+namespace SFC.Sensors.Features.RegisterMeasurement
 {
   internal class Sensor
   {
-    public Sensor(string guid, string zipCode)
+    public Sensor(Guid id, string zipCode) : this(id, (ZipCode) zipCode)
     {
-      Guid = guid;
+    }
+
+    public Sensor(Guid id, ZipCode zipCode)
+    {
+      Id = id;
       ZipCode = zipCode;
     }
 
-    public string Guid { get; set; }
-    public string ZipCode { get; set; }
+    public Guid Id { get; set; }
+    public ZipCode ZipCode { get; set; }
   }
 }

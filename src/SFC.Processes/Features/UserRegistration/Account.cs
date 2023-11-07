@@ -4,7 +4,12 @@ using System;
 namespace SFC.Processes.Features.UserRegistration
 {
   internal class Account
-  {    
+  {
+    public Account(Guid id, string email, string zipCode, string loginName, string passwordHash)
+      :this(id, (Email)email,(LoginName)loginName, (ZipCode)zipCode, passwordHash)
+    {
+    }
+
     public Account(Guid id, Email email, LoginName loginName, ZipCode zipCode, string passwordHash)
     {
       Email = email;

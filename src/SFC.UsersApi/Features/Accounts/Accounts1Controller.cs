@@ -55,10 +55,7 @@ namespace SFC.UserApi.Features.Accounts
     {
       try
       {
-        await _commandBus.Send(new ConfirmUserCommand()
-        {
-          ConfirmationId = id
-        });
+        await _commandBus.Send(new ConfirmUserCommand(id));
       }
       catch (InvalidOperationException)
       {

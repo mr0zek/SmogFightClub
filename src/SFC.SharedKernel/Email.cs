@@ -24,11 +24,11 @@ namespace SFC.SharedKernel
     {
       if (email == null)
       {
-        throw new ArgumentNullException(nameof(email));
+        return null!;
       }
       return new Email(email);
     }
-
+    
     public static implicit operator string(Email email)
     {
       return email.ToString();

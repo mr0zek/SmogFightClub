@@ -1,5 +1,6 @@
 ﻿using SFC.Infrastructure.Interfaces.Communication;
 using SFC.SharedKernel;
+using System;
 using System.Collections.Generic;
 
 namespace SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract
