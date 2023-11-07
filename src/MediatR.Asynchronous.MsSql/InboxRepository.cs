@@ -14,7 +14,9 @@ namespace MediatR.Asynchronous.MsSql
 
     public async Task<int> GetLastProcessedId(string moduleName)
     {
-      return await _connection.QueryFirstOrDefaultAsync<int>("select top 1 lastProcessedId from inbox where moduleName = @moduleName order by id desc", new { moduleName });
+      int result = await _connection.QueryFirstOrDefaultAsync<int>("select top 1 lastProcessedId from inbox where moduleName = @moduleName order by id desc", new { moduleName });
+
+      return result;
     }
 
     public async Task SetProcessed(int id, string moduleName)

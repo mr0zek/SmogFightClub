@@ -75,7 +75,7 @@ namespace MediatR.Asynchronous
               await (scope.ServiceProvider.GetRequiredService<IInboxRepository>())
                 .SetProcessed(e.Id, moduleName);
 
-              Type eventType = Type.GetType(e.Type) ?? throw new NullReferenceException();
+              Type eventType = Type.GetType(e.Type)!;
               object @event = JsonSerializer.Deserialize(e.Data, eventType) ?? throw new NullReferenceException();
 
               if (e.MethodType == MethodType.Publish)

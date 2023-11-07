@@ -23,7 +23,7 @@ namespace MediatR.Asynchronous.Tests
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"] ?? throw new NullReferenceException("ConnectionString");
-      
+
       var services = new ServiceCollection();
 
       services.AddSingleton(TextWriter.Null);
@@ -43,9 +43,13 @@ namespace MediatR.Asynchronous.Tests
 
       _mediator = provider.GetRequiredService<IAsyncMediator>();
       _processor = provider.GetRequiredService<IMessagesAsyncProcessor>();
-      _processor.Start("testModuleName");
+
+      ResetDatabase.Reset(connectionString);
+      DatabaseMigrator.Run(connectionString);
+
+      _processor.Start("testModuleName");      
     }
-    
+
     ~ConcurrencyTests()
     {
       _processor.Stop();
