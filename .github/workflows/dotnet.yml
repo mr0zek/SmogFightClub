@@ -20,10 +20,11 @@ jobs:
       with:
         install: sqlengine, sqlclient, sqlpackage, localdb
 
-    - name: Create database for testing
-      run: 
-        sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database SFC_Test"
-        sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database MadiatR_Test"
+    - name: Create database for testing SFC
+      run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database SFC_Test"
+      
+    - name: Create database for testing mediatr
+      run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "create database MadiatR_Test"
       
     - uses: actions/checkout@v3
     
