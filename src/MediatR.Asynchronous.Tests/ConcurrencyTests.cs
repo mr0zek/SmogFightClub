@@ -14,8 +14,6 @@ namespace MediatR.Asynchronous.Tests
   {
     private IAsyncMediator _mediator;
     private IMessagesAsyncProcessor _processor;
-    private readonly Ping _request = new Ping("Hello World");
-    private readonly Pinged _notification = new Pinged();
 
     public ConcurrencyTests()
     {
@@ -59,17 +57,39 @@ namespace MediatR.Asynchronous.Tests
     [Fact]
     public async Task SendingRequests()
     {
-      await _mediator.Send(_request);
-      _processor.WaitForIdle();
-      Assert.Equal(1, PingHandler.RequestsCount);
+      int count = 1000;
+      for (int i = 0; i < count; i++)
+      {
+        await _mediator.Send(new Ping(i, "testmessage"));
+      }
+      
+      while(PingHandler.Requests.Count != count)
+      {
+        Thread.Sleep(10);
+      }
+      for(int i = 0;i< PingHandler.Requests.Count;i++)
+      {
+        Assert.Equal(i, PingHandler.Requests[i]);
+      }
     }
 
     [Fact]
     public async Task PublishingNotifications()
     {
-      await _mediator.Publish(_notification);
-      _processor.WaitForIdle();
-      Assert.Equal(1, PingedHandler.RequestsCount);
+      int count = 1000;
+      for (int i = 0; i < count; i++)
+      {
+        await _mediator.Publish(new Pinged(i));
+      }
+
+      while (PingedHandler.Requests.Count != count)
+      {
+        Thread.Sleep(10);
+      }
+      for (int i = 0; i < PingedHandler.Requests.Count; i++)
+      {
+        Assert.Equal(i, PingedHandler.Requests[i]);
+      }
     }
   }
 }

@@ -2,14 +2,20 @@
 {
   public class Pinged : INotification
   {
+    public Pinged(int index)
+    {
+      Index = index;
+    }
+
+    public int Index { get; }
   }
 
   public class PingedHandler : INotificationHandler<Pinged>
   {
-    public static int RequestsCount { get; private set; }
+    public static List<int> Requests { get; set; } = new List<int>();
     public Task Handle(Pinged notification, CancellationToken cancellationToken)
     {
-      RequestsCount++;
+      Requests.Add(notification.Index);
       return Task.CompletedTask;
     }
   }

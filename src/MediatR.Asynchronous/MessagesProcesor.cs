@@ -62,9 +62,9 @@ namespace MediatR.Asynchronous
             _idle.Set();
             NewMessageArrived.Reset();
             NewMessageArrived.WaitOne(1000);
+            _idle.Reset();
             messages = await outbox.Get(lastProcessedId, 100);
-          }
-          _idle.Reset();
+          }          
           _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
           foreach (MessageData e in messages)
           {
@@ -102,7 +102,7 @@ namespace MediatR.Asynchronous
 
     public void WaitForIdle()
     {
-      _idle.WaitOne();
+      _idle.WaitOne();      
     }
   }
 }

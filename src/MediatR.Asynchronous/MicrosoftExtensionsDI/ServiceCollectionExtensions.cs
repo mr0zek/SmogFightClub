@@ -28,8 +28,8 @@ public static class ServiceCollectionExtensions
     services.TryAddScoped<IAsyncSender, AsyncMediator>();
     services.TryAddScoped<IMessagesAsyncProcessor, MessagesProcesor>();
     services.TryAddScoped<IMessagesProcessorStatusReporter, MessagesProcesorStatusReporter>();
-    services.TryAddScoped(typeof(IInboxRepository), configuration.InboxRepository ?? throw new ArgumentException("Missing InboxRepository configuration"));
-    services.TryAddScoped(typeof(IOutboxRepository), configuration.OutboxRepository ?? throw new ArgumentException("Missing OutboxRepository configuration"));
+    services.TryAddTransient(typeof(IInboxRepository), configuration.InboxRepository ?? throw new ArgumentException("Missing InboxRepository configuration"));
+    services.TryAddTransient(typeof(IOutboxRepository), configuration.OutboxRepository ?? throw new ArgumentException("Missing OutboxRepository configuration"));
 
     return services;
   }

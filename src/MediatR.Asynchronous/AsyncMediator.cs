@@ -10,9 +10,9 @@ namespace MediatR.Asynchronous
   public class AsyncMediator : IAsyncMediator
   {
     private readonly IOutboxRepository _outbox;
-    private readonly IMessagesAsyncProcessor _eventAsyncProcessor;
+    private readonly IEnumerable<IMessagesAsyncProcessor> _eventAsyncProcessor;
 
-    public AsyncMediator(IOutboxRepository outbox, IMessagesAsyncProcessor eventAsyncProcessor)
+    public AsyncMediator(IOutboxRepository outbox, IEnumerable<IMessagesAsyncProcessor> eventAsyncProcessor)
     {
       _outbox = outbox;
       _eventAsyncProcessor = eventAsyncProcessor;
@@ -23,7 +23,7 @@ namespace MediatR.Asynchronous
       var data = JsonSerializer.Serialize(notification);
       string type = notification.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
       await _outbox.Add(new MessageData(0, data, type, MethodType.Publish));
-      _eventAsyncProcessor.NewMessageArrived.Set();
+      _eventAsyncProcessor.All(f=> f.NewMessageArrived.Set());
     }
 
     public async Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
@@ -41,7 +41,7 @@ namespace MediatR.Asynchronous
       string data = JsonSerializer.Serialize(request);
       string type = request.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
       await _outbox.Add(new MessageData(0, data, type, MethodType.Send));
-      _eventAsyncProcessor.NewMessageArrived.Set();
+      _eventAsyncProcessor.All(f => f.NewMessageArrived.Set());
     }
   }
 }
