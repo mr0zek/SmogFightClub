@@ -7,10 +7,10 @@ using System.Reflection;
 namespace SFC.SharedKernel
 {
   public abstract class ValueObject : IEqualityComparer, IEquatable<ValueObject>
-  {
+  {    
     public bool Equals(ValueObject? other)
     {
-      if(ReferenceEquals(null, other)) return false;
+      if (ReferenceEquals(null, other)) return false;
 
       var a = GetEqualityComponents().ToList();
       var b = other.GetEqualityComponents().ToList();
