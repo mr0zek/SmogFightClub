@@ -26,9 +26,9 @@ namespace MediatR.Asynchronous
       _idle = new EventWaitHandle(false, EventResetMode.ManualReset);
     }
 
-    public void Start(string moduleName)
+    public void Start()
     {
-      ThreadPool.QueueUserWorkItem(f => EventLoop(moduleName, _cancellationTokenSource.Token).Wait());
+      ThreadPool.QueueUserWorkItem(f => EventLoop(_cancellationTokenSource.Token).Wait());
     }
 
     public void Stop()
@@ -41,10 +41,11 @@ namespace MediatR.Asynchronous
       _shutDownCompleated.WaitOne();
     }
 
-    private async Task EventLoop(string moduleName, CancellationToken token)
+    private async Task EventLoop(CancellationToken token)
     {
       try
       {
+        string moduleName = "internal";
         IOutboxRepository outbox = _serviceProvider.GetRequiredService<IOutboxRepository>();
         _statusReporter.ReportStatus(AsyncProcesorStatus.Working);
         var inbox = _serviceProvider.GetRequiredService<IInboxRepository>();

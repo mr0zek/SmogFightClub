@@ -3,7 +3,7 @@
   public interface IAsyncProcessor
   {
     EventWaitHandle NewNotificationArrived { get; }
-    void Start(string moduleName);
+    void Start();
     void Stop();
     void WaitForIdle();
     void WaitForShutdown();

@@ -44,7 +44,7 @@ namespace MediatR.Asynchronous.Benchmarks
 
       _mediator = provider.GetRequiredService<IAsyncMediator>();
       _processor = provider.GetRequiredService<IAsyncProcessor>();
-      _processor.Start("testModuleName");
+      _processor.Start();
     }
 
     [GlobalCleanup]

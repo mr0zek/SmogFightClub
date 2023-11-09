@@ -45,7 +45,7 @@ namespace MediatR.Asynchronous.Tests
       ResetDatabase.Reset(connectionString);
       DatabaseMigrator.Run(connectionString);
 
-      _processor.Start("testModuleName");      
+      _processor.Start();      
     }
 
     ~ConcurrencyTests()

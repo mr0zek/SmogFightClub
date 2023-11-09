@@ -13,24 +13,8 @@ using SFC.Sensors;
 namespace SFC.AdminApi
 {
   [ModuleDefinition("Api")]
-  public class AdminApiModule : IHaveAutofacRegistrations, IModule, IHaveWorker
-  {
-    IAsyncProcessor? _eventAsyncProcessor;
-    public void StartWorker(IComponentContext container)
-    {
-      _eventAsyncProcessor = container.Resolve<IAsyncProcessor>();
-      _eventAsyncProcessor.Start("AdminApi");
-    }
-
-    public void StopWorker()
-    {
-      _eventAsyncProcessor?.Stop();
-    }
-
-    public void WaitForShutdown()
-    {
-      _eventAsyncProcessor?.WaitForShutdown();
-    }
+  public class AdminApiModule : IHaveAutofacRegistrations, IModule
+  {    
 
     public void RegisterTypes(ContainerBuilder builder)
     {

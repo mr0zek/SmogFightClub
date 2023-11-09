@@ -20,8 +20,25 @@ using Microsoft.Extensions.DependencyInjection;
 namespace SFC.Infrastructure
 {
   [ModuleDefinition("Infastructure")]
-  public class InfrastructureModule : IHaveAutofacRegistrations, IModule, IHaveAspConfiguration
+  public class InfrastructureModule : IHaveAutofacRegistrations, IModule, IHaveAspConfiguration, IHaveWorker
   {
+    IAsyncProcessor? _eventAsyncProcessor;
+    public void StartWorker(IComponentContext container)
+    {
+      _eventAsyncProcessor = container.Resolve<IAsyncProcessor>();
+      _eventAsyncProcessor.Start();
+    }
+
+    public void StopWorker()
+    {
+      _eventAsyncProcessor?.Stop();
+    }
+
+    public void WaitForShutdown()
+    {
+      _eventAsyncProcessor?.WaitForShutdown();
+    }
+
     public void Configure(WebApplicationBuilder builder)
     {
       builder.Services.AddMediatRAsynchronous(cfg =>
