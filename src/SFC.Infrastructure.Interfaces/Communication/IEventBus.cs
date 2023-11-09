@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using MediatR.Asynchronous;
 
 namespace SFC.Infrastructure.Interfaces.Communication
 {
-  public interface IEventBus : IPublisher
+  public interface IEventBus : IAsyncPublisher
   {    
   }
 }

@@ -52,7 +52,7 @@ namespace SFC.Infrastructure
       builder.RegisterType<HandlerActivator>().AsSelf();
       builder.RegisterType<ContainerJobActivator>().As<JobActivator>();
       builder.RegisterType<CallStack>().InstancePerLifetimeScope().AsImplementedInterfaces();
-      builder.RegisterType<MessagesProcesor>().AsImplementedInterfaces().SingleInstance();
+      builder.RegisterType<NotificationAsyncProcesor>().AsImplementedInterfaces().SingleInstance();
       builder.RegisterType<AsyncMediator>().AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(TraceHandlerBehavior<,>)).AsImplementedInterfaces();
       builder.RegisterGeneric(typeof(ValidationBehavior<,>)).AsImplementedInterfaces();

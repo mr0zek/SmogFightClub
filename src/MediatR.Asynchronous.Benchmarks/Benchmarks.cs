@@ -13,7 +13,7 @@ namespace MediatR.Asynchronous.Benchmarks
   public class Benchmarks
   {
     private IAsyncMediator? _mediator;
-    private IMessagesAsyncProcessor? _processor;
+    private INotificationAsyncProcessor? _processor;
     private readonly Ping _request = new Ping { Message = "Hello World" };
     private readonly Pinged _notification = new Pinged();
 
@@ -43,7 +43,7 @@ namespace MediatR.Asynchronous.Benchmarks
       var provider = services.BuildServiceProvider();
 
       _mediator = provider.GetRequiredService<IAsyncMediator>();
-      _processor = provider.GetRequiredService<IMessagesAsyncProcessor>();
+      _processor = provider.GetRequiredService<INotificationAsyncProcessor>();
       _processor.Start("testModuleName");
     }
 

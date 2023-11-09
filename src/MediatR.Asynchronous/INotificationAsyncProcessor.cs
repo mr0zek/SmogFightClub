@@ -1,8 +1,8 @@
 ﻿namespace MediatR.Asynchronous
 {
-  public interface IMessagesAsyncProcessor
+  public interface INotificationAsyncProcessor
   {
-    EventWaitHandle NewMessageArrived { get; }
+    EventWaitHandle NewNotificationArrived { get; }
     void Start(string moduleName);
     void Stop();
     void WaitForIdle();

@@ -5,7 +5,7 @@ using System.Transactions;
 namespace MediatR.Asynchronous
 {
 
-  public class MessagesProcesor : IMessagesAsyncProcessor
+  public class NotificationAsyncProcesor : INotificationAsyncProcessor
   {
     private readonly IServiceProvider _serviceProvider;
     private readonly IMessagesProcessorStatusReporter _statusReporter;
@@ -13,9 +13,9 @@ namespace MediatR.Asynchronous
     private readonly EventWaitHandle _shutDownCompleated;
     private readonly EventWaitHandle _idle;
 
-    public EventWaitHandle NewMessageArrived { get; } = new EventWaitHandle(false, EventResetMode.ManualReset);
+    public EventWaitHandle NewNotificationArrived { get; } = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-    public MessagesProcesor(
+    public NotificationAsyncProcesor(
       IServiceProvider serviceProvider,
       IMessagesProcessorStatusReporter statusReporter)
     {
@@ -60,8 +60,8 @@ namespace MediatR.Asynchronous
             }
             _statusReporter.ReportStatus(MessagesProcesorStatus.Idle);
             _idle.Set();
-            NewMessageArrived.Reset();
-            NewMessageArrived.WaitOne(1000);
+            NewNotificationArrived.Reset();
+            NewNotificationArrived.WaitOne(1000);
             _idle.Reset();
             messages = await outbox.Get(lastProcessedId, 100);
           }          

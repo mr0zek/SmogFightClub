@@ -13,7 +13,7 @@ namespace MediatR.Asynchronous.Tests
   public class ConcurrencyTests
   {
     private IAsyncMediator _mediator;
-    private IMessagesAsyncProcessor _processor;
+    private INotificationAsyncProcessor _processor;
 
     public ConcurrencyTests()
     {
@@ -40,7 +40,7 @@ namespace MediatR.Asynchronous.Tests
       var provider = services.BuildServiceProvider();
 
       _mediator = provider.GetRequiredService<IAsyncMediator>();
-      _processor = provider.GetRequiredService<IMessagesAsyncProcessor>();
+      _processor = provider.GetRequiredService<INotificationAsyncProcessor>();
 
       ResetDatabase.Reset(connectionString);
       DatabaseMigrator.Run(connectionString);

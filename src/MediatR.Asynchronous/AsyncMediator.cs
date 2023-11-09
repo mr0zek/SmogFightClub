@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,12 @@ namespace MediatR.Asynchronous
   public class AsyncMediator : IAsyncMediator
   {
     private readonly IOutboxRepository _outbox;
-    private readonly IEnumerable<IMessagesAsyncProcessor> _eventAsyncProcessor;
+    private readonly IEnumerable<INotificationAsyncProcessor> _eventAsyncProcessor;
 
-    public AsyncMediator(IOutboxRepository outbox, IEnumerable<IMessagesAsyncProcessor> eventAsyncProcessor)
+    public AsyncMediator(IServiceProvider serviceProvider)
     {
-      _outbox = outbox;
-      _eventAsyncProcessor = eventAsyncProcessor;
+      _outbox = serviceProvider.GetRequiredService<IOutboxRepository>();
+      _eventAsyncProcessor = serviceProvider.GetRequiredService<IEnumerable<INotificationAsyncProcessor>>();
     }
 
     public async Task Publish(object notification, CancellationToken cancellationToken = default)
@@ -23,7 +24,7 @@ namespace MediatR.Asynchronous
       var data = JsonSerializer.Serialize(notification);
       string type = notification.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
       await _outbox.Add(new MessageData(0, data, type, MethodType.Publish));
-      _eventAsyncProcessor.All(f=> f.NewMessageArrived.Set());
+      _eventAsyncProcessor.All(f=> f.NewNotificationArrived.Set());
     }
 
     public async Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
@@ -41,7 +42,7 @@ namespace MediatR.Asynchronous
       string data = JsonSerializer.Serialize(request);
       string type = request.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
       await _outbox.Add(new MessageData(0, data, type, MethodType.Send));
-      _eventAsyncProcessor.All(f => f.NewMessageArrived.Set());
+      _eventAsyncProcessor.All(f => f.NewNotificationArrived.Set());
     }
   }
 }
