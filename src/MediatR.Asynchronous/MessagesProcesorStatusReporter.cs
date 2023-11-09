@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediatR.Asynchronous
 {
-  public class MessagesProcesorStatusReporter : IMessagesProcessorStatusReporter
+  public class MessagesProcesorStatusReporter : IAsyncProcessorStatusReporter
   {
-    public void ReportStatus(MessagesProcesorStatus status)
+    public void ReportStatus(AsyncProcesorStatus status)
     {
     }
   }

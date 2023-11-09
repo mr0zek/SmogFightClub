@@ -1,6 +1,6 @@
 ﻿namespace MediatR.Asynchronous
 {
-  public enum MessagesProcesorStatus
+  public enum AsyncProcesorStatus
   {
     Working,
     Idle

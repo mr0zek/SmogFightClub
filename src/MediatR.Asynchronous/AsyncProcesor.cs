@@ -5,19 +5,19 @@ using System.Transactions;
 namespace MediatR.Asynchronous
 {
 
-  public class NotificationAsyncProcesor : INotificationAsyncProcessor
+  public class AsyncProcesor : IAsyncProcessor
   {
     private readonly IServiceProvider _serviceProvider;
-    private readonly IMessagesProcessorStatusReporter _statusReporter;
+    private readonly IAsyncProcessorStatusReporter _statusReporter;
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly EventWaitHandle _shutDownCompleated;
     private readonly EventWaitHandle _idle;
 
     public EventWaitHandle NewNotificationArrived { get; } = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-    public NotificationAsyncProcesor(
+    public AsyncProcesor(
       IServiceProvider serviceProvider,
-      IMessagesProcessorStatusReporter statusReporter)
+      IAsyncProcessorStatusReporter statusReporter)
     {
       _serviceProvider = serviceProvider;
       _statusReporter = statusReporter;
@@ -46,7 +46,7 @@ namespace MediatR.Asynchronous
       try
       {
         IOutboxRepository outbox = _serviceProvider.GetRequiredService<IOutboxRepository>();
-        _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
+        _statusReporter.ReportStatus(AsyncProcesorStatus.Working);
         var inbox = _serviceProvider.GetRequiredService<IInboxRepository>();
         while (!token.IsCancellationRequested)
         {
@@ -58,14 +58,14 @@ namespace MediatR.Asynchronous
             {
               return;
             }
-            _statusReporter.ReportStatus(MessagesProcesorStatus.Idle);
+            _statusReporter.ReportStatus(AsyncProcesorStatus.Idle);
             _idle.Set();
             NewNotificationArrived.Reset();
             NewNotificationArrived.WaitOne(1000);
             _idle.Reset();
             messages = await outbox.Get(lastProcessedId, 100);
           }          
-          _statusReporter.ReportStatus(MessagesProcesorStatus.Working);
+          _statusReporter.ReportStatus(AsyncProcesorStatus.Working);
           foreach (MessageData e in messages)
           {
             var scopeFactory = _serviceProvider.GetRequiredService<IServiceScopeFactory>();

@@ -11,12 +11,12 @@ namespace MediatR.Asynchronous
   public class AsyncMediator : IAsyncMediator
   {
     private readonly IOutboxRepository _outbox;
-    private readonly IEnumerable<INotificationAsyncProcessor> _eventAsyncProcessor;
+    private readonly IEnumerable<IAsyncProcessor> _eventAsyncProcessor;
 
     public AsyncMediator(IServiceProvider serviceProvider)
     {
       _outbox = serviceProvider.GetRequiredService<IOutboxRepository>();
-      _eventAsyncProcessor = serviceProvider.GetRequiredService<IEnumerable<INotificationAsyncProcessor>>();
+      _eventAsyncProcessor = serviceProvider.GetRequiredService<IEnumerable<IAsyncProcessor>>();
     }
 
     public async Task Publish(object notification, CancellationToken cancellationToken = default)

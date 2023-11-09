@@ -15,10 +15,10 @@ namespace SFC.AdminApi
   [ModuleDefinition("Api")]
   public class AdminApiModule : IHaveAutofacRegistrations, IModule, IHaveWorker
   {
-    INotificationAsyncProcessor? _eventAsyncProcessor;
+    IAsyncProcessor? _eventAsyncProcessor;
     public void StartWorker(IComponentContext container)
     {
-      _eventAsyncProcessor = container.Resolve<INotificationAsyncProcessor>();
+      _eventAsyncProcessor = container.Resolve<IAsyncProcessor>();
       _eventAsyncProcessor.Start("AdminApi");
     }
 
