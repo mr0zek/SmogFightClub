@@ -62,7 +62,7 @@ namespace MediatR.Asynchronous
             _statusReporter.ReportStatus(AsyncProcesorStatus.Idle);
             _idle.Set();
             NewNotificationArrived.Reset();
-            NewNotificationArrived.WaitOne(1000);
+            NewNotificationArrived.WaitOne(50);
             _idle.Reset();
             messages = await outbox.Get(lastProcessedId, 100);
           }          

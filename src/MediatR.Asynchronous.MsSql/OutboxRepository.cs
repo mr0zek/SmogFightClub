@@ -15,7 +15,9 @@ namespace MediatR.Asynchronous.MsSql
 
     public async Task Add(MessageData messageData)
     {
-      await _connection.ExecuteAsync("insert into dbo.Outbox(data, type, methodType)values(@data, @type, @methodType)", new { data = messageData.Data, type = messageData.Type, methodType = messageData.MethodType });
+      messageData.Id = await _connection.QueryFirstAsync<int>(
+        @"insert into dbo.Outbox(data, type, methodType)values(@data, @type, @methodType)
+          select @@identity", messageData);
     }
 
     public async Task<IEnumerable<MessageData>> Get(int lastProcessedId, int count)
