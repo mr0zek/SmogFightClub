@@ -7,6 +7,6 @@ namespace MediatR.Asynchronous
   public interface IOutboxRepository
   {
     Task Add(MessageData eventData);
-    Task<IEnumerable<MessageData>> Get(int lastProcessedId, int count);
+    Task<IEnumerable<MessageData>> Get(int count, string moduleName);
   }
 }

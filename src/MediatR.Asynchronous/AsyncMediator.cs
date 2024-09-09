@@ -11,11 +11,13 @@ namespace MediatR.Asynchronous
   public class AsyncMediator : IAsyncMediator
   {
     private readonly IOutboxRepository _outbox;
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IEnumerable<IAsyncProcessor> _eventAsyncProcessor;
 
     public AsyncMediator(IServiceProvider serviceProvider)
     {
       _outbox = serviceProvider.GetRequiredService<IOutboxRepository>();
+      _dateTimeProvider = serviceProvider.GetRequiredService<IDateTimeProvider>();
       _eventAsyncProcessor = serviceProvider.GetRequiredService<IEnumerable<IAsyncProcessor>>();
     }
 
@@ -23,7 +25,7 @@ namespace MediatR.Asynchronous
     {
       var data = JsonSerializer.Serialize(notification);
       string type = notification.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
-      await _outbox.Add(new MessageData(0, data, type, MethodType.Publish));
+      await _outbox.Add(new MessageData(0, data, _dateTimeProvider.Now(), type, MethodType.Publish));
       _eventAsyncProcessor.All(f=> f.NewNotificationArrived.Set());
     }
 
@@ -41,7 +43,7 @@ namespace MediatR.Asynchronous
     {
       string data = JsonSerializer.Serialize(request);
       string type = request.GetType().AssemblyQualifiedName ?? throw new NullReferenceException();
-      await _outbox.Add(new MessageData(0, data, type, MethodType.Send));
+      await _outbox.Add(new MessageData(0, data, _dateTimeProvider.Now(), type, MethodType.Send));
       _eventAsyncProcessor.All(f => f.NewNotificationArrived.Set());
     }
   }

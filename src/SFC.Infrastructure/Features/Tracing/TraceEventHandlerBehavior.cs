@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MediatR.NotificationPipeline;
 using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Threading;

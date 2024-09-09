@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Interfaces.Communication
+namespace MediatR.NotificationPipeline
 {
   public delegate Task EventHandlerDelegate();
 

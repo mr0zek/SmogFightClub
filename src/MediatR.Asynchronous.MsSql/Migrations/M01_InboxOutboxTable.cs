@@ -9,14 +9,16 @@ namespace MediatR.Asynchronous.MsSql.Migrations
     {
       Create.Table("Inbox")
         .InSchema("dbo")
-        .WithColumn("Id").AsInt32().PrimaryKey().Identity()
-        .WithColumn("ModuleName").AsString().NotNullable()
-        .WithColumn("LastProcessedId").AsString().NotNullable();
+        .WithColumn("Id").AsInt32().PrimaryKey()
+        .WithColumn("Date").AsDateTime2().NotNullable()
+        .WithColumn("ModuleName").AsString().NotNullable().PrimaryKey();
 
       Create.Table("Outbox")
         .InSchema("dbo")
         .WithColumn("Id").AsInt32().PrimaryKey().Identity()
         .WithColumn("Data").AsString().NotNullable()
+        .WithColumn("Date").AsDateTime2().NotNullable()
+        .WithColumn("MethodType").AsInt16().WithDefaultValue(2)
         .WithColumn("Type").AsString().NotNullable();
     }
   }

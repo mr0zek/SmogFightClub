@@ -11,4 +11,12 @@
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MediatR.NotificationPipeline\MediatR.NotificationPipeline.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pipeline\" />
+  </ItemGroup>
+
 </Project>

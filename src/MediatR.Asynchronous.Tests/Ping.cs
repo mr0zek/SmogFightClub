@@ -1,4 +1,6 @@
-﻿namespace MediatR.Asynchronous.Tests
+﻿using System.Collections.Concurrent;
+
+namespace MediatR.Asynchronous.Tests
 {
   public class Ping : IRequest
   {
@@ -14,10 +16,11 @@
 
   public class PingHandler : IRequestHandler<Ping>
   {
-    public static List<int> Requests { get; internal set; } = new List<int>();
+    public static ConcurrentBag<int> Requests { get; internal set; } = new ConcurrentBag<int>();
 
     public Task Handle(Ping request, CancellationToken cancellationToken)
     {
+      Thread.Sleep(10);
       Requests.Add(request.Index);
       return Task.CompletedTask;
     }

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using SFC.Infrastructure.Interfaces.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFC.Infrastructure.Features.Communication
+namespace MediatR.NotificationPipeline
 {
-  class NotificationPipelineDecorator<TNotification> : INotificationHandler<TNotification>
-  where TNotification : INotification
+  public class NotificationPipelineDecorator<TNotification> : INotificationHandler<TNotification>
+    where TNotification : INotification
   {
     private readonly INotificationHandler<TNotification> _notificationHandler;
     private readonly IEnumerable<INotificationPipelineBehavior<TNotification>> _pipelineBehaviors;

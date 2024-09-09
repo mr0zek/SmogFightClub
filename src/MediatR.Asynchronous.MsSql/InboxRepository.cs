@@ -10,30 +10,22 @@ namespace MediatR.Asynchronous.MsSql
     public InboxRepository(string connectionString)
     {
       _connection = new SqlConnection(connectionString);
-    }
+    }    
 
-    public async Task<int> GetLastProcessedId(string moduleName)
+    public async Task<bool> SetProcessed(int id, DateTime date, string moduleName)
     {
-      int result = await _connection.QueryFirstOrDefaultAsync<int>("select top 1 lastProcessedId from inbox where moduleName = @moduleName order by id desc", new { moduleName });
-
-      return result;
-    }
-
-    public async Task SetProcessed(int id, string moduleName)
-    {
-      if (id == 1)
+      try
       {
-        await _connection.ExecuteAsync(@"insert into dbo.Inbox(moduleName, lastProcessedId)values(@moduleName,1)", new { moduleName });
+        await _connection.ExecuteAsync(@"insert into dbo.Inbox(moduleName, date, id)values(@moduleName,@date,@id)", new { id, date, moduleName });
+        return true;
       }
-      else
+      catch(SqlException ex) 
       {
-        int rowsAffected = await _connection.ExecuteAsync(
-          @"update dbo.inbox set LastProcessedId = @id where moduleName = @moduleName and LastProcessedId = @previousId",
-          new { moduleName, id, previousId = id - 1 });
-        if(rowsAffected == 0)
+        if(ex.Number == 2627) // Violation of PRIMARY KEY constraint 'PK_Inbox'
         {
-          throw new DBConcurrencyException();
+          return false;
         }
+        throw;
       }
     }
   }

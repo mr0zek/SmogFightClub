@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 using System.Text.Json;
 using System.Transactions;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace MediatR.Asynchronous
 {
@@ -8,7 +10,6 @@ namespace MediatR.Asynchronous
   public class AsyncProcesor : IAsyncProcessor
   {
     private readonly IServiceProvider _serviceProvider;
-    private readonly IAsyncProcessorStatusReporter _statusReporter;
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly EventWaitHandle _shutDownCompleated;
     private readonly EventWaitHandle _idle;
@@ -16,11 +17,9 @@ namespace MediatR.Asynchronous
     public EventWaitHandle NewNotificationArrived { get; } = new EventWaitHandle(false, EventResetMode.ManualReset);
 
     public AsyncProcesor(
-      IServiceProvider serviceProvider,
-      IAsyncProcessorStatusReporter statusReporter)
+      IServiceProvider serviceProvider)
     {
       _serviceProvider = serviceProvider;
-      _statusReporter = statusReporter;
       _cancellationTokenSource = new CancellationTokenSource();
       _shutDownCompleated = new EventWaitHandle(false, EventResetMode.AutoReset);
       _idle = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -46,51 +45,58 @@ namespace MediatR.Asynchronous
       try
       {
         string moduleName = "internal";
-        IOutboxRepository outbox = _serviceProvider.GetRequiredService<IOutboxRepository>();
-        _statusReporter.ReportStatus(AsyncProcesorStatus.Working);
-        var inbox = _serviceProvider.GetRequiredService<IInboxRepository>();
-        while (!token.IsCancellationRequested)
+        await using (var scope1 = _serviceProvider.CreateAsyncScope())
         {
-          var lastProcessedId = await inbox.GetLastProcessedId(moduleName);
-          IEnumerable<MessageData> messages = await outbox.Get(lastProcessedId, 100);
-          while(!messages.Any())
+          var dateTimeProvider = scope1.ServiceProvider.GetRequiredService<IDateTimeProvider>();
+          var outbox = scope1.ServiceProvider.GetRequiredService<IOutboxRepository>();
+          var inbox = scope1.ServiceProvider.GetRequiredService<IInboxRepository>();
+          var statusReporter = scope1.ServiceProvider.GetRequiredService<IAsyncProcessorStatusReporter>();
+          statusReporter.ReportStatus(AsyncProcesorStatus.Working);
+          while (!token.IsCancellationRequested)
           {
-            if(token.IsCancellationRequested)
+            try
             {
-              return;
+              IEnumerable<MessageData> messages = await outbox.Get(100, moduleName);
+              while (!messages.Any())
+              {
+                if (token.IsCancellationRequested)
+                {
+                  return;
+                }
+                statusReporter.ReportStatus(AsyncProcesorStatus.Idle);
+                _idle.Set();
+                NewNotificationArrived.Reset();
+                NewNotificationArrived.WaitOne(50);
+                _idle.Reset();
+                messages = await outbox.Get(100, moduleName);
+              }
+              statusReporter.ReportStatus(AsyncProcesorStatus.Working);
+              messages.AsParallel().ForAll(async e =>
+              {
+                var scopeFactory = scope1.ServiceProvider.GetRequiredService<IServiceScopeFactory>();
+                var txOptions = new TransactionOptions();
+                txOptions.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+
+                await using (var scope2 = scopeFactory.CreateAsyncScope())
+                { 
+                  Type eventType = Type.GetType(e.Type)!;
+                  object @event = JsonSerializer.Deserialize(e.Data, eventType) ?? throw new NullReferenceException();
+
+                  if (e.MethodType == MethodType.Publish)
+                  {
+                    var publisher = scope2.ServiceProvider.GetRequiredService<IPublisher>();
+                    await publisher.Publish(@event);
+                  }
+                  else
+                  {
+                    var sender = scope2.ServiceProvider.GetRequiredService<ISender>();
+                    await sender.Send(@event);
+                  }
+                }
+              });
             }
-            _statusReporter.ReportStatus(AsyncProcesorStatus.Idle);
-            _idle.Set();
-            NewNotificationArrived.Reset();
-            NewNotificationArrived.WaitOne(50);
-            _idle.Reset();
-            messages = await outbox.Get(lastProcessedId, 100);
-          }          
-          _statusReporter.ReportStatus(AsyncProcesorStatus.Working);
-          foreach (MessageData e in messages)
-          {
-            var scopeFactory = _serviceProvider.GetRequiredService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
-            using (TransactionScope ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            catch (DBConcurrencyException ex)
             {
-              await (scope.ServiceProvider.GetRequiredService<IInboxRepository>())
-                .SetProcessed(e.Id, moduleName);
-
-              Type eventType = Type.GetType(e.Type)!;
-              object @event = JsonSerializer.Deserialize(e.Data, eventType) ?? throw new NullReferenceException();
-
-              if (e.MethodType == MethodType.Publish)
-              {
-                var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
-                await publisher.Publish(@event);
-              }
-              else
-              {
-                var sender = scope.ServiceProvider.GetRequiredService<ISender>();
-                await sender.Send(@event);
-              }
-
-              ts.Complete();
             }
           }
         }
@@ -103,7 +109,7 @@ namespace MediatR.Asynchronous
 
     public void WaitForIdle()
     {
-      _idle.WaitOne();      
+      _idle.WaitOne();
     }
   }
 }

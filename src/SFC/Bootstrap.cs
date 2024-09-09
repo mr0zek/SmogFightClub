@@ -69,7 +69,8 @@ namespace SFC
 
       
 
-      builder.Services.AddHangfireServer();      
+      builder.Services.AddHangfireServer();     
+      
       builder.Services.AddControllers();
 
       var mvc = builder.Services.AddMvc()        

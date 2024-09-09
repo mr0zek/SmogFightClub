@@ -16,6 +16,7 @@ using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using MediatR.NotificationPipeline;
 
 namespace SFC.Infrastructure
 {
@@ -56,8 +57,8 @@ namespace SFC.Infrastructure
     public void RegisterTypes(ContainerBuilder builder)
     {
       RegisterMediator(builder);
-      builder.RegisterType<IdentityProvider>().AsImplementedInterfaces();
-      builder.RegisterType<DateTimeProvider>().AsImplementedInterfaces();
+      builder.RegisterType<IdentityProvider>().AsImplementedInterfaces();      
+      builder.RegisterType<Features.TimeDependency.DateTimeProvider>().AsImplementedInterfaces();
       builder.RegisterType<HangFireScheduler>().AsImplementedInterfaces();
       builder.RegisterType<FakeSmtpClient>().AsImplementedInterfaces();
       builder.RegisterType<TraceRepository>().AsImplementedInterfaces();
@@ -87,6 +88,7 @@ namespace SFC.Infrastructure
       builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
       builder.RegisterGeneric(typeof(RequestExceptionActionProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
       builder.RegisterGeneric(typeof(RequestExceptionProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+      builder.RegisterType<MediatR.Asynchronous.DateTimeProvider>().AsImplementedInterfaces();
     }
   }
 }

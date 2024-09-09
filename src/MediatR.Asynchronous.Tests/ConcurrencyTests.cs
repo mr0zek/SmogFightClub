@@ -2,6 +2,7 @@ using MediatR.Asynchronous.MsSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace MediatR.Asynchronous.Tests
 {
@@ -12,8 +13,8 @@ namespace MediatR.Asynchronous.Tests
   /// </summary>
   public class ConcurrencyTests
   {
-    private IAsyncMediator _mediator;
-    private IAsyncProcessor _processor;
+    private List<IAsyncProcessor> _processor = new List<IAsyncProcessor>();
+    IServiceProvider _serviceProvider;
 
     public ConcurrencyTests()
     {
@@ -37,58 +38,78 @@ namespace MediatR.Asynchronous.Tests
         cfg.OutboxRepository = sp => new OutboxRepository(connectionString);
       });
 
-      var provider = services.BuildServiceProvider();
+      _serviceProvider = services.BuildServiceProvider();
 
-      _mediator = provider.GetRequiredService<IAsyncMediator>();
-      _processor = provider.GetRequiredService<IAsyncProcessor>();
+      for (int i = 0; i < 10; i++)
+      {
+        _processor.Add(_serviceProvider.GetRequiredService<IAsyncProcessor>());
+      }
 
       ResetDatabase.Reset(connectionString);
       DatabaseMigrator.Run(connectionString);
 
-      _processor.Start();      
+      _processor.ForEach(f=>f.Start());      
     }
 
     ~ConcurrencyTests()
     {
-      _processor.Stop();
-      _processor.WaitForShutdown();
+      _processor.ForEach(f => f.Stop());
+      _processor.ForEach(f => f.WaitForShutdown());
     }
 
     [Fact]
     public async Task SendingRequests()
     {
-      int count = 1000;
-      for (int i = 0; i < count; i++)
-      {
-        await _mediator.Send(new Ping(i, "testmessage"));
-      }
-      
-      while(PingHandler.Requests.Count != count)
+      int count = 10;
+      int processes = 32;
+      Enumerable.Range(0, processes)
+       .AsParallel()
+       .ForAll(async index =>
+       {
+         using (var scope = _serviceProvider.CreateScope())
+         {
+           for (int i = 0; i < count; i++)
+           {
+             await scope.ServiceProvider.GetRequiredService<IAsyncMediator>().Send(new Ping(index * count + i, "testmessage"));
+           }
+          }
+        });          
+            
+      while(PingHandler.Requests.Count != count * processes)
       {
         Thread.Sleep(10);
       }
       for(int i = 0;i< PingHandler.Requests.Count;i++)
       {
-        Assert.Equal(i, PingHandler.Requests[i]);
+        Assert.True(PingHandler.Requests.Any(f => f == i), $"Message {i} not found");
       }
     }
 
     [Fact]
     public async Task PublishingNotifications()
     {
-      int count = 1000;
-      for (int i = 0; i < count; i++)
-      {
-        await _mediator.Publish(new Pinged(i));
-      }
+      int count = 10;
+      int processes = 32;
+      Enumerable.Range(0, processes)
+       .AsParallel()
+       .ForAll(async index =>
+       {
+         using (var scope = _serviceProvider.CreateScope())
+         {
+           for (int i = 0; i < count; i++)
+           {
+             await scope.ServiceProvider.GetRequiredService<IAsyncMediator>().Publish(new Pinged(index * count+i));
+           }
+         }
+       });
 
-      while (PingedHandler.Requests.Count != count)
+      while (PingedHandler.Requests.Count != count*processes)
       {
         Thread.Sleep(10);
       }
       for (int i = 0; i < PingedHandler.Requests.Count; i++)
       {
-        Assert.Equal(i, PingedHandler.Requests[i]);
+        Assert.True(PingedHandler.Requests.Any(f => f == i), $"Message {i} not found");
       }
     }
   }
