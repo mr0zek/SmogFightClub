@@ -25,13 +25,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using SFC.Infrastructure.Features.TimeDependency;
-using SFC.Infrastructure.Features.Tracing;
 using SFC.Infrastructure.Features.Validation;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Database;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Infrastructure.Interfaces.TimeDependency;
-using SFC.Infrastructure.Interfaces.Tracing;
 
 namespace SFC
 {
@@ -73,8 +71,7 @@ namespace SFC
       
       builder.Services.AddControllers();
 
-      var mvc = builder.Services.AddMvc()        
-        .AddTracing();
+      var mvc = builder.Services.AddMvc();
 
       foreach (var m in _modules)
       {
@@ -198,22 +195,11 @@ namespace SFC
         m.Configure(app);        
       }
 
-      foreach (var module in _modules.Where(f=> f is IHaveWorker).Select(f=>(IHaveWorker)f)) 
-      {
-        module.StartWorker(app.Services.GetRequiredService<IComponentContext>());
-      }
-
       return app;
     }
 
     public static void Stop(WebApplication app)
     {
-      _modules.Where(f => f is IHaveWorker).ToList().ForEach(
-       f => ((IHaveWorker)f).StopWorker());
-
-      _modules.Where(f => f is IHaveWorker).ToList().ForEach(
-       f => ((IHaveWorker)f).WaitForShutdown());
-
       app.StopAsync().Wait();
       app.WaitForShutdown();      
     }

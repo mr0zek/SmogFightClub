@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MediatR.Asynchronous\MediatR.Asynchronous.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
     <ProjectReference Include="..\SFC.Sensors\SFC.Sensors.csproj" />
     <ProjectReference Include="..\SFC.SharedKernel\SFC.SharedKernel.csproj" />

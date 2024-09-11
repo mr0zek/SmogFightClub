@@ -7,13 +7,11 @@ using SFC.Alerts.Infrastructure;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
 
 namespace SFC.Alerts
 {
-  [ModuleDefinition("Backend")]
   public class AlertsModule : IHaveAutofacRegistrations, IModule
   {
     public void RegisterTypes(ContainerBuilder builder)

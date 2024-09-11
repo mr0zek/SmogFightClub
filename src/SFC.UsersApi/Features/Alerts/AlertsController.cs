@@ -7,7 +7,6 @@ using SFC.Alerts.Features.GetAlert;
 using SFC.Alerts.Features.GetAllAlerts;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.UserApi.Features.Alerts
 {
@@ -28,7 +27,6 @@ namespace SFC.UserApi.Features.Alerts
       _query = query;
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public async Task<IActionResult> Post(PostAlertModel model)
     {
@@ -39,14 +37,12 @@ namespace SFC.UserApi.Features.Alerts
       return Created($"/api/alerts/{id}",id);
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet]
     public async Task<IActionResult> Get()
     {
       return Json(await _query.Send(new GetAllAlertsRequest(_identityProvider.GetLoginName())));
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Query)]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromRoute]Guid id)
     {

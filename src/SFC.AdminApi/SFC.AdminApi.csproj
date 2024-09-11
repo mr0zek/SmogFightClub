@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MediatR.Asynchronous\MediatR.Asynchronous.csproj" />
     <ProjectReference Include="..\SFC.Alerts\SFC.Alerts.csproj" />
     <ProjectReference Include="..\SFC.Infrastructure\SFC.Infrastructure.csproj" />
     <ProjectReference Include="..\SFC.Notifications\SFC.Notifications.csproj" />

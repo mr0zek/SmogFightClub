@@ -56,7 +56,6 @@ namespace SFC.Tests.AdminApi
       {
         Values = { { PolutionType.PM2_5, 25 } }
       });
-      _eventProcessorStatus.WaitIlde();
 
       // Act
       var result = await api.GetAlertNotificationsWithUserData(1, int.MaxValue);
@@ -85,7 +84,6 @@ namespace SFC.Tests.AdminApi
       await api.PostAccountConfirmation(confirmationId);
 
       api.Token = api.Token = "Bearer " + await api.Login(new CredentialsModel(postAccountModel.LoginName, postAccountModel.Password));
-      _eventProcessorStatus.WaitIlde();
 
       // Act
       var result = await api.GetSendNotificationsByUser(0, int.MaxValue);
@@ -119,7 +117,6 @@ namespace SFC.Tests.AdminApi
       {
         await api.PostAlert(new PostAlertModel() { ZipCode = Random.Shared.NextInt64(10000, 99999).ToString() });
       }
-      _eventProcessorStatus.WaitIlde();
 
       // Act
       var result = await api.GetSearchableDashboard(0, int.MaxValue, 10, 20);

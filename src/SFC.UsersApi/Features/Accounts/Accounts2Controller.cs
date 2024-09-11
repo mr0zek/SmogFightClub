@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Processes.Features.UserRegistrationSaga.Contract;
 using SFC.SharedKernel;
 
@@ -22,7 +21,6 @@ namespace SFC.UserApi.Features.Accounts
       _commandBus = commandBus;
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public async Task<IActionResult> PostAccount([FromBody] PostAccountModel model)
     {
@@ -48,7 +46,6 @@ namespace SFC.UserApi.Features.Accounts
       return Created(new Uri((Request?.BaseUrl($"api/v2.0/accounts/{id}")).ThrowIfNull()), id);
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost("{id}/confirmation")]
     public async Task<IActionResult> PostConfirmation([FromRoute] string id)
     {

@@ -30,7 +30,6 @@ namespace SFC.Tests.Tools
   {
     protected readonly string _url = TestHelper.GenerateUrl();
     private readonly WebApplication _app;
-    protected MessagesProcessorStatus _eventProcessorStatus;
 
 
     protected TestBase()
@@ -39,8 +38,6 @@ namespace SFC.Tests.Tools
         .AddJsonFile("appsettings.json");
       var configuration = confBuilder.Build();
       var connectionString = configuration["ConnectionStrings:DefaultConnection"].ThrowIfNull();
-
-      _eventProcessorStatus = new MessagesProcessorStatus();
 
       ResetDatabase.Reset(connectionString);
 
@@ -62,18 +59,12 @@ namespace SFC.Tests.Tools
         builder =>
         {
           builder.RegisterType<TestSmtpClient>().AsImplementedInterfaces();
-          builder.RegisterInstance(new MyTraceRepository("")).AsImplementedInterfaces();
-          builder.RegisterInstance(_eventProcessorStatus).AsImplementedInterfaces();
         });
     }
 
     public void Dispose()
     {
       Bootstrap.Stop(_app);
-      foreach (var test in MyTraceRepository.Traces)
-      {
-        SequenceDiagramGenerator.Generate(test.Value.First().CallName.Replace("/", "_") + ".puml", test.Value.First().CallName, test.Value);
-      }
     }
   }
 

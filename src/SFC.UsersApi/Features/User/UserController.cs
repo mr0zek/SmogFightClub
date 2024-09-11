@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Notifications.Features.SetNotificationEmail.Contract;
 using SFC.Sensors.Features.GetAllSensors;
 using SFC.Sensors.Features.GetSensor;
@@ -27,7 +26,6 @@ namespace SFC.UserApi.Features.User
       _identityProvider = identityProvider;
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Command)]
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PostUserModel model)
     {

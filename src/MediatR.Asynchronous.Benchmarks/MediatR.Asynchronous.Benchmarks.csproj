@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MediatR.Asynchronous.MsSql\MediatR.Asynchronous.MsSql.csproj" />
-    <ProjectReference Include="..\MediatR.Asynchronous\MediatR.Asynchronous.csproj" />
   </ItemGroup>
 
 </Project>

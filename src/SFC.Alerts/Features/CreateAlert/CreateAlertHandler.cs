@@ -5,16 +5,15 @@ using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces.Communication;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR.Asynchronous;
 
 namespace SFC.Alerts.Features.CreateAlert
 {
   internal class CreateAlertHandler : ICommandHandler<CreateAlertCommand>
   {
-    private readonly IAsyncPublisher _eventBus;
+    private readonly IEventBus _eventBus;
     private readonly IAlertWriteRepository _repository;
 
-    public CreateAlertHandler(IAsyncPublisher eventBus, IAlertWriteRepository repository)
+    public CreateAlertHandler(IEventBus eventBus, IAlertWriteRepository repository)
     {
       _eventBus = eventBus;
       _repository = repository;

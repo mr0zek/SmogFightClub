@@ -4,7 +4,6 @@ using SFC.Alerts;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Processes.Features.UserRegistration;
 using SFC.Processes.Features.UserRegistrationSaga;
@@ -12,7 +11,6 @@ using SFC.Sensors;
 
 namespace SFC.Processes
 {
-  [ModuleDefinition("Task")]
   public class ProcessesModule : IHaveAutofacRegistrations, IModule
   {
     public void RegisterTypes(ContainerBuilder builder)

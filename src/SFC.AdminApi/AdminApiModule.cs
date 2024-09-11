@@ -1,18 +1,15 @@
 ﻿using Autofac;
 using FluentValidation;
-using MediatR.Asynchronous;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
 using SFC.AdminApi.Features.SearchableDashboard;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors;
 
 namespace SFC.AdminApi
 {
-  [ModuleDefinition("Api")]
   public class AdminApiModule : IHaveAutofacRegistrations, IModule
   {    
 

@@ -9,12 +9,10 @@ using SFC.Alerts;
 using SFC.Notifications;
 using SFC.Sensors;
 using ArchUnitNET.xUnit;
-using Autofac;
 using FluentMigrator;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -25,6 +23,7 @@ using SFC.SensorApi;
 using ArchUnitNET.Fluent.Predicates;
 using System.Collections.Generic;
 using ArchUnitNET.Domain.Extensions;
+using SFC.Infrastructure.Interfaces.Modules;
 
 namespace SFC.Tests.Architecture
 {
@@ -34,12 +33,7 @@ namespace SFC.Tests.Architecture
   {
     private static readonly ArchUnitNET.Domain.Architecture Architecture =
     new ArchLoader().LoadAssemblies(
-      typeof(ExitPointToAttribute).Assembly,
-      typeof(UserApiModule).Assembly,
-      typeof(AdminApiModule).Assembly,
-      typeof(SensorApiModule).Assembly,
-      typeof(Controller).Assembly,
-      typeof(InfrastructureModule).Assembly,
+      typeof(ICommand).Assembly,
       typeof(AccountsModule).Assembly,
       typeof(AlertsModule).Assembly,
       typeof(NotificationsModule).Assembly,
@@ -48,26 +42,14 @@ namespace SFC.Tests.Architecture
 
     [Fact]
     public void CheckPublicTypesInModules()
-    {
-      var controllers = Types().That()
-          .ResideInAssembly("SFC.*", true).And()
-          .AreAssignableTo(typeof(Controller)).GetObjects(Architecture);
-
-      IEnumerable<IType> classesUsedByControllers = controllers.SelectMany(f => f.Dependencies.Select(f => f.Target))
-        .Concat(
-          controllers.SelectMany(
-            f => f.Dependencies.SelectMany(
-              x => x.Target.Dependencies).Select(x => x.Target)));
-                  
+    {                 
       IArchRule allowedPublicTypesInModules =
         Types().That()
           .ResideInAssembly("SFC.*", true).And()
-          .AreNot(classesUsedByControllers).And()
           .DoNotResideInAssembly(typeof(ICommand).Assembly).And()
           .AreNotAssignableTo(typeof(IMigration)).And()
           .AreNotAssignableTo(typeof(Exception)).And()
-          .AreNotAssignableTo(typeof(Controller)).And()
-          .DoNotHaveAnyAttributes(typeof(ModuleDefinitionAttribute)).And()
+          .AreNotAssignableTo(typeof(IModule)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
           .DoNotImplementInterface(typeof(IActionFilter)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()
@@ -77,21 +59,7 @@ namespace SFC.Tests.Architecture
 
       allowedPublicTypesInModules.Check(Architecture);
     }    
-
-    [Fact]
-    public void EveryControllerMethodHaveToHaveEntryPointForAttributeDeclared()
-    {
-      var controllers = Types().That()
-        .ResideInAssembly("SFC.*", true)
-        .And()
-        .AreAssignableTo(typeof(Controller)).GetObjects(Architecture);
-      MethodMembers().That().AreDeclaredIn(controllers)
-        .And()
-        .AreNoConstructors()
-        .Should()
-        .HaveAnyAttributes(typeof(EntryPointForAttribute)).Check(Architecture);
-    }
-    
+   
     [Fact]
     public void CheckFeatureAutonomy()
     {

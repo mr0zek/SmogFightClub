@@ -3,12 +3,10 @@ using FluentValidation;
 using SFC.Accounts.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 
 namespace SFC.Accounts
 {
-  [ModuleDefinition("Backend")]
   public class AccountsModule : IHaveAutofacRegistrations, IModule
   {
     public void RegisterTypes(ContainerBuilder builder)

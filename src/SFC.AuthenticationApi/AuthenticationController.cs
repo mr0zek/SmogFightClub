@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.AuthenticationApi.Features.Authentication;
-using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.AuthenticationApi
 {
@@ -17,8 +16,6 @@ namespace SFC.AuthenticationApi
       _tokenRepository = tokenRepository;
     }
 
-    [EntryPointFor("User", CallerType.Human, CallType.Command)]
-    [EntryPointFor("Admin", CallerType.Human, CallType.Command)]
     [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Login(CredentialsModel usersdata)

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Notifications.Features.GetAllSendNotificationsByUser.Contract;
 using System;
 using System.Collections;
@@ -26,7 +25,6 @@ namespace SFC.AdminApi.Features.SendNotificationsByUser
       _query = query;
     }
 
-    [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
     public async Task<ActionResult<GetAllSendNotificationsByUserResponse>> Get([FromQuery] SendNotificationsByUserModel query)
     {

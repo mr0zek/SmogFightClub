@@ -3,14 +3,12 @@ using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Notifications.Features.SendNotification;
 using SFC.Notifications.Infrastructure;
 
 namespace SFC.Notifications
 {
-  [ModuleDefinition("Backend")]
   public class NotificationsModule : IHaveAutofacRegistrations, IModule
   {    
     public void RegisterTypes(ContainerBuilder builder)

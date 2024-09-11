@@ -3,14 +3,12 @@ using FluentValidation;
 using SFC.Infrastructure;
 using SFC.Infrastructure.Interfaces;
 using SFC.Infrastructure.Interfaces.Communication;
-using SFC.Infrastructure.Interfaces.Documentation;
 using SFC.Infrastructure.Interfaces.Modules;
 using SFC.Sensors.Features.RegisterMeasurement;
 using SFC.Sensors.Infrastructure;
 
 namespace SFC.Sensors
 {
-  [ModuleDefinition("Backend")]
   public class SensorsModule : IHaveAutofacRegistrations, IModule
   {
     public void RegisterTypes(ContainerBuilder builder)

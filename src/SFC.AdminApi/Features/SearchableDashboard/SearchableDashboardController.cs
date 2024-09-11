@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFC.AdminApi.Features.AlertNotificationsWithUserData;
-using SFC.Infrastructure.Interfaces.Documentation;
 
 namespace SFC.AdminApi.Features.SearchableDashboard
 {
@@ -20,7 +19,6 @@ namespace SFC.AdminApi.Features.SearchableDashboard
       _searchableDashboardPerspective = searchableDashboardPerspective;
     }
 
-    [EntryPointFor("Admin", CallerType.Human, CallType.Query)]
     [HttpGet]
     public async Task<ActionResult<SearchableDashboardResult>> Get([FromQuery]SearchableDashboardQueryModel query)
     {

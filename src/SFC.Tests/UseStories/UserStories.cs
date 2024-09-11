@@ -49,7 +49,6 @@ namespace SFC.Tests.UseStories
 
     void ThenSystemSendsConfirmationEmail()
     {
-      _eventProcessorStatus.WaitIlde();
       Assert.Single(TestSmtpClient.SentEmails);
     }
 
