@@ -51,7 +51,6 @@ namespace SFC.Tests.Architecture
           .AreNotAssignableTo(typeof(Exception)).And()
           .AreNotAssignableTo(typeof(IModule)).And()
           .DoNotImplementInterface(typeof(IRequest<>)).And()
-          .DoNotImplementInterface(typeof(IActionFilter)).And()
           .DoNotImplementInterface(typeof(IResponse)).And()
           .DoNotImplementInterface(typeof(ICommand)).And()
           .DoNotImplementInterface(typeof(IEvent))
